@@ -2,6 +2,7 @@ console.log("Script started");
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { HashRouter as Router, Route, Switch, Link, IndexRoute } from 'react-router-dom';
 
 class App extends React.Component{
     constructor(props) {
@@ -9,24 +10,16 @@ class App extends React.Component{
     }
     
    render(){
-       var divStyle = {
-					margin:'auto',
-					padding:0,
-					width: '100%',
-					height: 400,
-					borderColor: 'black',
-					borderWidth: 1,
-					borderStyle: 'solid',
-					textAlign: 'center'
-					};
-
-					
-        
 
             return (
            <div>
-            <Header/>
-            <Home/>
+            <Router>
+            <div>
+                <Header/>
+                <Route exact path='/' component={Home}/>
+                <Route exact path='/signup' component={ProjectInfo} />
+            </div>
+            </Router>
           </div>
           ); 
 					
@@ -34,6 +27,8 @@ class App extends React.Component{
       
    
 }
+
+
 
 class Header extends React.Component{
     constructor(props) {
@@ -69,9 +64,9 @@ class Header extends React.Component{
 
             return (
            <div id="header" style={divStyle}>
-            <HoverButton float='left' text='Home'/>
-            <HoverButton float='right' text='Sign Up'/>
-            <HoverButton float='right' text='Login'/>
+            <HoverButton float='left' text='Home' address="/"/>
+            <HoverButton float='right' text='Sign Up' address="/signup"/>
+            <HoverButton float='right' text='Login' address="login"/>
           </div>
           ); 
 					
@@ -91,6 +86,7 @@ class Home extends React.Component{
                <div>
                     <HomeMain/>
                     <HomeInfo/>
+                    <ProjectInfo/>
                </div>
           ); 
 					
@@ -162,25 +158,95 @@ class HomeInfo extends React.Component{
    render(){
             
             var infoBoxStyle = {
-                width:180,
+                width:300,
                 display:'inline-block',
-                margin: '50px 100px 0px 100px',
+                margin: '50px 50px 0px 50px',
                 verticalAlign: 'top',
                 textAlign: 'left'
             };
+            var pStyle = {
+                fontFamily: 'Arial',
+                color: '#797979'
+            };
+            var hStyle = {
+                color: '#5C0700',
+                marginBottom:0
+            };
+            var hrStyle = {
+                width: 280,
+                color: 'gray',
+                float: 'left'
+            };
             return (
-               <div style={{textAlign:'center'}}>
+               <div style={{textAlign:'center', height:300}}>
                     <div style={infoBoxStyle}>
-                        <h1>Browse Catalogue</h1>
-                        <p>Look through the catalogue to see which books our users own and see which ones you would be interested in reading.</p>
+                        <h1 style={hStyle}>Browse Catalogue</h1>
+                        <hr style={hrStyle}/>
+                        <p style={pStyle}>Look through the catalogue to see which books our users own and see which ones you would be interested in reading.</p>
                     </div>
                     <div style={infoBoxStyle}>
-                        <h1>Exchange Books</h1>
-                        <p>Post books that you own that you would be interested in exchanging with other reader's books.</p>
+                        <h1 style={hStyle}>Exchange Books</h1>
+                        <hr style={hrStyle}/>
+                        <p style={pStyle}>Post books that you own that you would be interested in exchanging with other reader's books.</p>
                     </div>
                     <div style={infoBoxStyle}>
-                        <h1>Personal Homepage</h1>
-                        <p>Maintain your public profile, manage your trades, and update your personal catalogue.</p>
+                        <h1 style={hStyle}>Personal Homepage</h1>
+                        <hr style={hrStyle}/>
+                        <p style={pStyle}>Maintain your public profile, manage your trades, and update your personal catalogue.</p>
+                    </div>
+               </div>
+          ); 
+					
+   }
+      
+   
+}
+
+class ProjectInfo extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+   render(){
+            var divStyle = {
+                backgroundColor: 'gray',
+                width:'100%',
+                height:300,
+                textAlign:'center'
+                };
+            var infoBoxStyle = {
+                width:300,
+                display:'inline-block',
+                margin: '50px 50px 0px 50px',
+                verticalAlign: 'top',
+                textAlign: 'left',
+                padding: '0px 0px 20px 30px',
+                borderLeft:'2px solid black'
+            };
+            var pStyle = {
+                fontFamily: 'Arial',
+                color: '#E0E0E0'
+            };
+            var hStyle = {
+                color: 'white',
+                marginBottom:0
+            };
+            return (
+               <div style={divStyle}>
+                    <div style={infoBoxStyle}>
+                        <h1 style={hStyle}>Background</h1>
+                        <p style={pStyle}>This book trading club app is a</p>
+                        <p style={pStyle}>FreeCodeCamp full-stack project</p>
+                    </div>
+                    <div style={infoBoxStyle}>
+                        <h1 style={hStyle}>Technologies</h1>
+                        <p style={pStyle}>Front-end: React, React Router</p>
+                        <p style={pStyle}>Back-end: Express.js, Mongoose</p>
+                    </div>
+                    <div style={infoBoxStyle}>
+                        <h1 style={hStyle}>Author</h1>
+                        <p style={pStyle}>David Magee is a web developer in</p>
+                        <p style={pStyle}>Houston, TX</p>
                     </div>
                </div>
           ); 
@@ -223,7 +289,7 @@ class HoverButton extends React.Component{
 		};
     
         return(
-            <button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.text}</button>
+            <Link to={this.props.address}><button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.text}</button></Link>
         );
     }
 }
