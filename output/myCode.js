@@ -2367,7 +2367,8 @@ var App = function (_React$Component) {
                         null,
                         _react2.default.createElement(Header, null),
                         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: Home }),
-                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/signup", component: ProjectInfo })
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/signup", component: SignUp }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/login", component: Login })
                     )
                 )
             );
@@ -2377,8 +2378,237 @@ var App = function (_React$Component) {
     return App;
 }(_react2.default.Component);
 
-var Header = function (_React$Component2) {
-    _inherits(Header, _React$Component2);
+var SignUp = function (_React$Component2) {
+    _inherits(SignUp, _React$Component2);
+
+    function SignUp(props) {
+        _classCallCheck(this, SignUp);
+
+        var _this2 = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
+
+        _this2.handleUsernameChange = function (event) {
+            _this2.setState({
+                usernameInput: event.target.value
+            });
+        };
+
+        _this2.handlePasswordChange = function (event) {
+            _this2.setState({
+                passwordInput: event.target.value
+            });
+        };
+
+        _this2.handleEmailChange = function (event) {
+            _this2.setState({
+                emailInput: event.target.value
+            });
+        };
+
+        _this2.state = {
+            usernameInput: '',
+            passwordInput: '',
+            emailInput: ''
+        };
+        return _this2;
+    }
+
+    _createClass(SignUp, [{
+        key: "render",
+        value: function render() {
+            var divStyle = {
+                padding: 0,
+                width: '100%',
+                textAlign: 'center'
+            };
+            var innerDivStyle = {
+                width: '50%',
+                textAlign: 'left',
+                margin: 'auto',
+                padding: '0px 0px 30px 40px',
+                borderLeft: '3px solid gray'
+            };
+            var inputStyle = {
+                padding: 0,
+                width: '100%',
+                height: 25
+            };
+            var hrStyle = {
+                width: '70%',
+                height: 0,
+                borderColor: 'gray'
+            };
+            var hStyle = {
+                fontSize: 40,
+                fontFamily: 'Arial'
+            };
+            var pStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var buttonStyle = {
+                background: 'lightblue',
+                border: 'none',
+                borderRadius: 5,
+                boxShadow: 'none',
+                margin: '20px 0px 0px 0px',
+                fontSize: 18,
+                fontFamily: 'Arial',
+                padding: '10px 10px 10px 10px'
+            };
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "h1",
+                    { style: hStyle },
+                    "Sign Up"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: innerDivStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Username"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.usernameInput, onChange: this.handleUsernameChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Password"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Email"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.emailInput, onChange: this.handleEmailChange }),
+                    _react2.default.createElement(
+                        "button",
+                        { style: buttonStyle },
+                        "Create Account"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return SignUp;
+}(_react2.default.Component);
+
+var Login = function (_React$Component3) {
+    _inherits(Login, _React$Component3);
+
+    function Login(props) {
+        _classCallCheck(this, Login);
+
+        var _this3 = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+        _this3.handleUsernameChange = function (event) {
+            _this3.setState({
+                usernameInput: event.target.value
+            });
+        };
+
+        _this3.handlePasswordChange = function (event) {
+            _this3.setState({
+                passwordInput: event.target.value
+            });
+        };
+
+        _this3.state = {
+            usernameInput: '',
+            passwordInput: ''
+        };
+        return _this3;
+    }
+
+    _createClass(Login, [{
+        key: "render",
+        value: function render() {
+            var divStyle = {
+                padding: 0,
+                width: '100%',
+                textAlign: 'center'
+            };
+            var innerDivStyle = {
+                width: '50%',
+                textAlign: 'left',
+                margin: 'auto',
+                padding: '0px 0px 30px 40px',
+                borderLeft: '3px solid gray'
+            };
+            var inputStyle = {
+                padding: 0,
+                width: '100%',
+                height: 25
+            };
+            var hrStyle = {
+                width: '70%',
+                height: 0,
+                borderColor: 'gray'
+            };
+            var hStyle = {
+                fontSize: 40,
+                fontFamily: 'Arial'
+            };
+            var pStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var buttonStyle = {
+                background: 'lightblue',
+                border: 'none',
+                borderRadius: 5,
+                boxShadow: 'none',
+                margin: '20px 0px 0px 0px',
+                fontSize: 18,
+                fontFamily: 'Arial',
+                padding: '10px 10px 10px 10px'
+            };
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "h1",
+                    { style: hStyle },
+                    "Login"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: innerDivStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Username"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.usernameInput, onChange: this.handleUsernameChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Password"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
+                    _react2.default.createElement(
+                        "button",
+                        { style: buttonStyle },
+                        "Login"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Login;
+}(_react2.default.Component);
+
+var Header = function (_React$Component4) {
+    _inherits(Header, _React$Component4);
 
     function Header(props) {
         _classCallCheck(this, Header);
@@ -2393,25 +2623,7 @@ var Header = function (_React$Component2) {
                 padding: 0,
                 width: '100%',
                 height: 50,
-                borderColor: 'black',
-                borderWidth: 1,
-                borderStyle: 'solid'
-            };
-
-            var leftButtonStyle = {
-                height: '100%',
-                color: 'black',
-                float: 'left',
-                background: 'none',
-                border: 'none'
-            };
-
-            var rightButtonStyle = {
-                height: '100%',
-                color: 'black',
-                float: 'right',
-                background: 'none',
-                border: 'none'
+                backgroundColor: '#F7F7F7'
             };
 
             return _react2.default.createElement(
@@ -2427,8 +2639,8 @@ var Header = function (_React$Component2) {
     return Header;
 }(_react2.default.Component);
 
-var Home = function (_React$Component3) {
-    _inherits(Home, _React$Component3);
+var Home = function (_React$Component5) {
+    _inherits(Home, _React$Component5);
 
     function Home(props) {
         _classCallCheck(this, Home);
@@ -2453,8 +2665,8 @@ var Home = function (_React$Component3) {
     return Home;
 }(_react2.default.Component);
 
-var HomeMain = function (_React$Component4) {
-    _inherits(HomeMain, _React$Component4);
+var HomeMain = function (_React$Component6) {
+    _inherits(HomeMain, _React$Component6);
 
     function HomeMain(props) {
         _classCallCheck(this, HomeMain);
@@ -2524,8 +2736,8 @@ var HomeMain = function (_React$Component4) {
     return HomeMain;
 }(_react2.default.Component);
 
-var HomeInfo = function (_React$Component5) {
-    _inherits(HomeInfo, _React$Component5);
+var HomeInfo = function (_React$Component7) {
+    _inherits(HomeInfo, _React$Component7);
 
     function HomeInfo(props) {
         _classCallCheck(this, HomeInfo);
@@ -2612,8 +2824,8 @@ var HomeInfo = function (_React$Component5) {
     return HomeInfo;
 }(_react2.default.Component);
 
-var ProjectInfo = function (_React$Component6) {
-    _inherits(ProjectInfo, _React$Component6);
+var ProjectInfo = function (_React$Component8) {
+    _inherits(ProjectInfo, _React$Component8);
 
     function ProjectInfo(props) {
         _classCallCheck(this, ProjectInfo);
@@ -2714,30 +2926,30 @@ var ProjectInfo = function (_React$Component6) {
     return ProjectInfo;
 }(_react2.default.Component);
 
-var HoverButton = function (_React$Component7) {
-    _inherits(HoverButton, _React$Component7);
+var HoverButton = function (_React$Component9) {
+    _inherits(HoverButton, _React$Component9);
 
     function HoverButton(props) {
         _classCallCheck(this, HoverButton);
 
-        var _this7 = _possibleConstructorReturn(this, (HoverButton.__proto__ || Object.getPrototypeOf(HoverButton)).call(this, props));
+        var _this9 = _possibleConstructorReturn(this, (HoverButton.__proto__ || Object.getPrototypeOf(HoverButton)).call(this, props));
 
-        _this7.getInitialState = function () {
+        _this9.getInitialState = function () {
             return { hover: false };
         };
 
-        _this7.mouseOver = function () {
-            _this7.setState({ hover: true });
+        _this9.mouseOver = function () {
+            _this9.setState({ hover: true });
         };
 
-        _this7.mouseOut = function () {
-            _this7.setState({ hover: false });
+        _this9.mouseOut = function () {
+            _this9.setState({ hover: false });
         };
 
-        _this7.state = {
+        _this9.state = {
             hover: false
         };
-        return _this7;
+        return _this9;
     }
 
     _createClass(HoverButton, [{
