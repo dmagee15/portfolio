@@ -2,6 +2,7 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var User = require('../models/users');
 
 module.exports = function (app, passport) {
 
@@ -19,6 +20,37 @@ module.exports = function (app, passport) {
 		.get(function (req, res) {
 			res.sendFile(path + '/dev/index.html');
 		});
+		
+	app.post('/createnewuser', passport.authenticate('local-signup'), function(req,res){
+		console.log("authentication successful");
+		console.log(req.user);
+		res.end();
+	});
+	
+	app.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/mybooks', // redirect to the secure profile section
+        failureRedirect : '/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+    
+    app.post('/test', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body);
+    	res.send(req.body);
+    });
+    
+    app.post('/data', function(req,res){
+    	User.find({},function(err,data){
+    		if(err)throw err;
+    		console.log(data[0]);
+    	});
+    	res.end();
+    });
+    
+    app.post('/deletedata', function(req,res){
+    	User.find({}).remove().exec();
+    	res.end();
+    });
 
 	app.route('/login')
 		.get(function (req, res) {

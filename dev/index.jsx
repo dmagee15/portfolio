@@ -38,6 +38,28 @@ class SignUp extends React.Component{
         emailInput: ''
         };
     }
+    createAccount = () => {
+        var formData = new FormData();
+
+        formData.append("username", this.state.usernameInput);
+        formData.append("password", this.state.passwordInput);
+        
+        fetch('/createnewuser', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({"username":this.state.usernameInput,
+            "password":this.state.passwordInput
+        })
+        });
+        
+        {/*.then(function(response) {
+        return response.json();
+        }).then(function(json) {
+        console.log('parsed json', json);
+        }).catch(function(ex) {
+        console.log('parsing failed', ex);
+        });*/}
+    }
     handleUsernameChange = (event) => {
         this.setState({
             usernameInput: event.target.value
@@ -107,14 +129,12 @@ class SignUp extends React.Component{
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
                     <h3 style={pStyle}>Email</h3>
                     <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
-                    <button style={buttonStyle}>Create Account</button>
+                    <button onClick={this.createAccount} style={buttonStyle}>Create Account</button>
                 </div>
           </div>
           ); 
 					
    }
-      
-   
 }
 
 class Login extends React.Component{
@@ -255,7 +275,7 @@ class HomeMain extends React.Component{
     var divStyle = {
 					padding:0,
 					width: '100%',
-					height: 210,
+					minHeight: 210,
 					background:'url(/output/priscilla-du-preez-293218.jpg)',
 					backgroundPosition: 'center bottom',
 					backgroundSize: 'cover',
@@ -265,7 +285,7 @@ class HomeMain extends React.Component{
 	var divStyleOverlay = {
 	                padding:0,
 					width: '100%',
-					height: 210,
+					minHeight: 210,
 					background:'rgba(1,1,1,.5)',
 					overflow: 'hidden'
 	                };
@@ -329,7 +349,7 @@ class HomeInfo extends React.Component{
                 float: 'left'
             };
             return (
-               <div style={{textAlign:'center', height:300}}>
+               <div style={{textAlign:'center', minHeight:300}}>
                     <div style={infoBoxStyle}>
                         <h1 style={hStyle}>Browse Catalogue</h1>
                         <hr style={hrStyle}/>
@@ -362,7 +382,7 @@ class ProjectInfo extends React.Component{
             var divStyle = {
                 backgroundColor: 'gray',
                 width:'100%',
-                height:300,
+                minHeight:300,
                 textAlign:'center'
                 };
             var infoBoxStyle = {
