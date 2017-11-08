@@ -2,7 +2,7 @@ console.log("Script started");
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter as Router, Route, Switch, Link, IndexRoute } from 'react-router-dom';
+import { BrowserRouter as Router, withRouter, Route, Switch, Link, IndexRoute, Redirect} from 'react-router-dom';
 
 class App extends React.Component{
     constructor(props) {
@@ -35,30 +35,24 @@ class SignUp extends React.Component{
     this.state = {
         usernameInput: '',
         passwordInput: '',
-        emailInput: ''
+        emailInput: '',
+        redirect: false
         };
     }
-    createAccount = () => {
-        var formData = new FormData();
-
-        formData.append("username", this.state.usernameInput);
-        formData.append("password", this.state.passwordInput);
+    createAccount = (history) => {
         
         fetch('/createnewuser', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({"username":this.state.usernameInput,
-            "password":this.state.passwordInput
+            "password":this.state.passwordInput,
+            "email":this.state.emailInput
         })
+        }).then((response) => {
+            console.log('pushing to homepage');
+            history.push('/');
         });
-        
-        {/*.then(function(response) {
-        return response.json();
-        }).then(function(json) {
-        console.log('parsed json', json);
-        }).catch(function(ex) {
-        console.log('parsing failed', ex);
-        });*/}
+
     }
     handleUsernameChange = (event) => {
         this.setState({
@@ -117,9 +111,13 @@ class SignUp extends React.Component{
 		    fontFamily: 'Arial',
 		    padding: '10px 10px 10px 10px'
 		};
+		const { redirect } = this.state;
         
-
-            return (
+        if(redirect){
+            return <Redirect to='/'/>;
+        }
+        
+        return (
            <div style={divStyle}>
                 <h1 style={hStyle}>Sign Up</h1>
                 <div style={innerDivStyle}>
@@ -129,13 +127,25 @@ class SignUp extends React.Component{
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
                     <h3 style={pStyle}>Email</h3>
                     <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
-                    <button onClick={this.createAccount} style={buttonStyle}>Create Account</button>
+                    <Route render={({ history}) => (
+                        <button onClick={() => this.createAccount(history)} style={buttonStyle}>Create Account</button>
+                    )} />
                 </div>
           </div>
           ); 
-					
+        	
    }
 }
+const Button = () => (
+  <Route render={({ history}) => (
+    <button
+      type='button'
+      onClick={() => { history.push('/') }}
+    >
+      Click Me!
+    </button>
+  )} />
+)
 
 class Login extends React.Component{
     constructor(props) {

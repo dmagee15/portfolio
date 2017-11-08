@@ -2835,7 +2835,7 @@ var App = function (_React$Component) {
                 "div",
                 null,
                 _react2.default.createElement(
-                    _reactRouterDom.HashRouter,
+                    _reactRouterDom.BrowserRouter,
                     null,
                     _react2.default.createElement(
                         "div",
@@ -2861,27 +2861,19 @@ var SignUp = function (_React$Component2) {
 
         var _this2 = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
 
-        _this2.createAccount = function () {
-            var formData = new FormData();
-
-            formData.append("username", _this2.state.usernameInput);
-            formData.append("password", _this2.state.passwordInput);
+        _this2.createAccount = function (history) {
 
             fetch('/createnewuser', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ "username": _this2.state.usernameInput,
-                    "password": _this2.state.passwordInput
+                    "password": _this2.state.passwordInput,
+                    "email": _this2.state.emailInput
                 })
+            }).then(function (response) {
+                console.log('pushing to homepage');
+                history.push('/');
             });
-
-            {/*.then(function(response) {
-                return response.json();
-                }).then(function(json) {
-                console.log('parsed json', json);
-                }).catch(function(ex) {
-                console.log('parsing failed', ex);
-                });*/}
         };
 
         _this2.handleUsernameChange = function (event) {
@@ -2905,7 +2897,8 @@ var SignUp = function (_React$Component2) {
         _this2.state = {
             usernameInput: '',
             passwordInput: '',
-            emailInput: ''
+            emailInput: '',
+            redirect: false
         };
         return _this2;
     }
@@ -2913,6 +2906,8 @@ var SignUp = function (_React$Component2) {
     _createClass(SignUp, [{
         key: "render",
         value: function render() {
+            var _this3 = this;
+
             var divStyle = {
                 padding: 0,
                 width: '100%',
@@ -2954,6 +2949,12 @@ var SignUp = function (_React$Component2) {
                 fontFamily: 'Arial',
                 padding: '10px 10px 10px 10px'
             };
+            var redirect = this.state.redirect;
+
+
+            if (redirect) {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" });
+            }
 
             return _react2.default.createElement(
                 "div",
@@ -2984,12 +2985,18 @@ var SignUp = function (_React$Component2) {
                         "Email"
                     ),
                     _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.emailInput, onChange: this.handleEmailChange }),
-                    _react2.default.createElement(
-                        "button",
-                        { onClick: this.createAccount, style: buttonStyle },
-                        "Create Account"
-                    )
-                )
+                    _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
+                            var history = _ref.history;
+                            return _react2.default.createElement(
+                                "button",
+                                { onClick: function onClick() {
+                                        return _this3.createAccount(history);
+                                    }, style: buttonStyle },
+                                "Create Account"
+                            );
+                        } })
+                ),
+                _react2.default.createElement(Button, null)
             );
         }
     }]);
@@ -2997,31 +3004,47 @@ var SignUp = function (_React$Component2) {
     return SignUp;
 }(_react2.default.Component);
 
+var Button = function Button() {
+    return _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref2) {
+            var history = _ref2.history;
+            return _react2.default.createElement(
+                "button",
+                {
+                    type: "button",
+                    onClick: function onClick() {
+                        history.push('/');
+                    }
+                },
+                "Click Me!"
+            );
+        } });
+};
+
 var Login = function (_React$Component3) {
     _inherits(Login, _React$Component3);
 
     function Login(props) {
         _classCallCheck(this, Login);
 
-        var _this3 = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+        var _this4 = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
-        _this3.handleUsernameChange = function (event) {
-            _this3.setState({
+        _this4.handleUsernameChange = function (event) {
+            _this4.setState({
                 usernameInput: event.target.value
             });
         };
 
-        _this3.handlePasswordChange = function (event) {
-            _this3.setState({
+        _this4.handlePasswordChange = function (event) {
+            _this4.setState({
                 passwordInput: event.target.value
             });
         };
 
-        _this3.state = {
+        _this4.state = {
             usernameInput: '',
             passwordInput: ''
         };
-        return _this3;
+        return _this4;
     }
 
     _createClass(Login, [{
@@ -3430,24 +3453,24 @@ var HoverButton = function (_React$Component9) {
     function HoverButton(props) {
         _classCallCheck(this, HoverButton);
 
-        var _this9 = _possibleConstructorReturn(this, (HoverButton.__proto__ || Object.getPrototypeOf(HoverButton)).call(this, props));
+        var _this10 = _possibleConstructorReturn(this, (HoverButton.__proto__ || Object.getPrototypeOf(HoverButton)).call(this, props));
 
-        _this9.getInitialState = function () {
+        _this10.getInitialState = function () {
             return { hover: false };
         };
 
-        _this9.mouseOver = function () {
-            _this9.setState({ hover: true });
+        _this10.mouseOver = function () {
+            _this10.setState({ hover: true });
         };
 
-        _this9.mouseOut = function () {
-            _this9.setState({ hover: false });
+        _this10.mouseOut = function () {
+            _this10.setState({ hover: false });
         };
 
-        _this9.state = {
+        _this10.state = {
             hover: false
         };
-        return _this9;
+        return _this10;
     }
 
     _createClass(HoverButton, [{
