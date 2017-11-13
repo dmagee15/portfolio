@@ -26,8 +26,17 @@ module.exports = function (app, passport) {
 		console.log(req.body.email);
 		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email},{new:true}, function(err,data){
 			if(err)throw err;
-			console.log(data);
-			res.redirect('/');
+			var userData = {
+				email: data.local.email,
+				location: data.local.location,
+				about: data.local.about,
+				username: data.local.username,
+				tradeRequestsForYou: data.local.tradeRequestsForYou,
+				tradeRequests: data.local.tradeRequests,
+				myBooks: data.local.myBooks
+			};
+			console.log("USER DATA: "+JSON.stringify(req.user));
+			res.send(userData);
 		});
 	});
 	
@@ -63,8 +72,10 @@ module.exports = function (app, passport) {
 
 	app.route('/logout')
 		.get(function (req, res) {
+			console.log("Before logout: "+JSON.stringify(req.user));
 			req.logout();
-			res.redirect('/login');
+			console.log("After logout: "+JSON.stringify(req.user));
+			res.end();
 		});
 
 	app.route('/profile')

@@ -3,8 +3,121 @@ console.log("Script started");
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, withRouter, Route, Switch, Link, IndexRoute, Redirect} from 'react-router-dom';
+import ReactRedux, {connect, Provider} from 'react-redux';
+import Redux, {createStore, bindActionCreators} from 'redux';
+import Home from "./components/Home.js";
+
+const ADD = 'ADD';
+
+const initialState = {
+    authenticated: false,
+	username: '',
+	location: '',
+	about: '',
+	tradeRequestsForYou: [],
+	tradeRequests: [],
+	myBooks: []
+};
+
+const add = () => {
+	return {
+    type: 'ADD'
+  };
+};
+
+const loginUser = (user) => {
+	return {
+		type: 'LOGIN',
+		user: user
+	};
+};
+
+const logoutUser = () => {
+	return {
+		type: 'LOGOUT'
+	};
+};
+
+const messageReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD':
+      return Object.assign({}, state, {
+        authenticated: !state.authenticated
+    });
+    case 'LOGIN':
+        return Object.assign({}, state, {
+        authenticated: true,
+		username: action.user.username,
+	    location: action.user.location,
+	    about: action.user.about,
+	    tradeRequestsForYou: action.user.tradeRequestsForYou,
+	    tradeRequests: action.user.tradeRequests,
+	    myBooks: action.user.myBooks
+    });
+    case 'LOGOUT':
+        return Object.assign({}, state, {
+        authenticated: false,
+		username: '',
+	    location: '',
+	    about: '',
+	    tradeRequestsForYou: [],
+	    tradeRequests: [],
+	    myBooks: []
+    });
+    default:
+      return state;
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (user) => {
+      dispatch(loginUser(user))
+    },
+    logoutUser: () => {
+      dispatch(logoutUser())
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state
+  }
+}
+
+const store = createStore(messageReducer);
+
+// React:
 
 class App extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+   render(){
+            console.log(this.props);
+            return (
+           <div>
+            <Router>
+            <div>
+                <Header store={this.props}/>
+                <Route exact path='/' component={Home}/>
+                <Route exact path='/signup' render={(props) => (
+                    <SignUp store={this.props}/>
+                )} />
+                <Route exact path='/login' component={Login} />
+            </div>
+            </Router>
+          </div>
+          ); 
+					
+   }
+      
+   
+}
+
+class AppTest extends React.Component{
     constructor(props) {
     super(props);
     }
@@ -15,10 +128,7 @@ class App extends React.Component{
            <div>
             <Router>
             <div>
-                <Header/>
-                <Route exact path='/' component={Home}/>
-                <Route exact path='/signup' component={SignUp} />
-                <Route exact path='/login' component={Login} />
+                <Route exact path='/' component={Home2}/>
             </div>
             </Router>
           </div>
@@ -27,6 +137,182 @@ class App extends React.Component{
    }
       
    
+}
+
+class Home2 extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    increase = () => {
+        var user = {
+    authenticated: true,
+	username: 'Patrick',
+	location: 'Houston',
+	about: 'Nothing to put here.',
+	tradeRequestsForYou: [],
+	tradeRequests: [],
+	myBooks: []
+};
+        console.log("GET STATE: "+store.getState().username);
+        console.log("GET STATE: "+store.getState().location);
+        console.log("GET STATE: "+store.getState().authenticated);
+        console.log("mapstatetoprops: "+this.props.number);
+        store.dispatch(loginUser(user));
+        console.log("GET STATE: "+store.getState().username);
+        console.log("GET STATE: "+store.getState().location);
+        console.log("GET STATE: "+store.getState().authenticated);
+
+    }
+   render(){
+
+            return (
+               <div>
+                    <button onClick={this.increase}>Submit</button>
+               </div>
+          ); 
+					
+   }
+      
+   
+}
+
+class Header extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+   render(){
+       var divStyle = {
+					padding:0,
+					width: '100%',
+					height: 50,
+					backgroundColor:'#F7F7F7'
+					};
+		var loggedStyle = {
+		    float: 'right',
+		    color: 'slateblue',
+		    display: 'inline-block',
+		    margin: '12px 40px 0px 0px',
+		    fontSize: 15,
+		    fontFamily: 'Arial'
+		};
+		var spanStyle = {
+		    fontSize: 20,
+		    color: 'darkslateblue',
+		    fontFamily: 'Bookman',
+		    fontWeight: 900
+		};
+        if(this.props.store.user.authenticated==true){
+            return (
+           <div id="header" style={divStyle}>
+            <HoverButton float='left' text='Home' address="/"/>
+            <LogoutButton float='right' store={this.props.store}/>
+            <HoverButton float='right' text='My Profile' address="login"/>
+            <HoverButton float='right' text='All Books' address="/signup"/>
+            <p style={loggedStyle}>Welcome, <span style={spanStyle}>{store.getState().username}</span></p>
+          </div>
+          ); 
+        }
+        else
+        {
+            return (
+           <div id="header" style={divStyle}>
+            <HoverButton float='left' text='Home' address="/"/>
+            <HoverButton float='right' text='Sign Up' address="/signup"/>
+            <HoverButton float='right' text='Login' address="login"/>
+          </div>
+          ); 
+        }
+					
+   }
+      
+   
+}
+
+class HoverButton extends React.Component{
+    constructor(props) {
+    super(props);
+    this.state = {
+        hover: false
+        };
+    }
+    getInitialState = () => {
+        return {hover: false};
+    }
+    
+    mouseOver = () => {
+        this.setState({hover: true});
+    }
+    
+    mouseOut = () => {
+        this.setState({hover: false});
+    }
+    
+    
+    
+    render() {
+        
+        var hoverButtonStyle = {
+		    height: '100%',
+		    color: 'black',
+		    float: this.props.float,
+		    background: this.state.hover?'lightblue':'none',
+            border:'none',
+            margin: '0px 20px 0px 20px'
+		};
+    
+        return(
+            <Link to={this.props.address}><button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.text}</button></Link>
+        );
+    }
+}
+
+class LogoutButton extends React.Component{
+    constructor(props) {
+    super(props);
+    this.state = {
+        hover: false
+        };
+    }
+    getInitialState = () => {
+        return {hover: false};
+    }
+    
+    mouseOver = () => {
+        this.setState({hover: true});
+    }
+    
+    mouseOut = () => {
+        this.setState({hover: false});
+    }
+    logout = (history) => {
+        fetch('/logout', {
+        method: 'GET',
+        credentials: 'include'
+        }).then(() => {
+            this.props.store.logoutUser();
+            history.push('/');
+        })
+    }
+    
+    
+    render() {
+        
+        var hoverButtonStyle = {
+		    height: '100%',
+		    color: 'black',
+		    float: this.props.float,
+		    background: this.state.hover?'lightblue':'none',
+            border:'none',
+            margin: '0px 20px 0px 20px'
+		};
+    
+        return(
+            <Route render={({ history}) => (
+                <button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={() => this.logout(history)}>Logout</button>
+            )} />
+        );
+    }
 }
 
 class SignUp extends React.Component{
@@ -44,12 +330,20 @@ class SignUp extends React.Component{
         fetch('/createnewuser', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
+        credentials: 'include',
         body: JSON.stringify({"username":this.state.usernameInput,
             "password":this.state.passwordInput,
             "email":this.state.emailInput
         })
-        }).then((response) => {
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
             console.log('pushing to homepage');
+            console.log(j);
+            console.log("login status: "+store.getState().authenticated);
+            this.props.store.loginUser(j);
+            console.log("login status: "+store.getState().authenticated);
+            console.log(this.props);
             history.push('/');
         });
 
@@ -136,16 +430,6 @@ class SignUp extends React.Component{
         	
    }
 }
-const Button = () => (
-  <Route render={({ history}) => (
-    <button
-      type='button'
-      onClick={() => { history.push('/') }}
-    >
-      Click Me!
-    </button>
-  )} />
-)
 
 class Login extends React.Component{
     constructor(props) {
@@ -228,257 +512,29 @@ class Login extends React.Component{
    
 }
 
-class Header extends React.Component{
-    constructor(props) {
-    super(props);
-    }
-    
-   render(){
-       var divStyle = {
-					padding:0,
-					width: '100%',
-					height: 50,
-					backgroundColor:'#F7F7F7'
-					};
+const Container = connect(mapStateToProps, mapDispatchToProps)(App);
 
-        
-
-            return (
-           <div id="header" style={divStyle}>
-            <HoverButton float='left' text='Home' address="/"/>
-            <HoverButton float='right' text='Sign Up' address="/signup"/>
-            <HoverButton float='right' text='Login' address="login"/>
-          </div>
-          ); 
-					
-   }
-      
-   
-}
-
-class Home extends React.Component{
-    constructor(props) {
-    super(props);
-    }
-    
-   render(){
-
-            return (
-               <div>
-                    <HomeMain/>
-                    <HomeInfo/>
-                    <ProjectInfo/>
-               </div>
-          ); 
-					
-   }
-      
-   
-}
-
-class HomeMain extends React.Component{
-    constructor(props) {
-    super(props);
-    }
-    
-   render(){
-    var divStyle = {
-					padding:0,
-					width: '100%',
-					minHeight: 210,
-					background:'url(/output/priscilla-du-preez-293218.jpg)',
-					backgroundPosition: 'center bottom',
-					backgroundSize: 'cover',
-					textAlign: 'center',
-					overflow: 'hidden'
-					};
-	var divStyleOverlay = {
-	                padding:0,
-					width: '100%',
-					minHeight: 210,
-					background:'rgba(1,1,1,.5)',
-					overflow: 'hidden'
-	                };
-	var titleStyle = {
-					color: 'white',
-					fontSize: 80,
-					paddingTop: 20,
-					margin: 0
-					};
-	var hrStyle = {
-	    width: 700,
-	    borderColor: 'white'
-	};
-	var subtitleStyle = {
-					color: 'white',
-					fontSize: 20,
-					paddingTop: 10,
-					margin: 0,
-					fontFamily: 'Lucida Console'
-					};
-            return (
-               <div style={divStyle}>
-               <div style={divStyleOverlay}>
-                    <h1 style={titleStyle}>Book Trading Club</h1>
-                    <hr style={hrStyle}/>
-                    <p style={subtitleStyle}>Trade your used books with other readers</p>
-                </div>
-               </div>
-          ); 
-					
-   }
-      
-   
-}
-
-class HomeInfo extends React.Component{
-    constructor(props) {
-    super(props);
-    }
-    
-   render(){
-            
-            var infoBoxStyle = {
-                width:300,
-                display:'inline-block',
-                margin: '50px 50px 0px 50px',
-                verticalAlign: 'top',
-                textAlign: 'left'
-            };
-            var pStyle = {
-                fontFamily: 'Arial',
-                color: '#797979'
-            };
-            var hStyle = {
-                color: '#5C0700',
-                marginBottom:0
-            };
-            var hrStyle = {
-                width: 280,
-                color: 'gray',
-                float: 'left'
-            };
-            return (
-               <div style={{textAlign:'center', minHeight:300}}>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Browse Catalogue</h1>
-                        <hr style={hrStyle}/>
-                        <p style={pStyle}>Look through the catalogue to see which books our users own and see which ones you would be interested in reading.</p>
-                    </div>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Exchange Books</h1>
-                        <hr style={hrStyle}/>
-                        <p style={pStyle}>Post books that you own that you would be interested in exchanging with other reader's books.</p>
-                    </div>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Personal Homepage</h1>
-                        <hr style={hrStyle}/>
-                        <p style={pStyle}>Maintain your public profile, manage your trades, and update your personal catalogue.</p>
-                    </div>
-               </div>
-          ); 
-					
-   }
-      
-   
-}
-
-class ProjectInfo extends React.Component{
-    constructor(props) {
-    super(props);
-    }
-    
-   render(){
-            var divStyle = {
-                backgroundColor: 'gray',
-                width:'100%',
-                minHeight:300,
-                textAlign:'center'
-                };
-            var infoBoxStyle = {
-                width:300,
-                display:'inline-block',
-                margin: '50px 50px 0px 50px',
-                verticalAlign: 'top',
-                textAlign: 'left',
-                padding: '0px 0px 20px 30px',
-                borderLeft:'2px solid black'
-            };
-            var pStyle = {
-                fontFamily: 'Arial',
-                color: '#E0E0E0'
-            };
-            var hStyle = {
-                color: 'white',
-                marginBottom:0
-            };
-            return (
-               <div style={divStyle}>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Background</h1>
-                        <p style={pStyle}>This book trading club app is a</p>
-                        <p style={pStyle}>FreeCodeCamp full-stack project</p>
-                    </div>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Technologies</h1>
-                        <p style={pStyle}>Front-end: React, React Router</p>
-                        <p style={pStyle}>Back-end: Express.js, Mongoose</p>
-                    </div>
-                    <div style={infoBoxStyle}>
-                        <h1 style={hStyle}>Author</h1>
-                        <p style={pStyle}>David Magee is a web developer in</p>
-                        <p style={pStyle}>Houston, TX</p>
-                    </div>
-               </div>
-          ); 
-					
-   }
-      
-   
-}
-
-class HoverButton extends React.Component{
-    constructor(props) {
-    super(props);
-    this.state = {
-        hover: false
-        };
-    }
-    getInitialState = () => {
-        return {hover: false};
-    }
-    
-    mouseOver = () => {
-        this.setState({hover: true});
-    }
-    
-    mouseOut = () => {
-        this.setState({hover: false});
-    }
-    
-    
-    
-    render() {
-        
-        var hoverButtonStyle = {
-		    height: '100%',
-		    color: 'black',
-		    float: this.props.float,
-		    background: this.state.hover?'lightblue':'none',
-            border:'none',
-            margin: '0px 20px 0px 20px'
-		};
-    
-        return(
-            <Link to={this.props.address}><button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.text}</button></Link>
-        );
-    }
-}
+const Button = () => (
+  <Route render={({ history}) => (
+    <button
+      type='button'
+      onClick={() => { history.push('/') }}
+    >
+      Click Me!
+    </button>
+  )} />
+)
 
 
+
+const AppWrapper = ({ store }) => (
+  <Provider store={store}>
+      <Container />
+  </Provider>
+);
 
 ReactDOM.render(
-        <App/>,
+        <AppWrapper store={store}/>,
     document.querySelector("#container")
     );
     
