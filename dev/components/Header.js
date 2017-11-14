@@ -13,8 +13,9 @@ class Header extends React.Component{
        var divStyle = {
 					padding:0,
 					width: '100%',
-					height: 50,
-					backgroundColor:'#F7F7F7'
+					minHeight: 50,
+					backgroundColor:'#F7F7F7',
+					overflow: 'hidden'
 					};
 		var loggedStyle = {
 		    float: 'right',
@@ -30,14 +31,14 @@ class Header extends React.Component{
 		    fontFamily: 'Bookman',
 		    fontWeight: 900
 		};
-        if(store.getState().authenticated==true){
+        if(this.props.store.user.authenticated==true){
             return (
            <div id="header" style={divStyle}>
             <HoverButton float='left' text='Home' address="/"/>
-            <LogoutButton float='right'/>
-            <HoverButton float='right' text='My Profile' address="login"/>
+            <LogoutButton float='right' store={this.props.store}/>
+            <HoverButton float='right' text='My Profile' address="/profile"/>
             <HoverButton float='right' text='All Books' address="/signup"/>
-            <p style={loggedStyle}>Welcome, <span style={spanStyle}>{store.getState().username}</span></p>
+            <p style={loggedStyle}>Welcome, <span style={spanStyle}>{this.props.store.user.username}</span></p>
           </div>
           ); 
         }
@@ -81,7 +82,7 @@ class HoverButton extends React.Component{
     render() {
         
         var hoverButtonStyle = {
-		    height: '100%',
+		    height: 50,
 		    color: 'black',
 		    float: this.props.float,
 		    background: this.state.hover?'lightblue':'none',
@@ -113,15 +114,21 @@ class LogoutButton extends React.Component{
     mouseOut = () => {
         this.setState({hover: false});
     }
-    logout = () => {
-        store.dispatch(logoutUser());
+    logout = (history) => {
+        fetch('/logout', {
+        method: 'GET',
+        credentials: 'include'
+        }).then(() => {
+            this.props.store.logoutUser();
+            history.push('/');
+        })
     }
     
     
     render() {
         
         var hoverButtonStyle = {
-		    height: '100%',
+		    height: 50,
 		    color: 'black',
 		    float: this.props.float,
 		    background: this.state.hover?'lightblue':'none',
@@ -130,7 +137,9 @@ class LogoutButton extends React.Component{
 		};
     
         return(
-            <button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={this.logout}>Logout</button>
+            <Route render={({ history}) => (
+                <button style={hoverButtonStyle} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} onClick={() => this.logout(history)}>Logout</button>
+            )} />
         );
     }
 }

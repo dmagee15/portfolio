@@ -4,7 +4,7 @@ var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var User = require('../models/users');
 
-module.exports = function (app, passport) {
+module.exports = function (app, passport, googleBooks) {
 
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
@@ -52,6 +52,12 @@ module.exports = function (app, passport) {
     	res.send(req.body);
     });
     
+    app.get('/findbook', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body);
+    	res.send(req.body);
+    });
+    
     app.post('/data', function(req,res){
     	User.find({},function(err,data){
     		if(err)throw err;
@@ -76,6 +82,30 @@ module.exports = function (app, passport) {
 			req.logout();
 			console.log("After logout: "+JSON.stringify(req.user));
 			res.end();
+		});
+		
+	app.route('/logstatus')
+		.get(function (req, res){
+			console.log("LOG STATUS: "+req.user);
+			if(Boolean(req.user)==false){
+				res.send('false');
+			}
+			else{
+				User.find({'local.username':req.user.local.username}, function(err, data){
+					if(err) throw err;
+					var userData = {
+					email: req.user.local.email,
+					location: req.user.local.location,
+					about: req.user.local.about,
+					username: req.user.local.username,
+					tradeRequestsForYou: req.user.local.tradeRequestsForYou,
+					tradeRequests: req.user.local.tradeRequests,
+					myBooks: req.user.local.myBooks
+					};
+					console.log("FOUND DATA FOR LOGIN: "+JSON.stringify(userData));
+					res.send(userData);
+				});
+			}
 		});
 
 	app.route('/profile')

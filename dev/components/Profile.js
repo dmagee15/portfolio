@@ -4,7 +4,7 @@ import { BrowserRouter as Router, withRouter, Route, Switch, Link, IndexRoute, R
 import ReactRedux, {connect, Provider} from 'react-redux';
 import Redux, {createStore, bindActionCreators} from 'redux';
 
-class SignUp extends React.Component{
+class Profile extends React.Component{
     constructor(props) {
     super(props);
     this.state = {
@@ -13,10 +13,10 @@ class SignUp extends React.Component{
         emailInput: '',
         };
     }
-    createAccount = (history) => {
+    findBook = () => {
         
-        fetch('/createnewuser', {
-        method: 'POST',
+        fetch('/findbook', {
+        method: 'GET',
         headers: {"Content-Type": "application/json"},
         credentials: 'include',
         body: JSON.stringify({"username":this.state.usernameInput,
@@ -30,7 +30,6 @@ class SignUp extends React.Component{
             console.log(j);
             this.props.store.loginUser(j);
             console.log(this.props);
-            history.push('/');
         });
 
     }
@@ -94,7 +93,7 @@ class SignUp extends React.Component{
         
         return (
            <div style={divStyle}>
-                <h1 style={hStyle}>Sign Up</h1>
+                <h1 style={hStyle}>Profile</h1>
                 <div style={innerDivStyle}>
                     <h3 style={pStyle}>Username</h3>
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
@@ -103,7 +102,7 @@ class SignUp extends React.Component{
                     <h3 style={pStyle}>Email</h3>
                     <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
                     <Route render={({ history}) => (
-                        <button onClick={() => this.createAccount(history)} style={buttonStyle}>Create Account</button>
+                        <button onClick={() => this.findBook()} style={buttonStyle}>Find Book</button>
                     )} />
                 </div>
           </div>
@@ -112,4 +111,4 @@ class SignUp extends React.Component{
    }
 }
 
-export default SignUp
+export default Profile
