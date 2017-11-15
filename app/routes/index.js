@@ -52,10 +52,22 @@ module.exports = function (app, passport, googleBooks) {
     	res.send(req.body);
     });
     
-    app.get('/findbook', function(req,res){
+    app.post('/findbook', function(req,res){
     	console.log("Fetch request successful");
-    	console.log(req.body);
-    	res.send(req.body);
+    	console.log(req.body.searchInput);
+    	
+    	googleBooks.search(req.body.searchInput, function(error, results) {
+		if ( ! error ) {
+        	var resultArray = Object.assign({},results[0]);
+        	resultArray.thumbnail = resultArray.thumbnail.replace(/=1&zoom=1&edge=curl&source=gbs_api/,'').replace(/http/,'https');
+        	console.log(resultArray);
+        	res.send(resultArray);
+    	} else {
+        		console.log(error);
+        		res.end();
+    		}
+		});
+    	
     });
     
     app.post('/data', function(req,res){

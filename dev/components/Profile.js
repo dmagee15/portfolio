@@ -8,7 +8,8 @@ class Profile extends React.Component{
     constructor(props) {
     super(props);
     this.state = {
-        usernameInput: '',
+        searchInput: '',
+        myBooksArray: [],
         passwordInput: '',
         emailInput: '',
         };
@@ -16,26 +17,25 @@ class Profile extends React.Component{
     findBook = () => {
         
         fetch('/findbook', {
-        method: 'GET',
+        method: 'POST',
         headers: {"Content-Type": "application/json"},
         credentials: 'include',
-        body: JSON.stringify({"username":this.state.usernameInput,
-            "password":this.state.passwordInput,
-            "email":this.state.emailInput
+        body: JSON.stringify({"searchInput":this.state.searchInput,
         })
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log('pushing to homepage');
             console.log(j);
-            this.props.store.loginUser(j);
-            console.log(this.props);
+            var myBooksArray = [...this.state.myBooksArray, {title: j.title, thumbnail:j.thumbnail}];
+            this.setState({myBooksArray});
+
+
         });
 
     }
-    handleUsernameChange = (event) => {
+    handleSearchChange = (event) => {
         this.setState({
-            usernameInput: event.target.value
+            searchInput: event.target.value
         });
     }
     handlePasswordChange = (event) => {
@@ -55,7 +55,7 @@ class Profile extends React.Component{
 					textAlign:'center'
 					};
 		var innerDivStyle = {
-					width: '50%',
+					width: '75%',
 					textAlign:'left',
 					margin: 'auto',
 					padding: '0px 0px 30px 40px',
@@ -90,25 +90,89 @@ class Profile extends React.Component{
 		    fontFamily: 'Arial',
 		    padding: '10px 10px 10px 10px'
 		};
-        
+		var searchInputStyle = {
+		    padding:0,
+			width: 250,
+			height:25,
+			display: 'inline-block',
+			margin: "15px 0px 0px 0px"
+		};
+		var searchButtonStyle = {
+		    background: 'lightblue',
+		    height: 25,
+		    border:'none',
+		    boxShadow:'none',
+		    fontSize: 18,
+		    fontFamily: 'Arial',
+		    borderRadius: 2,
+		    display: 'inline-block',
+		    margin: "15px 0px 0px 10px"
+		}
+		var myBooksStyle = {
+		    width: '100%',
+		    minHeight: 200,
+		    border: '1px solid black',
+		    margin: '20px 0 20px 0'
+		};
+		var booksDisplay = this.state.myBooksArray.map((book, index) => 
+		   <BookAdded key={index} image={book.thumbnail} title={book.title}/>
+		);
+		
+
         return (
            <div style={divStyle}>
                 <h1 style={hStyle}>Profile</h1>
                 <div style={innerDivStyle}>
-                    <h3 style={pStyle}>Username</h3>
-                    <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
-                    <h3 style={pStyle}>Password</h3>
-                    <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
-                    <h3 style={pStyle}>Email</h3>
-                    <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
-                    <Route render={({ history}) => (
-                        <button onClick={() => this.findBook()} style={buttonStyle}>Find Book</button>
-                    )} />
+                    <h3 style={pStyle}>My Books</h3>
+                    <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
+                    <button style={searchButtonStyle} onClick={this.findBook}>Add Book</button>
+                    <div style={myBooksStyle}>
+                        {booksDisplay}
+                    </div>
+                    
                 </div>
           </div>
           ); 
         	
    }
+}
+
+class BookAdded extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+    render(){
+
+        var thumbnailStyle = {
+            height: 150,
+            background: "url('"+this.props.image+"')",
+            backgroundSize: 'cover',
+            display: 'inline-block'
+        }
+        var titleStyle = {
+            display: 'inline-block',
+            width:100
+        }
+        var divStyle = {
+            display: 'inline-block',
+            width: 100,
+            margin: "10px 25px 10px 25px",
+            verticalAlign: 'top'
+        }
+        var imgStyle = {
+            height: 150
+        }
+        
+        return (
+            <div style={divStyle}>
+                <div style={thumbnailStyle}>
+                    <img style={imgStyle} src={this.props.image}/>
+                </div>
+                <p style={titleStyle}>{this.props.title}</p>
+            </div>
+            );
+    }
 }
 
 export default Profile

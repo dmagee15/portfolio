@@ -29262,6 +29262,8 @@ var _redux2 = _interopRequireDefault(_redux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -29279,26 +29281,23 @@ var Profile = function (_React$Component) {
         _this.findBook = function () {
 
             fetch('/findbook', {
-                method: 'GET',
+                method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 credentials: 'include',
-                body: JSON.stringify({ "username": _this.state.usernameInput,
-                    "password": _this.state.passwordInput,
-                    "email": _this.state.emailInput
+                body: JSON.stringify({ "searchInput": _this.state.searchInput
                 })
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log('pushing to homepage');
                 console.log(j);
-                _this.props.store.loginUser(j);
-                console.log(_this.props);
+                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail }]);
+                _this.setState({ myBooksArray: myBooksArray });
             });
         };
 
-        _this.handleUsernameChange = function (event) {
+        _this.handleSearchChange = function (event) {
             _this.setState({
-                usernameInput: event.target.value
+                searchInput: event.target.value
             });
         };
 
@@ -29315,7 +29314,8 @@ var Profile = function (_React$Component) {
         };
 
         _this.state = {
-            usernameInput: '',
+            searchInput: '',
+            myBooksArray: [],
             passwordInput: '',
             emailInput: ''
         };
@@ -29325,15 +29325,13 @@ var Profile = function (_React$Component) {
     _createClass(Profile, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
-
             var divStyle = {
                 padding: 0,
                 width: '100%',
                 textAlign: 'center'
             };
             var innerDivStyle = {
-                width: '50%',
+                width: '75%',
                 textAlign: 'left',
                 margin: 'auto',
                 padding: '0px 0px 30px 40px',
@@ -29368,6 +29366,33 @@ var Profile = function (_React$Component) {
                 fontFamily: 'Arial',
                 padding: '10px 10px 10px 10px'
             };
+            var searchInputStyle = {
+                padding: 0,
+                width: 250,
+                height: 25,
+                display: 'inline-block',
+                margin: "15px 0px 0px 0px"
+            };
+            var searchButtonStyle = {
+                background: 'lightblue',
+                height: 25,
+                border: 'none',
+                boxShadow: 'none',
+                fontSize: 18,
+                fontFamily: 'Arial',
+                borderRadius: 2,
+                display: 'inline-block',
+                margin: "15px 0px 0px 10px"
+            };
+            var myBooksStyle = {
+                width: '100%',
+                minHeight: 200,
+                border: '1px solid black',
+                margin: '20px 0 20px 0'
+            };
+            var booksDisplay = this.state.myBooksArray.map(function (book, index) {
+                return _react2.default.createElement(BookAdded, { key: index, image: book.thumbnail, title: book.title });
+            });
 
             return _react2.default.createElement(
                 "div",
@@ -29383,37 +29408,78 @@ var Profile = function (_React$Component) {
                     _react2.default.createElement(
                         "h3",
                         { style: pStyle },
-                        "Username"
+                        "My Books"
                     ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.usernameInput, onChange: this.handleUsernameChange }),
+                    _react2.default.createElement("input", { style: searchInputStyle, type: "text", value: this.state.searchInput, onChange: this.handleSearchChange }),
                     _react2.default.createElement(
-                        "h3",
-                        { style: pStyle },
-                        "Password"
+                        "button",
+                        { style: searchButtonStyle, onClick: this.findBook },
+                        "Add Book"
                     ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
                     _react2.default.createElement(
-                        "h3",
-                        { style: pStyle },
-                        "Email"
-                    ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.emailInput, onChange: this.handleEmailChange }),
-                    _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
-                            var history = _ref.history;
-                            return _react2.default.createElement(
-                                "button",
-                                { onClick: function onClick() {
-                                        return _this2.findBook();
-                                    }, style: buttonStyle },
-                                "Find Book"
-                            );
-                        } })
+                        "div",
+                        { style: myBooksStyle },
+                        booksDisplay
+                    )
                 )
             );
         }
     }]);
 
     return Profile;
+}(_react2.default.Component);
+
+var BookAdded = function (_React$Component2) {
+    _inherits(BookAdded, _React$Component2);
+
+    function BookAdded(props) {
+        _classCallCheck(this, BookAdded);
+
+        return _possibleConstructorReturn(this, (BookAdded.__proto__ || Object.getPrototypeOf(BookAdded)).call(this, props));
+    }
+
+    _createClass(BookAdded, [{
+        key: "render",
+        value: function render() {
+
+            var thumbnailStyle = {
+                height: 150,
+                background: "url('" + this.props.image + "')",
+                backgroundSize: 'cover',
+                display: 'inline-block'
+            };
+            var titleStyle = {
+                display: 'inline-block',
+                width: 100
+            };
+            var divStyle = {
+                display: 'inline-block',
+                width: 100,
+                margin: "10px 25px 10px 25px",
+                verticalAlign: 'top'
+            };
+            var imgStyle = {
+                height: 150
+            };
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "div",
+                    { style: thumbnailStyle },
+                    _react2.default.createElement("img", { style: imgStyle, src: this.props.image })
+                ),
+                _react2.default.createElement(
+                    "p",
+                    { style: titleStyle },
+                    this.props.title
+                )
+            );
+        }
+    }]);
+
+    return BookAdded;
 }(_react2.default.Component);
 
 exports.default = Profile;
