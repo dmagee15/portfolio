@@ -29262,6 +29262,8 @@ var _redux2 = _interopRequireDefault(_redux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29290,7 +29292,7 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail }]);
+                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail, author: j.authors[0], publishedDate: j.publishedDate }]);
                 _this.setState({ myBooksArray: myBooksArray });
             });
         };
@@ -29391,7 +29393,7 @@ var Profile = function (_React$Component) {
                 margin: '20px 0 20px 0'
             };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(BookAdded, { key: index, image: book.thumbnail, title: book.title });
+                return _react2.default.createElement(BookAdded, { key: index, book: book });
             });
 
             return _react2.default.createElement(
@@ -29441,26 +29443,77 @@ var BookAdded = function (_React$Component2) {
     _createClass(BookAdded, [{
         key: "render",
         value: function render() {
+            var _removeButtonStyle, _infoButtonStyle;
 
             var thumbnailStyle = {
-                height: 150,
-                background: "url('" + this.props.image + "')",
-                backgroundSize: 'cover',
-                display: 'inline-block'
+                height: 230,
+                width: '100%',
+                display: 'inline-block',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0
             };
             var titleStyle = {
                 display: 'inline-block',
-                width: 100
+                width: '100%',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Arial'
             };
             var divStyle = {
                 display: 'inline-block',
-                width: 100,
+                width: 220,
                 margin: "10px 25px 10px 25px",
-                verticalAlign: 'top'
+                padding: 0,
+                verticalAlign: 'top',
+                boxShadow: '3px 3px 2px 2px #888888',
+                overflow: 'hidden',
+                overflowX: 'hidden'
             };
             var imgStyle = {
-                height: 150
+                width: 220,
+                height: 230,
+                background: "url('" + this.props.book.thumbnail + "')",
+                backgroundSize: 'cover',
+                display: 'inline-block'
             };
+            var divContentStyle = {
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var subtextStyle = {
+                color: '#D8D8D8',
+                margin: 0,
+                padding: 0
+            };
+            var buttonDiv = {
+                height: 80,
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var removeButtonStyle = (_removeButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'black',
+                color: 'white',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_removeButtonStyle, "margin", '15px 0 0 10px'), _defineProperty(_removeButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_removeButtonStyle, "fontSize", 18), _defineProperty(_removeButtonStyle, "fontWeight", 900), _removeButtonStyle);
+            var infoButtonStyle = (_infoButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'lightblue',
+                color: 'black',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_infoButtonStyle, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle, "fontSize", 18), _defineProperty(_infoButtonStyle, "fontWeight", 900), _infoButtonStyle);
 
             return _react2.default.createElement(
                 "div",
@@ -29468,12 +29521,42 @@ var BookAdded = function (_React$Component2) {
                 _react2.default.createElement(
                     "div",
                     { style: thumbnailStyle },
-                    _react2.default.createElement("img", { style: imgStyle, src: this.props.image })
+                    _react2.default.createElement("div", { style: imgStyle })
                 ),
                 _react2.default.createElement(
-                    "p",
-                    { style: titleStyle },
-                    this.props.title
+                    "div",
+                    { style: divContentStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: titleStyle },
+                        this.props.book.title
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Author: ",
+                        this.props.book.author
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Year: ",
+                        this.props.book.publishedDate
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: removeButtonStyle },
+                        "Remove"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { style: infoButtonStyle },
+                        "Book Info"
+                    )
                 )
             );
         }
