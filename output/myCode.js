@@ -3973,73 +3973,73 @@ console.log("Script started");
 var ADD = 'ADD';
 
 var initialState = {
-  authenticated: false,
-  username: '',
-  location: '',
-  about: '',
-  tradeRequestsForYou: [],
-  tradeRequests: [],
-  myBooks: []
+    authenticated: false,
+    username: '',
+    location: '',
+    about: '',
+    tradeRequestsForYou: [],
+    tradeRequests: [],
+    myBooks: []
 };
 
 var _loginUser = function _loginUser(user) {
-  return {
-    type: 'LOGIN',
-    user: user
-  };
+    return {
+        type: 'LOGIN',
+        user: user
+    };
 };
 
 var _logoutUser = function _logoutUser() {
-  return {
-    type: 'LOGOUT'
-  };
+    return {
+        type: 'LOGOUT'
+    };
 };
 
 var messageReducer = function messageReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments[1];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
 
-  switch (action.type) {
-    case 'LOGIN':
-      return Object.assign({}, state, {
-        authenticated: true,
-        username: action.user.username,
-        location: action.user.location,
-        about: action.user.about,
-        tradeRequestsForYou: action.user.tradeRequestsForYou,
-        tradeRequests: action.user.tradeRequests,
-        myBooks: action.user.myBooks
-      });
-    case 'LOGOUT':
-      return Object.assign({}, state, {
-        authenticated: false,
-        username: '',
-        location: '',
-        about: '',
-        tradeRequestsForYou: [],
-        tradeRequests: [],
-        myBooks: []
-      });
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case 'LOGIN':
+            return Object.assign({}, state, {
+                authenticated: true,
+                username: action.user.username,
+                location: action.user.location,
+                about: action.user.about,
+                tradeRequestsForYou: action.user.tradeRequestsForYou,
+                tradeRequests: action.user.tradeRequests,
+                myBooks: action.user.myBooks
+            });
+        case 'LOGOUT':
+            return Object.assign({}, state, {
+                authenticated: false,
+                username: '',
+                location: '',
+                about: '',
+                tradeRequestsForYou: [],
+                tradeRequests: [],
+                myBooks: []
+            });
+        default:
+            return state;
+    }
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    loginUser: function loginUser(user) {
-      dispatch(_loginUser(user));
-    },
-    logoutUser: function logoutUser() {
-      dispatch(_logoutUser());
-    }
-  };
+    return {
+        loginUser: function loginUser(user) {
+            dispatch(_loginUser(user));
+        },
+        logoutUser: function logoutUser() {
+            dispatch(_logoutUser());
+        }
+    };
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {
-    user: state
-  };
+    return {
+        user: state
+    };
 };
 
 var store = (0, _redux.createStore)(messageReducer);
@@ -4047,69 +4047,71 @@ var store = (0, _redux.createStore)(messageReducer);
 // React:
 
 var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+    _inherits(App, _React$Component);
 
-  function App(props) {
-    _classCallCheck(this, App);
+    function App(props) {
+        _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    fetch('/logstatus', {
-      method: 'GET',
-      credentials: 'include'
-    }).then(function (data) {
-      return data.json();
-    }).then(function (j) {
-      console.log(j);
-      if (j != false) {
-        _this.props.loginUser(j);
-      }
-    });
-    return _this;
-  }
-
-  _createClass(App, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      console.log(this.props);
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(
-          _reactRouterDom.BrowserRouter,
-          null,
-          _react2.default.createElement(
-            "div",
-            null,
-            _react2.default.createElement(_Header2.default, { store: this.props }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Home2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/signup", render: function render(props) {
-                return _react2.default.createElement(_SignUp2.default, { store: _this2.props });
-              } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/profile", render: function render(props) {
-                return _react2.default.createElement(_Profile2.default, { store: _this2.props });
-              } }),
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/login", component: _Login2.default })
-          )
-        )
-      );
+        fetch('/logstatus', {
+            method: 'GET',
+            credentials: 'include'
+        }).then(function (data) {
+            return data.json();
+        }).then(function (j) {
+            console.log(j);
+            if (j != false) {
+                _this.props.loginUser(j);
+            }
+        });
+        return _this;
     }
-  }]);
 
-  return App;
+    _createClass(App, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            console.log(this.props);
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    _reactRouterDom.BrowserRouter,
+                    null,
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(_Header2.default, { store: this.props }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Home2.default }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/signup", render: function render(props) {
+                                return _react2.default.createElement(_SignUp2.default, { store: _this2.props });
+                            } }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/profile", render: function render(props) {
+                                return _react2.default.createElement(_Profile2.default, { store: _this2.props });
+                            } }),
+                        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/login", render: function render(props) {
+                                return _react2.default.createElement(_Login2.default, { store: _this2.props });
+                            } })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return App;
 }(_react2.default.Component);
 
 var Container = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 var AppWrapper = function AppWrapper(_ref) {
-  var store = _ref.store;
-  return _react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(Container, null)
-  );
+    var store = _ref.store;
+    return _react2.default.createElement(
+        _reactRedux.Provider,
+        { store: store },
+        _react2.default.createElement(Container, null)
+    );
 };
 
 _reactDom2.default.render(_react2.default.createElement(AppWrapper, { store: store }), document.querySelector("#container"));
@@ -28868,7 +28870,7 @@ exports.default = SignUp;
 
 
 Object.defineProperty(exports, "__esModule", {
-				value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28892,111 +28894,138 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Login = function (_React$Component) {
-				_inherits(Login, _React$Component);
+    _inherits(Login, _React$Component);
 
-				function Login(props) {
-								_classCallCheck(this, Login);
+    function Login(props) {
+        _classCallCheck(this, Login);
 
-								var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
-								_this.handleUsernameChange = function (event) {
-												_this.setState({
-																usernameInput: event.target.value
-												});
-								};
+        _this.loginAccount = function (history) {
 
-								_this.handlePasswordChange = function (event) {
-												_this.setState({
-																passwordInput: event.target.value
-												});
-								};
+            fetch('/login', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "username": _this.state.usernameInput,
+                    "password": _this.state.passwordInput
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log('pushing to homepage');
+                console.log(j);
+                _this.props.store.loginUser(j);
+                console.log(_this.props);
+                history.push('/');
+            });
+        };
 
-								_this.state = {
-												usernameInput: '',
-												passwordInput: ''
-								};
-								return _this;
-				}
+        _this.handleUsernameChange = function (event) {
+            _this.setState({
+                usernameInput: event.target.value
+            });
+        };
 
-				_createClass(Login, [{
-								key: "render",
-								value: function render() {
-												var divStyle = {
-																padding: 0,
-																width: '100%',
-																textAlign: 'center'
-												};
-												var innerDivStyle = {
-																width: '50%',
-																textAlign: 'left',
-																margin: 'auto',
-																padding: '0px 0px 30px 40px',
-																borderLeft: '3px solid gray'
-												};
-												var inputStyle = {
-																padding: 0,
-																width: '100%',
-																height: 25
-												};
-												var hrStyle = {
-																width: '70%',
-																height: 0,
-																borderColor: 'gray'
-												};
-												var hStyle = {
-																fontSize: 40,
-																fontFamily: 'Arial'
-												};
-												var pStyle = {
-																padding: '5px 0px 5px 0px',
-																margin: 0,
-																fontFamily: 'Arial'
-												};
-												var buttonStyle = {
-																background: 'lightblue',
-																border: 'none',
-																borderRadius: 5,
-																boxShadow: 'none',
-																margin: '20px 0px 0px 0px',
-																fontSize: 18,
-																fontFamily: 'Arial',
-																padding: '10px 10px 10px 10px'
-												};
+        _this.handlePasswordChange = function (event) {
+            _this.setState({
+                passwordInput: event.target.value
+            });
+        };
 
-												return _react2.default.createElement(
-																"div",
-																{ style: divStyle },
-																_react2.default.createElement(
-																				"h1",
-																				{ style: hStyle },
-																				"Login"
-																),
-																_react2.default.createElement(
-																				"div",
-																				{ style: innerDivStyle },
-																				_react2.default.createElement(
-																								"h3",
-																								{ style: pStyle },
-																								"Username"
-																				),
-																				_react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.usernameInput, onChange: this.handleUsernameChange }),
-																				_react2.default.createElement(
-																								"h3",
-																								{ style: pStyle },
-																								"Password"
-																				),
-																				_react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
-																				_react2.default.createElement(
-																								"button",
-																								{ style: buttonStyle },
-																								"Login"
-																				)
-																)
-												);
-								}
-				}]);
+        _this.state = {
+            usernameInput: '',
+            passwordInput: ''
+        };
+        return _this;
+    }
 
-				return Login;
+    _createClass(Login, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var divStyle = {
+                padding: 0,
+                width: '100%',
+                textAlign: 'center'
+            };
+            var innerDivStyle = {
+                width: '50%',
+                textAlign: 'left',
+                margin: 'auto',
+                padding: '0px 0px 30px 40px',
+                borderLeft: '3px solid gray'
+            };
+            var inputStyle = {
+                padding: 0,
+                width: '100%',
+                height: 25
+            };
+            var hrStyle = {
+                width: '70%',
+                height: 0,
+                borderColor: 'gray'
+            };
+            var hStyle = {
+                fontSize: 40,
+                fontFamily: 'Arial'
+            };
+            var pStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var buttonStyle = {
+                background: 'lightblue',
+                border: 'none',
+                borderRadius: 5,
+                boxShadow: 'none',
+                margin: '20px 0px 0px 0px',
+                fontSize: 18,
+                fontFamily: 'Arial',
+                padding: '10px 10px 10px 10px'
+            };
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "h1",
+                    { style: hStyle },
+                    "Login"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: innerDivStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Username"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.usernameInput, onChange: this.handleUsernameChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Password"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
+                    _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
+                            var history = _ref.history;
+                            return _react2.default.createElement(
+                                "button",
+                                { onClick: function onClick() {
+                                        return _this2.loginAccount(history);
+                                    }, style: buttonStyle },
+                                "Login"
+                            );
+                        } })
+                )
+            );
+        }
+    }]);
+
+    return Login;
 }(_react2.default.Component);
 
 exports.default = Login;
@@ -29336,8 +29365,7 @@ var Profile = function (_React$Component) {
                 width: '75%',
                 textAlign: 'left',
                 margin: 'auto',
-                padding: '0px 0px 30px 40px',
-                borderLeft: '3px solid gray'
+                padding: '0px 0px 30px 0px'
             };
             var inputStyle = {
                 padding: 0,
@@ -29491,7 +29519,7 @@ var BookAdded = function (_React$Component2) {
                 padding: 0
             };
             var buttonDiv = {
-                height: 80,
+                height: 70,
                 width: '100%',
                 margin: 0,
                 padding: 0
@@ -29563,6 +29591,140 @@ var BookAdded = function (_React$Component2) {
     }]);
 
     return BookAdded;
+}(_react2.default.Component);
+
+var BookInfoBox = function (_React$Component3) {
+    _inherits(BookInfoBox, _React$Component3);
+
+    function BookInfoBox(props) {
+        _classCallCheck(this, BookInfoBox);
+
+        return _possibleConstructorReturn(this, (BookInfoBox.__proto__ || Object.getPrototypeOf(BookInfoBox)).call(this, props));
+    }
+
+    _createClass(BookInfoBox, [{
+        key: "render",
+        value: function render() {
+            var _removeButtonStyle2, _infoButtonStyle2;
+
+            var thumbnailStyle = {
+                height: 230,
+                width: '100%',
+                display: 'inline-block',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0
+            };
+            var titleStyle = {
+                display: 'inline-block',
+                width: '100%',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Arial'
+            };
+            var divStyle = {
+                display: 'inline-block',
+                width: 220,
+                margin: "10px 25px 10px 25px",
+                padding: 0,
+                verticalAlign: 'top',
+                boxShadow: '3px 3px 2px 2px #888888',
+                overflow: 'hidden',
+                overflowX: 'hidden'
+            };
+            var imgStyle = {
+                width: 220,
+                height: 230,
+                background: "url('" + this.props.book.thumbnail + "')",
+                backgroundSize: 'cover',
+                display: 'inline-block'
+            };
+            var divContentStyle = {
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var subtextStyle = {
+                color: '#D8D8D8',
+                margin: 0,
+                padding: 0
+            };
+            var buttonDiv = {
+                height: 70,
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var removeButtonStyle = (_removeButtonStyle2 = {
+                display: 'inline-block',
+                backgroundColor: 'black',
+                color: 'white',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_removeButtonStyle2, "margin", '15px 0 0 10px'), _defineProperty(_removeButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_removeButtonStyle2, "fontSize", 18), _defineProperty(_removeButtonStyle2, "fontWeight", 900), _removeButtonStyle2);
+            var infoButtonStyle = (_infoButtonStyle2 = {
+                display: 'inline-block',
+                backgroundColor: 'lightblue',
+                color: 'black',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_infoButtonStyle2, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle2, "fontSize", 18), _defineProperty(_infoButtonStyle2, "fontWeight", 900), _infoButtonStyle2);
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "div",
+                    { style: thumbnailStyle },
+                    _react2.default.createElement("div", { style: imgStyle })
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: divContentStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: titleStyle },
+                        this.props.book.title
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Author: ",
+                        this.props.book.author
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Year: ",
+                        this.props.book.publishedDate
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: removeButtonStyle },
+                        "Remove"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { style: infoButtonStyle },
+                        "Book Info"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return BookInfoBox;
 }(_react2.default.Component);
 
 exports.default = Profile;

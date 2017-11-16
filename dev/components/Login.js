@@ -10,6 +10,26 @@ class Login extends React.Component{
         passwordInput: ''
         };
     }
+    loginAccount = (history) => {
+        
+        fetch('/login', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"username":this.state.usernameInput,
+            "password":this.state.passwordInput
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log('pushing to homepage');
+            console.log(j);
+            this.props.store.loginUser(j);
+            console.log(this.props);
+            history.push('/');
+        });
+
+    }
     handleUsernameChange = (event) => {
         this.setState({
             usernameInput: event.target.value
@@ -73,7 +93,9 @@ class Login extends React.Component{
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
-                    <button style={buttonStyle}>Login</button>
+                    <Route render={({ history}) => (
+                        <button onClick={() => this.loginAccount(history)} style={buttonStyle}>Login</button>
+                    )} />
                 </div>
           </div>
           ); 

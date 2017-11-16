@@ -241,4 +241,109 @@ class BookAdded extends React.Component{
     }
 }
 
+class BookInfoBox extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+    render(){
+
+        var thumbnailStyle = {
+            height: 230,
+            width: '100%',
+            display: 'inline-block',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0
+        }
+        var titleStyle = {
+            display: 'inline-block',
+            width:'100%',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0,
+            fontFamily: 'Arial'
+        }
+        var divStyle = {
+            display: 'inline-block',
+            width: 220,
+            margin: "10px 25px 10px 25px",
+            padding:0,
+            verticalAlign: 'top',
+            boxShadow: '3px 3px 2px 2px #888888',
+            overflow: 'hidden',
+            overflowX: 'hidden'
+        }
+        var imgStyle = {
+            width: 220,
+            height: 230,
+            background: "url('"+this.props.book.thumbnail+"')",
+            backgroundSize: 'cover',
+            display:'inline-block'
+        }
+        var divContentStyle = {
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var subtextStyle = {
+            color: '#D8D8D8',
+            margin: 0,
+            padding: 0
+        };
+        var buttonDiv = {
+            height: 70,
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var removeButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'black',
+            color: 'white',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            margin:0,
+            border: 'none',
+            margin: '15px 0 0 10px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        var infoButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'lightblue',
+            color: 'black',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            margin:0,
+            border: 'none',
+            margin: '15px 0 0 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        
+        return (
+            <div style={divStyle}>
+                <div style={thumbnailStyle}>
+                    <div style={imgStyle}>
+                    </div>
+                </div>
+                <div style={divContentStyle}>
+                    <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
+                    <p style={subtextStyle}>Year: {this.props.book.publishedDate}</p>
+                </div>
+                <div style={buttonDiv}>
+                    <button style={removeButtonStyle}>Remove</button>
+                    <button style={infoButtonStyle}>Book Info</button>
+                </div>
+            </div>
+            );
+    }
+}
+
 export default Profile

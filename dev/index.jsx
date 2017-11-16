@@ -116,7 +116,9 @@ class App extends React.Component{
                 <Route exact path='/profile' render={(props) => (
                     <Profile store={this.props}/>
                 )} />
-                <Route exact path='/login' component={Login} />
+                <Route exact path='/login' render={(props) => (
+                    <Login store={this.props}/>
+                )} />
             </div>
             </Router>
           </div>

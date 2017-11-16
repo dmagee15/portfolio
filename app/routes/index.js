@@ -40,11 +40,26 @@ module.exports = function (app, passport, googleBooks) {
 		});
 	});
 	
-	app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/mybooks', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+	app.post('/login', passport.authenticate('local-login', { failureFlash: 'Username already exists.' }), function(req,res){
+		console.log('LOGINSTART');
+		console.log(JSON.stringify(req.user));
+		User.find({'local.username':req.user.local.username},{new:true}, function(err,data){
+			if(err)throw err;
+			console.log("search result");
+			console.log(JSON.stringify(data));
+			var userData = {
+				email: req.user.local.email,
+				location: req.user.local.location,
+				about: req.user.local.about,
+				username: req.user.local.username,
+				tradeRequestsForYou: req.user.local.tradeRequestsForYou,
+				tradeRequests: req.user.local.tradeRequests,
+				myBooks: req.user.local.myBooks
+			};
+			console.log("USER DATA: "+JSON.stringify(req.user));
+			res.send(userData);
+		});
+	});
     
     app.post('/test', function(req,res){
     	console.log("Fetch request successful");
@@ -82,11 +97,6 @@ module.exports = function (app, passport, googleBooks) {
     	User.find({}).remove().exec();
     	res.end();
     });
-
-	app.route('/login')
-		.get(function (req, res) {
-			res.sendFile(path + '/public/login.html');
-		});
 
 	app.route('/logout')
 		.get(function (req, res) {
