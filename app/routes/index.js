@@ -41,12 +41,10 @@ module.exports = function (app, passport, googleBooks) {
 	});
 	
 	app.post('/login', passport.authenticate('local-login', { failureFlash: 'Username already exists.' }), function(req,res){
-		console.log('LOGINSTART');
-		console.log(JSON.stringify(req.user));
+
 		User.find({'local.username':req.user.local.username},{new:true}, function(err,data){
 			if(err)throw err;
-			console.log("search result");
-			console.log(JSON.stringify(data));
+
 			var userData = {
 				email: req.user.local.email,
 				location: req.user.local.location,

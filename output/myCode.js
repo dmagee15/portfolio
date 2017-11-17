@@ -29321,7 +29321,7 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail, author: j.authors[0], publishedDate: j.publishedDate }]);
+                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail, author: j.authors[0], publishedDate: j.publishedDate, description: j.description, pageCount: j.pageCount }]);
                 _this.setState({ myBooksArray: myBooksArray });
             });
         };
@@ -29344,11 +29344,19 @@ var Profile = function (_React$Component) {
             });
         };
 
+        _this.showInfoWindow = function (book) {
+            console.log("info window");
+            console.log(book);
+            _this.setState({ showInfo: true, showInfoBook: book });
+        };
+
         _this.state = {
             searchInput: '',
             myBooksArray: [],
             passwordInput: '',
-            emailInput: ''
+            emailInput: '',
+            showInfo: false,
+            showInfoBook: ''
         };
         return _this;
     }
@@ -29356,6 +29364,8 @@ var Profile = function (_React$Component) {
     _createClass(Profile, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
             var divStyle = {
                 padding: 0,
                 width: '100%',
@@ -29417,11 +29427,14 @@ var Profile = function (_React$Component) {
             var myBooksStyle = {
                 width: '100%',
                 minHeight: 200,
-                border: '1px solid black',
                 margin: '20px 0 20px 0'
             };
+            var hrStyle = {
+                borderColor: '#F2F2F2',
+                width: '100%'
+            };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(BookAdded, { key: index, book: book });
+                return _react2.default.createElement(BookAdded, { key: index, book: book, showInfoWindow: _this2.showInfoWindow });
             });
 
             return _react2.default.createElement(
@@ -29435,6 +29448,7 @@ var Profile = function (_React$Component) {
                 _react2.default.createElement(
                     "div",
                     { style: innerDivStyle },
+                    _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
                         "h3",
                         { style: pStyle },
@@ -29450,8 +29464,10 @@ var Profile = function (_React$Component) {
                         "div",
                         { style: myBooksStyle },
                         booksDisplay
-                    )
-                )
+                    ),
+                    _react2.default.createElement("hr", { style: hrStyle })
+                ),
+                _react2.default.createElement(BookInfoBox, { showInfo: this.state.showInfo, book: this.state.showInfoBook })
             );
         }
     }]);
@@ -29471,7 +29487,9 @@ var BookAdded = function (_React$Component2) {
     _createClass(BookAdded, [{
         key: "render",
         value: function render() {
-            var _removeButtonStyle, _infoButtonStyle;
+            var _removeButtonStyle,
+                _infoButtonStyle,
+                _this4 = this;
 
             var thumbnailStyle = {
                 height: 230,
@@ -29582,7 +29600,9 @@ var BookAdded = function (_React$Component2) {
                     ),
                     _react2.default.createElement(
                         "button",
-                        { style: infoButtonStyle },
+                        { style: infoButtonStyle, onClick: function onClick() {
+                                _this4.props.showInfoWindow(_this4.props.book);
+                            } },
                         "Book Info"
                     )
                 )
@@ -29605,15 +29625,56 @@ var BookInfoBox = function (_React$Component3) {
     _createClass(BookInfoBox, [{
         key: "render",
         value: function render() {
-            var _removeButtonStyle2, _infoButtonStyle2;
 
-            var thumbnailStyle = {
-                height: 230,
-                width: '100%',
-                display: 'inline-block',
-                overflow: 'hidden',
+            if (!this.props.showInfo) {
+                return null;
+            }
+
+            var backdropStyle = {
+                position: 'fixed',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                padding: 50
+            };
+
+            var modalStyle = {
+                backgroundColor: '#fff',
+                borderRadius: 5,
+                width: 650,
+                height: 500,
                 margin: 0,
-                padding: 0
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                textAlign: 'left'
+            };
+
+            var bookCoverStyle = {
+                display: 'inline-block',
+                height: 500,
+                width: 325,
+                margin: 0,
+                overflow: 'hidden'
+            };
+            var contentStyle = {
+                display: 'inline-block',
+                height: 500,
+                width: 310,
+                paddingLeft: 15,
+                margin: 0,
+                overflow: 'hidden'
+            };
+            var imgStyle = {
+                width: 300,
+                height: 480,
+                background: "url(https://books.google.com/books/content?id=iO5pApw2JycC&printsec=frontcover&img)",
+                backgroundSize: 'cover',
+                display: 'inline-block',
+                margin: "10px 12px 10px 12px"
             };
             var titleStyle = {
                 display: 'inline-block',
@@ -29621,103 +29682,87 @@ var BookInfoBox = function (_React$Component3) {
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
-                margin: 0,
-                padding: 0,
-                fontFamily: 'Arial'
-            };
-            var divStyle = {
-                display: 'inline-block',
-                width: 220,
-                margin: "10px 25px 10px 25px",
-                padding: 0,
-                verticalAlign: 'top',
-                boxShadow: '3px 3px 2px 2px #888888',
-                overflow: 'hidden',
-                overflowX: 'hidden'
-            };
-            var imgStyle = {
-                width: 220,
-                height: 230,
-                background: "url('" + this.props.book.thumbnail + "')",
-                backgroundSize: 'cover',
-                display: 'inline-block'
-            };
-            var divContentStyle = {
-                width: '100%',
-                margin: 0,
-                padding: 0
+                margin: 'auto',
+                padding: '0 0 15px 0',
+                fontFamily: 'Arial',
+                fontWeight: 900
             };
             var subtextStyle = {
                 color: '#D8D8D8',
                 margin: 0,
+                padding: '0 0 10px 0'
+            };
+            var synopsisStyle = {
+                color: '#D8D8D8',
+                margin: 0,
                 padding: 0
             };
-            var buttonDiv = {
-                height: 70,
-                width: '100%',
-                margin: 0,
-                padding: 0
+            var subtitleStyle = {
+                color: '#A5A5A5',
+                fontWeight: 700,
+                padding: 0,
+                margin: 0
             };
-            var removeButtonStyle = (_removeButtonStyle2 = {
-                display: 'inline-block',
-                backgroundColor: 'black',
-                color: 'white',
-                height: 40,
-                padding: '0px 8px 0px 8px',
-                margin: 0,
-                border: 'none'
-            }, _defineProperty(_removeButtonStyle2, "margin", '15px 0 0 10px'), _defineProperty(_removeButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_removeButtonStyle2, "fontSize", 18), _defineProperty(_removeButtonStyle2, "fontWeight", 900), _removeButtonStyle2);
-            var infoButtonStyle = (_infoButtonStyle2 = {
-                display: 'inline-block',
-                backgroundColor: 'lightblue',
-                color: 'black',
-                height: 40,
-                padding: '0px 8px 0px 8px',
-                margin: 0,
-                border: 'none'
-            }, _defineProperty(_infoButtonStyle2, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle2, "fontSize", 18), _defineProperty(_infoButtonStyle2, "fontWeight", 900), _infoButtonStyle2);
 
             return _react2.default.createElement(
                 "div",
-                { style: divStyle },
+                { className: "backdrop", style: backdropStyle },
                 _react2.default.createElement(
                     "div",
-                    { style: thumbnailStyle },
-                    _react2.default.createElement("div", { style: imgStyle })
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { style: divContentStyle },
+                    { className: "modal", style: modalStyle },
                     _react2.default.createElement(
-                        "h3",
-                        { style: titleStyle },
-                        this.props.book.title
+                        "div",
+                        { style: bookCoverStyle },
+                        _react2.default.createElement("div", { style: imgStyle })
                     ),
                     _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Author: ",
-                        this.props.book.author
-                    ),
-                    _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Year: ",
-                        this.props.book.publishedDate
-                    )
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { style: buttonDiv },
-                    _react2.default.createElement(
-                        "button",
-                        { style: removeButtonStyle },
-                        "Remove"
-                    ),
-                    _react2.default.createElement(
-                        "button",
-                        { style: infoButtonStyle },
-                        "Book Info"
+                        "div",
+                        { style: contentStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: titleStyle },
+                            "Harry Potter and the Prisoner"
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            _react2.default.createElement(
+                                "span",
+                                { style: subtitleStyle },
+                                "Synopsis"
+                            ),
+                            ": "
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            _react2.default.createElement(
+                                "span",
+                                { style: subtitleStyle },
+                                "Author"
+                            ),
+                            ": "
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            _react2.default.createElement(
+                                "span",
+                                { style: subtitleStyle },
+                                "Date"
+                            ),
+                            ": "
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            _react2.default.createElement(
+                                "span",
+                                { style: subtitleStyle },
+                                "Pages"
+                            ),
+                            ": "
+                        )
                     )
                 )
             );
