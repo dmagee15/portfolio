@@ -12,8 +12,7 @@ class Profile extends React.Component{
         myBooksArray: [],
         passwordInput: '',
         emailInput: '',
-        showInfo: false,
-        showInfoBook: ''
+        showInfoBook: null
         };
     }
     findBook = () => {
@@ -51,9 +50,10 @@ class Profile extends React.Component{
         });
     }
     showInfoWindow = (book) => {
-        console.log("info window");
-        console.log(book);
-        this.setState({showInfo: true, showInfoBook: book});
+        this.setState({showInfoBook: book});
+    }
+    closeInfoWindow = () => {
+        this.setState({showInfoBook: null});
     }
    render(){
        var divStyle = {
@@ -141,7 +141,7 @@ class Profile extends React.Component{
                     </div>
                     <hr style={hrStyle}/>
                 </div>
-                <BookInfoBox showInfo={this.state.showInfo} book={this.state.showInfoBook}/>
+                <BookInfoBox closeWindow={this.closeInfoWindow} book={this.state.showInfoBook}/>
           </div>
           ); 
         	
@@ -260,7 +260,7 @@ class BookInfoBox extends React.Component{
     
     render(){
     
-    if(!this.props.showInfo){
+    if(this.props.book == null){
         return null;
     }
     
@@ -271,20 +271,22 @@ class BookInfoBox extends React.Component{
       left: 0,
       right: 0,
       backgroundColor: 'rgba(0,0,0,0.3)',
-      padding: 50
+      padding: 50,
+      zIndex: 10
     };
 
     const modalStyle = {
       backgroundColor: '#fff',
       borderRadius: 5,
       width: 650,
-      height: 500,
+      height: 540,
       margin: 0,
       position: 'fixed',
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      textAlign: 'left'
+      textAlign: 'left',
+      zIndex: 100
     };
     
     var bookCoverStyle = {
@@ -296,28 +298,29 @@ class BookInfoBox extends React.Component{
     };
     var contentStyle = {
         display:'inline-block',
-        height:500,
-        width: 310,
+        height:490,
+        width: 295,
+        paddingTop: 10,
         paddingLeft: 15,
+        paddingRight: 15,
         margin: 0,
-        overflow: 'hidden'
+        overflowY: 'auto'
     };
     var imgStyle = {
             width: 300,
             height: 480,
-            background: "url(https://books.google.com/books/content?id=iO5pApw2JycC&printsec=frontcover&img)",
+            background: "url("+this.props.book.thumbnail+")",
             backgroundSize: 'cover',
             display:'inline-block',
             margin: "10px 12px 10px 12px"
         };
         var titleStyle = {
             display: 'inline-block',
-            width:'100%',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            margin: 'auto',
-            padding: '0 0 15px 0',
+            margin: '5px 0 0 15px',
+            padding: '0 0 0 0',
             fontFamily: 'Arial',
             fontWeight: 900
         };
@@ -325,6 +328,7 @@ class BookInfoBox extends React.Component{
             color: '#D8D8D8',
             margin: 0,
             padding: '0 0 10px 0',
+            fontFamily: "Bookman"
         };
         var synopsisStyle = {
             color: '#D8D8D8',
@@ -337,22 +341,35 @@ class BookInfoBox extends React.Component{
             padding: 0,
             margin: 0
         }
+        var modalHeaderStyle = {
+            display: 'inline-block',
+            backgroundColor: '#DFDFDF',
+            height: 40,
+            minWidth: 650
+        }
         
         return (
-            <div className="backdrop" style={backdropStyle}>
-                <div className="modal" style={modalStyle}>
+            <div>
+            <div className="backdrop" style={backdropStyle} onClick={this.props.closeWindow}>
+                
+            </div>
+            
+            <div className="modal" style={modalStyle}>
+                    <div style={modalHeaderStyle}>
+                        <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    </div>
                     <div style={bookCoverStyle}>
                         <div style={imgStyle}>
                         </div>
                     </div>
                     <div style={contentStyle}>
-                        <h3 style={titleStyle}>Harry Potter and the Prisoner</h3>
-                        <p style={subtextStyle}><span style={subtitleStyle}>Synopsis</span>: </p>
-                        <p style={subtextStyle}><span style={subtitleStyle}>Author</span>: </p>
-                        <p style={subtextStyle}><span style={subtitleStyle}>Date</span>: </p>
-                        <p style={subtextStyle}><span style={subtitleStyle}>Pages</span>: </p>
+                        <p style={subtextStyle}>{this.props.book.description}</p>
+                        <p style={subtextStyle}><span style={subtitleStyle}>Author</span>: {this.props.book.author}</p>
+                        <p style={subtextStyle}><span style={subtitleStyle}>Date</span>: {this.props.book.publishedDate}</p>
+                        <p style={subtextStyle}><span style={subtitleStyle}>Pages</span>: {this.props.book.pageCount}</p>
                     </div>
                 </div>
+            
             </div>
             );
     }

@@ -29345,9 +29345,11 @@ var Profile = function (_React$Component) {
         };
 
         _this.showInfoWindow = function (book) {
-            console.log("info window");
-            console.log(book);
-            _this.setState({ showInfo: true, showInfoBook: book });
+            _this.setState({ showInfoBook: book });
+        };
+
+        _this.closeInfoWindow = function () {
+            _this.setState({ showInfoBook: null });
         };
 
         _this.state = {
@@ -29355,8 +29357,7 @@ var Profile = function (_React$Component) {
             myBooksArray: [],
             passwordInput: '',
             emailInput: '',
-            showInfo: false,
-            showInfoBook: ''
+            showInfoBook: null
         };
         return _this;
     }
@@ -29467,7 +29468,7 @@ var Profile = function (_React$Component) {
                     ),
                     _react2.default.createElement("hr", { style: hrStyle })
                 ),
-                _react2.default.createElement(BookInfoBox, { showInfo: this.state.showInfo, book: this.state.showInfoBook })
+                _react2.default.createElement(BookInfoBox, { closeWindow: this.closeInfoWindow, book: this.state.showInfoBook })
             );
         }
     }]);
@@ -29626,7 +29627,7 @@ var BookInfoBox = function (_React$Component3) {
         key: "render",
         value: function render() {
 
-            if (!this.props.showInfo) {
+            if (this.props.book == null) {
                 return null;
             }
 
@@ -29637,20 +29638,22 @@ var BookInfoBox = function (_React$Component3) {
                 left: 0,
                 right: 0,
                 backgroundColor: 'rgba(0,0,0,0.3)',
-                padding: 50
+                padding: 50,
+                zIndex: 10
             };
 
             var modalStyle = {
                 backgroundColor: '#fff',
                 borderRadius: 5,
                 width: 650,
-                height: 500,
+                height: 540,
                 margin: 0,
                 position: 'fixed',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                textAlign: 'left'
+                textAlign: 'left',
+                zIndex: 100
             };
 
             var bookCoverStyle = {
@@ -29662,35 +29665,37 @@ var BookInfoBox = function (_React$Component3) {
             };
             var contentStyle = {
                 display: 'inline-block',
-                height: 500,
-                width: 310,
+                height: 490,
+                width: 295,
+                paddingTop: 10,
                 paddingLeft: 15,
+                paddingRight: 15,
                 margin: 0,
-                overflow: 'hidden'
+                overflowY: 'auto'
             };
             var imgStyle = {
                 width: 300,
                 height: 480,
-                background: "url(https://books.google.com/books/content?id=iO5pApw2JycC&printsec=frontcover&img)",
+                background: "url(" + this.props.book.thumbnail + ")",
                 backgroundSize: 'cover',
                 display: 'inline-block',
                 margin: "10px 12px 10px 12px"
             };
             var titleStyle = {
                 display: 'inline-block',
-                width: '100%',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
-                margin: 'auto',
-                padding: '0 0 15px 0',
+                margin: '5px 0 0 15px',
+                padding: '0 0 0 0',
                 fontFamily: 'Arial',
                 fontWeight: 900
             };
             var subtextStyle = {
                 color: '#D8D8D8',
                 margin: 0,
-                padding: '0 0 10px 0'
+                padding: '0 0 10px 0',
+                fontFamily: "Bookman"
             };
             var synopsisStyle = {
                 color: '#D8D8D8',
@@ -29703,13 +29708,29 @@ var BookInfoBox = function (_React$Component3) {
                 padding: 0,
                 margin: 0
             };
+            var modalHeaderStyle = {
+                display: 'inline-block',
+                backgroundColor: '#DFDFDF',
+                height: 40,
+                minWidth: 650
+            };
 
             return _react2.default.createElement(
                 "div",
-                { className: "backdrop", style: backdropStyle },
+                null,
+                _react2.default.createElement("div", { className: "backdrop", style: backdropStyle, onClick: this.props.closeWindow }),
                 _react2.default.createElement(
                     "div",
                     { className: "modal", style: modalStyle },
+                    _react2.default.createElement(
+                        "div",
+                        { style: modalHeaderStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: titleStyle },
+                            this.props.book.title
+                        )
+                    ),
                     _react2.default.createElement(
                         "div",
                         { style: bookCoverStyle },
@@ -29719,19 +29740,9 @@ var BookInfoBox = function (_React$Component3) {
                         "div",
                         { style: contentStyle },
                         _react2.default.createElement(
-                            "h3",
-                            { style: titleStyle },
-                            "Harry Potter and the Prisoner"
-                        ),
-                        _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
-                            _react2.default.createElement(
-                                "span",
-                                { style: subtitleStyle },
-                                "Synopsis"
-                            ),
-                            ": "
+                            this.props.book.description
                         ),
                         _react2.default.createElement(
                             "p",
@@ -29741,7 +29752,8 @@ var BookInfoBox = function (_React$Component3) {
                                 { style: subtitleStyle },
                                 "Author"
                             ),
-                            ": "
+                            ": ",
+                            this.props.book.author
                         ),
                         _react2.default.createElement(
                             "p",
@@ -29751,7 +29763,8 @@ var BookInfoBox = function (_React$Component3) {
                                 { style: subtitleStyle },
                                 "Date"
                             ),
-                            ": "
+                            ": ",
+                            this.props.book.publishedDate
                         ),
                         _react2.default.createElement(
                             "p",
@@ -29761,7 +29774,8 @@ var BookInfoBox = function (_React$Component3) {
                                 { style: subtitleStyle },
                                 "Pages"
                             ),
-                            ": "
+                            ": ",
+                            this.props.book.pageCount
                         )
                     )
                 )
