@@ -11,6 +11,7 @@ class SignUp extends React.Component{
         usernameInput: '',
         passwordInput: '',
         emailInput: '',
+        locationInput: ''
         };
     }
     createAccount = (history) => {
@@ -21,7 +22,8 @@ class SignUp extends React.Component{
         credentials: 'include',
         body: JSON.stringify({"username":this.state.usernameInput,
             "password":this.state.passwordInput,
-            "email":this.state.emailInput
+            "email":this.state.emailInput,
+            "location":this.state.locationInput
         })
         }).then(function(data) {
             return data.json();
@@ -47,6 +49,11 @@ class SignUp extends React.Component{
     handleEmailChange = (event) => {
         this.setState({
             emailInput: event.target.value
+        });
+    }
+    handleLocationChange = (event) => {
+        this.setState({
+            locationInput: event.target.value
         });
     }
    render(){
@@ -102,6 +109,8 @@ class SignUp extends React.Component{
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
                     <h3 style={pStyle}>Email</h3>
                     <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
+                    <h3 style={pStyle}>Location</h3>
+                    <input style={inputStyle} type="text" value={this.state.locationInput} onChange={this.handleLocationChange}/>
                     <Route render={({ history}) => (
                         <button onClick={() => this.createAccount(history)} style={buttonStyle}>Create Account</button>
                     )} />

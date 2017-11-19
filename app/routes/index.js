@@ -24,7 +24,7 @@ module.exports = function (app, passport, googleBooks) {
 	app.post('/createnewuser', passport.authenticate('local-signup',{ failureFlash: 'Username already exists.' }), function(req,res){
 		console.log("authentication successful");
 		console.log(req.body.email);
-		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email},{new:true}, function(err,data){
+		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email,'local.location':req.body.location},{new:true}, function(err,data){
 			if(err)throw err;
 			var userData = {
 				email: data.local.email,
@@ -35,7 +35,7 @@ module.exports = function (app, passport, googleBooks) {
 				tradeRequests: data.local.tradeRequests,
 				myBooks: data.local.myBooks
 			};
-			console.log("USER DATA: "+JSON.stringify(req.user));
+			console.log("USER DATA: "+JSON.stringify(userData));
 			res.send(userData);
 		});
 	});

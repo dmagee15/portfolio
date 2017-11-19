@@ -321,11 +321,11 @@ class BookInfoBox extends React.Component{
             overflow: 'hidden',
             margin: '5px 0 0 15px',
             padding: '0 0 0 0',
-            fontFamily: 'Arial',
+            fontFamily: 'Arial Black',
             fontWeight: 900
         };
         var subtextStyle = {
-            color: '#D8D8D8',
+            color: '#BDBDBD',
             margin: 0,
             padding: '0 0 10px 0',
             fontFamily: "Bookman"

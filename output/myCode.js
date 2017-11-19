@@ -28727,7 +28727,8 @@ var SignUp = function (_React$Component) {
                 credentials: 'include',
                 body: JSON.stringify({ "username": _this.state.usernameInput,
                     "password": _this.state.passwordInput,
-                    "email": _this.state.emailInput
+                    "email": _this.state.emailInput,
+                    "location": _this.state.locationInput
                 })
             }).then(function (data) {
                 return data.json();
@@ -28758,10 +28759,17 @@ var SignUp = function (_React$Component) {
             });
         };
 
+        _this.handleLocationChange = function (event) {
+            _this.setState({
+                locationInput: event.target.value
+            });
+        };
+
         _this.state = {
             usernameInput: '',
             passwordInput: '',
-            emailInput: ''
+            emailInput: '',
+            locationInput: ''
         };
         return _this;
     }
@@ -28842,6 +28850,12 @@ var SignUp = function (_React$Component) {
                         "Email"
                     ),
                     _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.emailInput, onChange: this.handleEmailChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Location"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.locationInput, onChange: this.handleLocationChange }),
                     _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
                             var history = _ref.history;
                             return _react2.default.createElement(
@@ -29688,11 +29702,11 @@ var BookInfoBox = function (_React$Component3) {
                 overflow: 'hidden',
                 margin: '5px 0 0 15px',
                 padding: '0 0 0 0',
-                fontFamily: 'Arial',
+                fontFamily: 'Arial Black',
                 fontWeight: 900
             };
             var subtextStyle = {
-                color: '#D8D8D8',
+                color: '#BDBDBD',
                 margin: 0,
                 padding: '0 0 10px 0',
                 fontFamily: "Bookman"
