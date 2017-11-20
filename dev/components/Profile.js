@@ -126,12 +126,43 @@ class Profile extends React.Component{
 		var booksDisplay = this.state.myBooksArray.map((book, index) => 
 		   <BookAdded key={index} book={book} showInfoWindow={this.showInfoWindow}/>
 		);
-		
+		var yourTradeRequestsStyle = {
+            display: 'inline-block',
+            backgroundColor: '#00C351',
+            color: 'white',
+            height: 32,
+            padding:'0px 18px 0px 18px',
+            margin:0,
+            border: 'none',
+            borderRadius: 8,
+            margin: '15px 0 0 10px',
+            fontFamily: 'Tahoma',
+            fontSize: 16,
+            fontWeight: 900
+		};
+		var requestsForYouStyle = {
+		    display: 'inline-block',
+            backgroundColor: '#FF9A00',
+            color: 'white',
+            height: 32,
+            padding:'0px 18px 0px 18px',
+            margin:0,
+            border: 'none',
+            borderRadius: 8,
+            margin: '15px 0 0 10px',
+            fontFamily: 'Tahoma',
+            fontSize: 16,
+            fontWeight: 900
+		};
 
         return (
            <div style={divStyle}>
                 <h1 style={hStyle}>Profile</h1>
                 <div style={innerDivStyle}>
+                    <div>
+                        <button style={yourTradeRequestsStyle}>Your Trade Requests</button>
+                        <button style={requestsForYouStyle}>Trade Requests For You</button>
+                    </div>
                     <hr style={hrStyle}/>
                     <h3 style={pStyle}>My Books</h3>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>

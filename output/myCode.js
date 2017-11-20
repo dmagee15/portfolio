@@ -29379,7 +29379,9 @@ var Profile = function (_React$Component) {
     _createClass(Profile, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this2 = this,
+                _yourTradeRequestsSty,
+                _requestsForYouStyle;
 
             var divStyle = {
                 padding: 0,
@@ -29451,6 +29453,26 @@ var Profile = function (_React$Component) {
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
                 return _react2.default.createElement(BookAdded, { key: index, book: book, showInfoWindow: _this2.showInfoWindow });
             });
+            var yourTradeRequestsStyle = (_yourTradeRequestsSty = {
+                display: 'inline-block',
+                backgroundColor: '#00C351',
+                color: 'white',
+                height: 32,
+                padding: '0px 18px 0px 18px',
+                margin: 0,
+                border: 'none',
+                borderRadius: 8
+            }, _defineProperty(_yourTradeRequestsSty, "margin", '15px 0 0 10px'), _defineProperty(_yourTradeRequestsSty, "fontFamily", 'Tahoma'), _defineProperty(_yourTradeRequestsSty, "fontSize", 16), _defineProperty(_yourTradeRequestsSty, "fontWeight", 900), _yourTradeRequestsSty);
+            var requestsForYouStyle = (_requestsForYouStyle = {
+                display: 'inline-block',
+                backgroundColor: '#FF9A00',
+                color: 'white',
+                height: 32,
+                padding: '0px 18px 0px 18px',
+                margin: 0,
+                border: 'none',
+                borderRadius: 8
+            }, _defineProperty(_requestsForYouStyle, "margin", '15px 0 0 10px'), _defineProperty(_requestsForYouStyle, "fontFamily", 'Tahoma'), _defineProperty(_requestsForYouStyle, "fontSize", 16), _defineProperty(_requestsForYouStyle, "fontWeight", 900), _requestsForYouStyle);
 
             return _react2.default.createElement(
                 "div",
@@ -29463,6 +29485,20 @@ var Profile = function (_React$Component) {
                 _react2.default.createElement(
                     "div",
                     { style: innerDivStyle },
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "button",
+                            { style: yourTradeRequestsStyle },
+                            "Your Trade Requests"
+                        ),
+                        _react2.default.createElement(
+                            "button",
+                            { style: requestsForYouStyle },
+                            "Trade Requests For You"
+                        )
+                    ),
                     _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
                         "h3",
