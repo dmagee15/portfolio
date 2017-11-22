@@ -7,14 +7,31 @@ import Redux, {createStore, bindActionCreators} from 'redux';
 class Profile extends React.Component{
     constructor(props) {
     super(props);
+    
     this.state = {
-        searchInput: '',
-        myBooksArray: [],
-        passwordInput: '',
-        emailInput: '',
-        showInfoBook: null
-        };
+            searchInput: '',
+            myBooksArray: [],
+            passwordInput: '',
+            emailInput: '',
+            showInfoBook: null
+            };
+    
     }
+    
+    componentWillMount = () => {
+        fetch('/getprofiledata', {
+        method: 'GET',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include'
+        })
+        .then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            this.setState({myBooksArray: j});
+        });
+    };
+    
     findBook = () => {
         
         fetch('/findbook', {
@@ -27,8 +44,26 @@ class Profile extends React.Component{
             return data.json();
         }).then((j) =>{
             console.log(j);
-            var myBooksArray = [...this.state.myBooksArray, {title: j.title, thumbnail:j.thumbnail, author:j.authors[0], publishedDate:j.publishedDate, description:j.description, pageCount:j.pageCount}];
-            this.setState({myBooksArray});
+            this.setState({myBooksArray:j});
+
+
+        });
+
+    }
+    removeBook = (id) => {
+        console.log("REMOVE BOOK");
+        console.log(id);
+        fetch('/removebook', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"id":id,
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            this.setState({myBooksArray:j});
 
 
         });
@@ -124,7 +159,7 @@ class Profile extends React.Component{
 		    width: '100%'
 		}
 		var booksDisplay = this.state.myBooksArray.map((book, index) => 
-		   <BookAdded key={index} book={book} showInfoWindow={this.showInfoWindow}/>
+		   <BookAdded key={index} book={book} removeBook={this.removeBook} showInfoWindow={this.showInfoWindow}/>
 		);
 		var yourTradeRequestsStyle = {
             display: 'inline-block',
@@ -276,7 +311,7 @@ class BookAdded extends React.Component{
                     <p style={subtextStyle}>Year: {this.props.book.publishedDate}</p>
                 </div>
                 <div style={buttonDiv}>
-                    <button style={removeButtonStyle}>Remove</button>
+                    <button style={removeButtonStyle} onClick={() => {this.props.removeBook(this.props.book._id)}}>Remove</button>
                     <button style={infoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
                 </div>
             </div>

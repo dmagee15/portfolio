@@ -29307,8 +29307,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -29323,6 +29321,19 @@ var Profile = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
 
+        _this.componentWillMount = function () {
+            fetch('/getprofiledata', {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include'
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                _this.setState({ myBooksArray: j });
+            });
+        };
+
         _this.findBook = function () {
 
             fetch('/findbook', {
@@ -29335,8 +29346,24 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                var myBooksArray = [].concat(_toConsumableArray(_this.state.myBooksArray), [{ title: j.title, thumbnail: j.thumbnail, author: j.authors[0], publishedDate: j.publishedDate, description: j.description, pageCount: j.pageCount }]);
-                _this.setState({ myBooksArray: myBooksArray });
+                _this.setState({ myBooksArray: j });
+            });
+        };
+
+        _this.removeBook = function (id) {
+            console.log("REMOVE BOOK");
+            console.log(id);
+            fetch('/removebook', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "id": id
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                _this.setState({ myBooksArray: j });
             });
         };
 
@@ -29373,6 +29400,7 @@ var Profile = function (_React$Component) {
             emailInput: '',
             showInfoBook: null
         };
+
         return _this;
     }
 
@@ -29451,7 +29479,7 @@ var Profile = function (_React$Component) {
                 width: '100%'
             };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(BookAdded, { key: index, book: book, showInfoWindow: _this2.showInfoWindow });
+                return _react2.default.createElement(BookAdded, { key: index, book: book, removeBook: _this2.removeBook, showInfoWindow: _this2.showInfoWindow });
             });
             var yourTradeRequestsStyle = (_yourTradeRequestsSty = {
                 display: 'inline-block',
@@ -29646,7 +29674,9 @@ var BookAdded = function (_React$Component2) {
                     { style: buttonDiv },
                     _react2.default.createElement(
                         "button",
-                        { style: removeButtonStyle },
+                        { style: removeButtonStyle, onClick: function onClick() {
+                                _this4.props.removeBook(_this4.props.book._id);
+                            } },
                         "Remove"
                     ),
                     _react2.default.createElement(

@@ -3,6 +3,7 @@
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var User = require('../models/users');
+var Book = require('../models/books');
 
 module.exports = function (app, passport, googleBooks) {
 
@@ -44,7 +45,7 @@ module.exports = function (app, passport, googleBooks) {
 
 		User.find({'local.username':req.user.local.username},{new:true}, function(err,data){
 			if(err)throw err;
-
+			console.log(JSON.stringify(data));
 			var userData = {
 				email: req.user.local.email,
 				location: req.user.local.location,
@@ -74,12 +75,60 @@ module.exports = function (app, passport, googleBooks) {
         	var resultArray = Object.assign({},results[0]);
         	resultArray.thumbnail = resultArray.thumbnail.replace(/=1&zoom=1&edge=curl&source=gbs_api/,'').replace(/http/,'https');
         	console.log(resultArray);
-        	res.send(resultArray);
+        	
+        	var newBook = new Book();
+        	newBook.title = resultArray.title;
+        	newBook.thumbnail = resultArray.thumbnail;
+        	newBook.author = resultArray.authors[0];
+        	newBook.publishedDate = resultArray.publishedDate;
+        	newBook.pageCount = resultArray.pageCount;
+        	newBook.description = resultArray.description;
+        	newBook.location = req.user.local.location;
+        	newBook.username = req.user.local.username;
+        	newBook.tradeRequests = [];
+        	newBook.tradeConfirmUser = '';
+        	newBook.tradeConfirmDate = '';
+        	console.log("New Book");
+        	console.log(newBook);
+        	newBook.save();
+        	Book.find({'username':req.user.local.username}, {new:true}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    		});
     	} else {
         		console.log(error);
         		res.end();
     		}
 		});
+    	
+    });
+    
+    app.post('/removebook', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.id);
+    	
+    	Book.find({'_id':req.body.id}).remove().exec(function(err, data){
+    		if(err) throw err;
+    		Book.find({'username':req.user.local.username}, {new:true}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    		});
+    	});
+    	
+    });
+    
+    
+    app.get('/getprofiledata', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.user.local.username);
+    	
+    	Book.find({'username':req.user.local.username}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    	});
     	
     });
     
