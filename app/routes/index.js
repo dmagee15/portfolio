@@ -137,6 +137,58 @@ module.exports = function (app, passport, googleBooks) {
     	
     });
     
+    app.get('/getallbooksdata', function(req,res){
+    	console.log("Fetch request successful");
+
+    	Book.find({}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    	});
+    	
+    });
+    
+    app.post('/requestbook', function(req,res){
+    	console.log("Fetch request successful");
+
+    	Book.find({'_id':req.body.id}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		if(data[0].username == req.user.local.username){
+    			console.log("this is your book");
+    			Book.find({}, function(err,data){
+    					if(err) throw err;
+    					console.log(JSON.stringify(data));
+    					res.send(data);
+    				});
+    		}
+    		else
+    		if(data[0].tradeRequests.indexOf(req.user.local.username)==-1){
+    			Book.findOneAndUpdate({'_id':req.body.id},{$push: {tradeRequests: req.user.local.username}},{new:true}, function(err,data){
+    				if(err) throw err;
+    				console.log("tradeRequests: "+data.tradeRequests);
+    				Book.find({}, function(err,data){
+    					if(err) throw err;
+    					console.log(JSON.stringify(data));
+    					res.send(data);
+    				});
+    			});
+    		}
+    		else{
+    			Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.user.local.username}},{new:true}, function(err,data){
+    				if(err) throw err;
+    				console.log("tradeRequests: "+data.tradeRequests);
+    				Book.find({}, function(err,data){
+    					if(err) throw err;
+    					console.log(JSON.stringify(data));
+    					res.send(data);
+    				});
+    			});
+    		}
+    	});
+    	
+    });
+    
     app.post('/data', function(req,res){
     	User.find({},function(err,data){
     		if(err)throw err;

@@ -10,7 +10,7 @@ import SignUp from "./components/SignUp.js";
 import Login from "./components/Login.js";
 import Header from "./components/Header.js";
 import Profile from "./components/Profile.js";
-
+import AllBooks from "./components/AllBooks.js";
 
 const ADD = 'ADD';
 
@@ -115,6 +115,9 @@ class App extends React.Component{
                 )} />
                 <Route exact path='/profile' render={(props) => (
                     <Profile store={this.props}/>
+                )} />
+                <Route exact path='/allbooks' render={(props) => (
+                    <AllBooks store={this.props}/>
                 )} />
                 <Route exact path='/login' render={(props) => (
                     <Login store={this.props}/>

@@ -37,7 +37,7 @@ class Header extends React.Component{
             <HoverButton float='left' text='Home' address="/"/>
             <LogoutButton float='right' store={this.props.store}/>
             <HoverButton float='right' text='My Profile' address="/profile"/>
-            <HoverButton float='right' text='All Books' address="/signup"/>
+            <HoverButton float='right' text='All Books' address="/allbooks"/>
             <p style={loggedStyle}>Welcome, <span style={spanStyle}>{this.props.store.user.username}</span></p>
           </div>
           ); 
