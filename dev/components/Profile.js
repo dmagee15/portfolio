@@ -28,7 +28,8 @@ class Profile extends React.Component{
             return data.json();
         }).then((j) =>{
             console.log(j);
-            this.setState({myBooksArray: j});
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
         });
     };
     
@@ -44,7 +45,8 @@ class Profile extends React.Component{
             return data.json();
         }).then((j) =>{
             console.log(j);
-            this.setState({myBooksArray:j});
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
 
 
         });
@@ -63,7 +65,8 @@ class Profile extends React.Component{
             return data.json();
         }).then((j) =>{
             console.log(j);
-            this.setState({myBooksArray:j});
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
 
 
         });
@@ -252,8 +255,8 @@ class BookAdded extends React.Component{
         var imgStyle = {
             width: 220,
             height: 230,
-            background: "url('"+this.props.book.thumbnail+"')",
             backgroundSize: 'cover',
+            backgroundImage: "url('"+this.props.book.thumbnail+"')",
             display:'inline-block'
         }
         var divContentStyle = {

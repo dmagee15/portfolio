@@ -29330,7 +29330,8 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                _this.setState({ myBooksArray: j });
+                var myBooksArray = j.slice();
+                _this.setState({ myBooksArray: myBooksArray });
             });
         };
 
@@ -29346,7 +29347,8 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                _this.setState({ myBooksArray: j });
+                var myBooksArray = j.slice();
+                _this.setState({ myBooksArray: myBooksArray });
             });
         };
 
@@ -29363,7 +29365,8 @@ var Profile = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log(j);
-                _this.setState({ myBooksArray: j });
+                var myBooksArray = j.slice();
+                _this.setState({ myBooksArray: myBooksArray });
             });
         };
 
@@ -29601,8 +29604,8 @@ var BookAdded = function (_React$Component2) {
             var imgStyle = {
                 width: 220,
                 height: 230,
-                background: "url('" + this.props.book.thumbnail + "')",
                 backgroundSize: 'cover',
+                backgroundImage: "url('" + this.props.book.thumbnail + "')",
                 display: 'inline-block'
             };
             var divContentStyle = {

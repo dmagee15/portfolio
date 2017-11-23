@@ -90,11 +90,14 @@ module.exports = function (app, passport, googleBooks) {
         	newBook.tradeConfirmDate = '';
         	console.log("New Book");
         	console.log(newBook);
-        	newBook.save();
-        	Book.find({'username':req.user.local.username}, {new:true}, function(err,data){
-    		if(err) throw err;
-    		console.log(JSON.stringify(data));
-    		res.send(data);
+        	newBook.save(function(err){
+        		if(err) throw err;
+        		Book.find({'username':req.user.local.username}, function(err,data){
+    			if(err) throw err;
+    			console.log("username: "+req.user.local.username);
+    			console.log(JSON.stringify(data));
+    			res.send(data);
+        		});
     		});
     	} else {
         		console.log(error);
@@ -110,8 +113,9 @@ module.exports = function (app, passport, googleBooks) {
     	
     	Book.find({'_id':req.body.id}).remove().exec(function(err, data){
     		if(err) throw err;
-    		Book.find({'username':req.user.local.username}, {new:true}, function(err,data){
+    		Book.find({'username':req.user.local.username}, function(err,data){
     		if(err) throw err;
+    		console.log("username: "+req.user.local.username);
     		console.log(JSON.stringify(data));
     		res.send(data);
     		});
@@ -126,6 +130,7 @@ module.exports = function (app, passport, googleBooks) {
     	
     	Book.find({'username':req.user.local.username}, function(err,data){
     		if(err) throw err;
+    		console.log("username: "+req.user.local.username);
     		console.log(JSON.stringify(data));
     		res.send(data);
     	});
