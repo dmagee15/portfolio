@@ -29408,7 +29408,9 @@ var Profile = function (_React$Component) {
             myBooksArray: [],
             passwordInput: '',
             emailInput: '',
-            showInfoBook: null
+            showInfoBook: null,
+            tradeRequestsWindow: false,
+            tradeRequestsForYouWindow: false
         };
 
         return _this;
@@ -29537,6 +29539,7 @@ var Profile = function (_React$Component) {
                             "Trade Requests For You"
                         )
                     ),
+                    _react2.default.createElement(YourRequests, null),
                     _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
                         "h3",
@@ -29704,8 +29707,145 @@ var BookAdded = function (_React$Component2) {
     return BookAdded;
 }(_react2.default.Component);
 
-var BookInfoBox = function (_React$Component3) {
-    _inherits(BookInfoBox, _React$Component3);
+var TradeRequestBook = function (_React$Component3) {
+    _inherits(TradeRequestBook, _React$Component3);
+
+    function TradeRequestBook(props) {
+        _classCallCheck(this, TradeRequestBook);
+
+        return _possibleConstructorReturn(this, (TradeRequestBook.__proto__ || Object.getPrototypeOf(TradeRequestBook)).call(this, props));
+    }
+
+    _createClass(TradeRequestBook, [{
+        key: "render",
+        value: function render() {
+            var _infoButtonStyle2,
+                _this6 = this;
+
+            var thumbnailStyle = {
+                height: 230,
+                width: '100%',
+                display: 'inline-block',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0
+            };
+            var titleStyle = {
+                display: 'inline-block',
+                width: '100%',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Arial'
+            };
+            var divStyle = {
+                display: 'inline-block',
+                width: 220,
+                margin: "10px 25px 10px 25px",
+                padding: 0,
+                verticalAlign: 'top',
+                boxShadow: '3px 3px 2px 2px #888888',
+                overflow: 'hidden',
+                overflowX: 'hidden'
+            };
+            var imgStyle = {
+                width: 220,
+                height: 230,
+                backgroundSize: 'cover',
+                backgroundImage: "url('" + this.props.book.thumbnail + "')",
+                display: 'inline-block'
+            };
+            var divContentStyle = {
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var subtextStyle = {
+                color: '#D8D8D8',
+                margin: 0,
+                padding: 0
+            };
+            var buttonDiv = {
+                height: 70,
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var removeButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'black',
+                color: 'white',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                border: 'none',
+                margin: '15px 30px 30px 5px',
+                fontFamily: 'Tahoma',
+                fontSize: 18,
+                fontWeight: 900
+            };
+            var infoButtonStyle = (_infoButtonStyle2 = {
+                display: 'inline-block',
+                backgroundColor: 'lightblue',
+                color: 'black',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_infoButtonStyle2, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle2, "fontSize", 18), _defineProperty(_infoButtonStyle2, "fontWeight", 900), _infoButtonStyle2);
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "div",
+                    { style: thumbnailStyle },
+                    _react2.default.createElement("div", { style: imgStyle })
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: divContentStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: titleStyle },
+                        this.props.book.title
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Author: ",
+                        this.props.book.author
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Owner: ",
+                        this.props.book.username,
+                        ", ",
+                        this.props.book.location
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: removeButtonStyle, onClick: function onClick() {
+                                _this6.props.removeRequest(_this6.props.book._id);
+                            } },
+                        "Remove"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return TradeRequestBook;
+}(_react2.default.Component);
+
+var BookInfoBox = function (_React$Component4) {
+    _inherits(BookInfoBox, _React$Component4);
 
     function BookInfoBox(props) {
         _classCallCheck(this, BookInfoBox);
@@ -29874,6 +30014,96 @@ var BookInfoBox = function (_React$Component3) {
     }]);
 
     return BookInfoBox;
+}(_react2.default.Component);
+
+var YourRequests = function (_React$Component5) {
+    _inherits(YourRequests, _React$Component5);
+
+    function YourRequests(props) {
+        _classCallCheck(this, YourRequests);
+
+        var _this8 = _possibleConstructorReturn(this, (YourRequests.__proto__ || Object.getPrototypeOf(YourRequests)).call(this, props));
+
+        _this8.componentWillMount = function () {
+            fetch('/getyourtraderequests', {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include'
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this8.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this8.removeRequest = function (id) {
+            console.log("REMOVE REQUEST");
+            console.log(id);
+            fetch('/removerequest', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "id": id
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this8.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this8.state = {
+            myBooksArray: []
+        };
+        return _this8;
+    }
+
+    _createClass(YourRequests, [{
+        key: "render",
+        value: function render() {
+            var _this9 = this;
+
+            var divStyle = {};
+            var boxStyle = {
+                width: '100%',
+                minHeight: 200,
+                margin: '20px 0 20px 0'
+            };
+            var hrStyle = {
+                borderColor: '#F2F2F2',
+                width: '100%'
+            };
+            var pStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var booksDisplay = this.state.myBooksArray.map(function (book, index) {
+                return _react2.default.createElement(TradeRequestBook, { key: index, book: book, removeRequest: _this9.removeRequest });
+            });
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement("hr", { style: hrStyle }),
+                _react2.default.createElement(
+                    "h3",
+                    { style: pStyle },
+                    "My Trade Requests"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: boxStyle },
+                    booksDisplay
+                )
+            );
+        }
+    }]);
+
+    return YourRequests;
 }(_react2.default.Component);
 
 exports.default = Profile;
@@ -30220,6 +30450,18 @@ var AllBookAdded = function (_React$Component2) {
                 margin: 0,
                 border: 'none'
             }, _defineProperty(_requestButtonStyle, "margin", '15px 0 0 10px'), _defineProperty(_requestButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_requestButtonStyle, "fontSize", 18), _defineProperty(_requestButtonStyle, "fontWeight", 900), _requestButtonStyle);
+            var blankInfoButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'lightblue',
+                color: 'black',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                border: 'none',
+                margin: '15px 30px 30px 5px',
+                fontFamily: 'Tahoma',
+                fontSize: 18,
+                fontWeight: 900
+            };
             var infoButtonStyle = (_infoButtonStyle = {
                 display: 'inline-block',
                 backgroundColor: 'lightblue',
@@ -30230,54 +30472,100 @@ var AllBookAdded = function (_React$Component2) {
                 border: 'none'
             }, _defineProperty(_infoButtonStyle, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle, "fontSize", 18), _defineProperty(_infoButtonStyle, "fontWeight", 900), _infoButtonStyle);
 
-            return _react2.default.createElement(
-                "div",
-                { style: divStyle },
-                _react2.default.createElement(
+            if (this.props.book.username == this.props.store.user.username) {
+                return _react2.default.createElement(
                     "div",
-                    { style: thumbnailStyle },
-                    _react2.default.createElement("div", { style: imgStyle })
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { style: divContentStyle },
+                    { style: divStyle },
                     _react2.default.createElement(
-                        "h3",
-                        { style: titleStyle },
-                        this.props.book.title
+                        "div",
+                        { style: thumbnailStyle },
+                        _react2.default.createElement("div", { style: imgStyle })
                     ),
                     _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Author: ",
-                        this.props.book.author
+                        "div",
+                        { style: divContentStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: titleStyle },
+                            this.props.book.title
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Author: ",
+                            this.props.book.author
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Year: ",
+                            this.props.book.publishedDate
+                        )
                     ),
                     _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Year: ",
-                        this.props.book.publishedDate
+                        "div",
+                        { style: buttonDiv },
+                        _react2.default.createElement(
+                            "button",
+                            { style: blankInfoButtonStyle, onClick: function onClick() {
+                                    _this4.props.showInfoWindow(_this4.props.book);
+                                } },
+                            "Book Info"
+                        )
                     )
-                ),
-                _react2.default.createElement(
+                );
+            } else {
+                return _react2.default.createElement(
                     "div",
-                    { style: buttonDiv },
+                    { style: divStyle },
                     _react2.default.createElement(
-                        "button",
-                        { style: requestButtonStyle, onClick: function onClick() {
-                                _this4.props.requestBook(_this4.props.book._id);
-                            } },
-                        "Request"
+                        "div",
+                        { style: thumbnailStyle },
+                        _react2.default.createElement("div", { style: imgStyle })
                     ),
                     _react2.default.createElement(
-                        "button",
-                        { style: infoButtonStyle, onClick: function onClick() {
-                                _this4.props.showInfoWindow(_this4.props.book);
-                            } },
-                        "Book Info"
+                        "div",
+                        { style: divContentStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: titleStyle },
+                            this.props.book.title
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Author: ",
+                            this.props.book.author
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Owner: ",
+                            this.props.book.username,
+                            ", ",
+                            this.props.book.location
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { style: buttonDiv },
+                        _react2.default.createElement(
+                            "button",
+                            { style: requestButtonStyle, onClick: function onClick() {
+                                    _this4.props.requestBook(_this4.props.book._id);
+                                } },
+                            "Request"
+                        ),
+                        _react2.default.createElement(
+                            "button",
+                            { style: infoButtonStyle, onClick: function onClick() {
+                                    _this4.props.showInfoWindow(_this4.props.book);
+                                } },
+                            "Book Info"
+                        )
                     )
-                )
-            );
+                );
+            }
         }
     }]);
 

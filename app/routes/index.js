@@ -123,6 +123,24 @@ module.exports = function (app, passport, googleBooks) {
     	
     });
     
+    app.post('/removerequest', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.id);
+    	
+    	Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.user.local.username}},{new:true}, function(err,data){
+    		if(err) throw err;
+    		console.log("username: "+req.user.local.username);
+    		console.log(JSON.stringify(data));
+    		Book.find({tradeRequests: req.user.local.username }, function(err,data){
+    		if(err) throw err;
+    		console.log("GET YOUR TRADE REQUESTS");
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    		});
+    	});
+    	
+    });
+    
     
     app.get('/getprofiledata', function(req,res){
     	console.log("Fetch request successful");
@@ -142,6 +160,18 @@ module.exports = function (app, passport, googleBooks) {
 
     	Book.find({}, function(err,data){
     		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		res.send(data);
+    	});
+    	
+    });
+    
+    app.get('/getyourtraderequests', function(req,res){
+    	console.log("Fetch request successful");
+
+    	Book.find({tradeRequests: req.user.local.username }, function(err,data){
+    		if(err) throw err;
+    		console.log("GET YOUR TRADE REQUESTS");
     		console.log(JSON.stringify(data));
     		res.send(data);
     	});

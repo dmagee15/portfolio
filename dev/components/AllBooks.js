@@ -283,6 +283,18 @@ class AllBookAdded extends React.Component{
             fontSize: 18,
             fontWeight: 900
         };
+        var blankInfoButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'lightblue',
+            color: 'black',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            border: 'none',
+            margin: '15px 30px 30px 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
         var infoButtonStyle = {
             display: 'inline-block',
             backgroundColor: 'lightblue',
@@ -297,8 +309,9 @@ class AllBookAdded extends React.Component{
             fontWeight: 900
         };
         
-        return (
-            <div style={divStyle}>
+        if(this.props.book.username==this.props.store.user.username){
+            return (
+                <div style={divStyle}>
                 <div style={thumbnailStyle}>
                     <div style={imgStyle}>
                     </div>
@@ -309,11 +322,30 @@ class AllBookAdded extends React.Component{
                     <p style={subtextStyle}>Year: {this.props.book.publishedDate}</p>
                 </div>
                 <div style={buttonDiv}>
-                    <button style={requestButtonStyle} onClick={() => {this.props.requestBook(this.props.book._id)}}>Request</button>
-                    <button style={infoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
+                        <button style={blankInfoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
+                </div>
+            </div>
+                );
+        }
+        else{
+        return (
+            <div style={divStyle}>
+                <div style={thumbnailStyle}>
+                    <div style={imgStyle}>
+                    </div>
+                </div>
+                <div style={divContentStyle}>
+                    <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
+                    <p style={subtextStyle}>Owner: {this.props.book.username}, {this.props.book.location}</p>
+                </div>
+                <div style={buttonDiv}>
+                        <button style={requestButtonStyle} onClick={() => {this.props.requestBook(this.props.book._id)}}>Request</button>
+                        <button style={infoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
                 </div>
             </div>
             );
+        }
     }
 }
 

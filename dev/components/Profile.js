@@ -13,7 +13,9 @@ class Profile extends React.Component{
             myBooksArray: [],
             passwordInput: '',
             emailInput: '',
-            showInfoBook: null
+            showInfoBook: null,
+            tradeRequestsWindow: false,
+            tradeRequestsForYouWindow: false
             };
     
     }
@@ -201,6 +203,7 @@ class Profile extends React.Component{
                         <button style={yourTradeRequestsStyle}>Your Trade Requests</button>
                         <button style={requestsForYouStyle}>Trade Requests For You</button>
                     </div>
+                    <YourRequests />
                     <hr style={hrStyle}/>
                     <h3 style={pStyle}>My Books</h3>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
@@ -316,6 +319,109 @@ class BookAdded extends React.Component{
                 <div style={buttonDiv}>
                     <button style={removeButtonStyle} onClick={() => {this.props.removeBook(this.props.book._id)}}>Remove</button>
                     <button style={infoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
+                </div>
+            </div>
+            );
+    }
+}
+
+class TradeRequestBook extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    
+    render(){
+
+        var thumbnailStyle = {
+            height: 230,
+            width: '100%',
+            display: 'inline-block',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0
+        }
+        var titleStyle = {
+            display: 'inline-block',
+            width:'100%',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0,
+            fontFamily: 'Arial'
+        }
+        var divStyle = {
+            display: 'inline-block',
+            width: 220,
+            margin: "10px 25px 10px 25px",
+            padding:0,
+            verticalAlign: 'top',
+            boxShadow: '3px 3px 2px 2px #888888',
+            overflow: 'hidden',
+            overflowX: 'hidden'
+        }
+        var imgStyle = {
+            width: 220,
+            height: 230,
+            backgroundSize: 'cover',
+            backgroundImage: "url('"+this.props.book.thumbnail+"')",
+            display:'inline-block'
+        }
+        var divContentStyle = {
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var subtextStyle = {
+            color: '#D8D8D8',
+            margin: 0,
+            padding: 0
+        };
+        var buttonDiv = {
+            height: 70,
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var removeButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'black',
+            color: 'white',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            border: 'none',
+            margin: '15px 30px 30px 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        var infoButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'lightblue',
+            color: 'black',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            margin:0,
+            border: 'none',
+            margin: '15px 0 0 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        
+        return (
+            <div style={divStyle}>
+                <div style={thumbnailStyle}>
+                    <div style={imgStyle}>
+                    </div>
+                </div>
+                <div style={divContentStyle}>
+                    <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
+                    <p style={subtextStyle}>Owner: {this.props.book.username}, {this.props.book.location}</p>
+                </div>
+                <div style={buttonDiv}>
+                    <button style={removeButtonStyle} onClick={() => {this.props.removeRequest(this.props.book._id)}}>Remove</button>
                 </div>
             </div>
             );
@@ -439,6 +545,82 @@ class BookInfoBox extends React.Component{
                     </div>
                 </div>
             
+            </div>
+            );
+    }
+}
+
+class YourRequests extends React.Component{
+    constructor(props) {
+    super(props);
+    
+    this.state = {
+            myBooksArray: []
+            };
+    }
+    componentWillMount = () => {
+        fetch('/getyourtraderequests', {
+        method: 'GET',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include'
+        })
+        .then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+        });
+    };
+    removeRequest = (id) => {
+        console.log("REMOVE REQUEST");
+        console.log(id);
+        fetch('/removerequest', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"id":id,
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+
+
+        });
+
+    }
+    
+    render(){
+        var divStyle = {
+            
+        };
+        var boxStyle = {
+            width: '100%',
+		    minHeight: 200,
+		    margin: '20px 0 20px 0'
+        };
+        var hrStyle = {
+		    borderColor:'#F2F2F2',
+		    width: '100%'
+		};
+		var pStyle = {
+		    padding: '5px 0px 5px 0px',
+		    margin:0,
+		    fontFamily:'Arial'
+		};
+		var booksDisplay = this.state.myBooksArray.map((book, index) => 
+		   <TradeRequestBook key={index} book={book} removeRequest={this.removeRequest}/>
+		);
+        return (
+            <div style={divStyle}>
+                <hr style={hrStyle}/>
+                <h3 style={pStyle}>My Trade Requests</h3>
+                <div style={boxStyle}>
+                    {booksDisplay}
+                </div>
             </div>
             );
     }
