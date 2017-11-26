@@ -11,7 +11,9 @@ class SignUp extends React.Component{
         usernameInput: '',
         passwordInput: '',
         emailInput: '',
-        locationInput: ''
+        cityInput: '',
+        stateInput: '',
+        fullNameInput: ''
         };
     }
     createAccount = (history) => {
@@ -23,7 +25,9 @@ class SignUp extends React.Component{
         body: JSON.stringify({"username":this.state.usernameInput,
             "password":this.state.passwordInput,
             "email":this.state.emailInput,
-            "location":this.state.locationInput
+            "city":this.state.cityInput,
+            "state":this.state.stateInput,
+            "fullName":this.state.fullNameInput
         })
         }).then(function(data) {
             return data.json();
@@ -51,9 +55,19 @@ class SignUp extends React.Component{
             emailInput: event.target.value
         });
     }
-    handleLocationChange = (event) => {
+    handleCityChange = (event) => {
         this.setState({
-            locationInput: event.target.value
+            cityInput: event.target.value
+        });
+    }
+    handleStateChange = (event) => {
+        this.setState({
+            stateInput: event.target.value
+        });
+    }
+    handleFullNameChange = (event) => {
+        this.setState({
+            fullNameInput: event.target.value
         });
     }
    render(){
@@ -74,6 +88,18 @@ class SignUp extends React.Component{
 					width: '100%',
 					height:25
 					};
+		var inputCityStyle = {
+					padding:0,
+					width: '100%',
+					height:25,
+					display:'inline-block'
+					};
+		var inputStateStyle = {
+					padding:0,
+					width: '100%',
+					height:25,
+					display:'inline-block',
+					};			
 		var hrStyle = {
 		    width:'70%',
 		    height:0,
@@ -88,6 +114,16 @@ class SignUp extends React.Component{
 		    margin:0,
 		    fontFamily:'Arial'
 		};
+		var pCityStyle = {
+		    padding: '5px 0px 5px 0px',
+		    margin:0,
+		    fontFamily:'Arial',
+		};
+		var pStateStyle = {
+		    padding: '5px 0px 5px 0px',
+		    margin:0,
+		    fontFamily:'Arial',
+		};
 		var buttonStyle = {
 		    background: 'lightblue',
 		    border:'none',
@@ -98,6 +134,18 @@ class SignUp extends React.Component{
 		    fontFamily: 'Arial',
 		    padding: '10px 10px 10px 10px'
 		};
+		var divCityStyle = {
+		    width:'45%',
+		    display:'inline-block'
+		};
+		var divStateStyle = {
+		    width:'45%',
+		    display:'inline-block'
+		};
+		var blankStyle = {
+		    width:'10%',
+		    display:'inline-block'
+		};
         
         return (
            <div style={divStyle}>
@@ -107,10 +155,20 @@ class SignUp extends React.Component{
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
+                    <h3 style={pStyle}>Full Name</h3>
+                    <input style={inputStyle} type="text" value={this.state.fullNameInput} onChange={this.handleFullNameChange}/>
                     <h3 style={pStyle}>Email</h3>
                     <input style={inputStyle} type="text" value={this.state.emailInput} onChange={this.handleEmailChange}/>
-                    <h3 style={pStyle}>Location</h3>
-                    <input style={inputStyle} type="text" value={this.state.locationInput} onChange={this.handleLocationChange}/>
+                    <div style={divCityStyle}>
+                        <h3 style={pCityStyle}>City</h3>
+                        <input style={inputCityStyle} type="text" value={this.state.cityInput} onChange={this.handleCityChange}/>
+                    </div>
+                    <div style={blankStyle}>
+                    </div>
+                    <div style={divStateStyle}>
+                        <h3 style={pStateStyle}>State</h3>
+                        <input style={inputStateStyle} type="text" value={this.state.stateInput} onChange={this.handleStateChange}/>
+                    </div>
                     <Route render={({ history}) => (
                         <button onClick={() => this.createAccount(history)} style={buttonStyle}>Create Account</button>
                     )} />

@@ -456,10 +456,12 @@ class TradeRequestBook extends React.Component{
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
                     <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Owner: {this.props.book.username}, {this.props.book.location}</p>
+                    <p style={subtextStyle}>Owner: {this.props.book.username}</p>
                 </div>
                 <div style={buttonDiv}>
-                    <button style={removeButtonStyle} onClick={() => {this.props.removeRequest(this.props.book._id)}}>Remove</button>
+                {(this.props.store.user.username!=this.props.book.tradeConfirmUser) &&
+                <button style={removeButtonStyle} onClick={() => {this.props.removeRequest(this.props.book._id)}}>Remove</button>
+                }
                 </div>
             </div>
             );
@@ -905,10 +907,11 @@ class RequestForYouBook extends React.Component{
             padding:'0px 5px 0px 5px',
             margin:0,
             border: 'none',
-            margin: '15px 0 0 5px',
+            margin: '15px 10px 0 5px',
             fontFamily: 'Tahoma',
             fontSize: 16,
-            fontWeight: 900
+            fontWeight: 900,
+            float: 'right'
         };
         
         
@@ -933,11 +936,13 @@ class RequestForYouBook extends React.Component{
                     <p style={subtextStyle}>Request From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
                 </div>
                 <div style={buttonDiv}>
-                    <button style={removeButtonStyle} onClick={() => {this.props.removeRequestForYou(this.props.book._id,this.props.book.tradeRequestUser)}}>Remove</button>
                     {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
                             <button style={unapproveButtonStyle} onClick={this.unapproveHandler}>Unapprove</button>
                         ):(
+                        <div>
+                            <button style={removeButtonStyle} onClick={() => {this.props.removeRequestForYou(this.props.book._id,this.props.book.tradeRequestUser)}}>Remove</button>
                             <button style={approveButtonStyle} onClick={this.approveHandler}>Approve</button>
+                        </div>
                     )}
                 </div>
             </div>

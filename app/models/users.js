@@ -8,11 +8,13 @@ var User = new Schema({
         username: String,
         password: String,
         email: String,
-        location: String,
         about: String,
         myBooks: Array,
         tradeRequests: Array,
-        tradeRequestsForYou: Array
+        tradeRequestsForYou: Array,
+        fullName: String,
+        city: String,
+        state: String
     }
 });
 

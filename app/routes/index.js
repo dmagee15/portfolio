@@ -25,11 +25,13 @@ module.exports = function (app, passport, googleBooks) {
 	app.post('/createnewuser', passport.authenticate('local-signup',{ failureFlash: 'Username already exists.' }), function(req,res){
 		console.log("authentication successful");
 		console.log(req.body.email);
-		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email,'local.location':req.body.location},{new:true}, function(err,data){
+		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email,'local.city':req.body.city,'local.state':req.body.state,'local.fullName':req.body.fullName},{new:true}, function(err,data){
 			if(err)throw err;
 			var userData = {
 				email: data.local.email,
-				location: data.local.location,
+				city: data.local.city,
+				state: data.local.state,
+				fullName: data.local.fullName,
 				about: data.local.about,
 				username: data.local.username,
 				tradeRequestsForYou: data.local.tradeRequestsForYou,
@@ -48,7 +50,9 @@ module.exports = function (app, passport, googleBooks) {
 			console.log(JSON.stringify(data));
 			var userData = {
 				email: req.user.local.email,
-				location: req.user.local.location,
+				city: req.user.local.city,
+				state: req.user.local.state,
+				fullName: req.user.local.fullName,
 				about: req.user.local.about,
 				username: req.user.local.username,
 				tradeRequestsForYou: req.user.local.tradeRequestsForYou,
@@ -83,7 +87,9 @@ module.exports = function (app, passport, googleBooks) {
         	newBook.publishedDate = resultArray.publishedDate;
         	newBook.pageCount = resultArray.pageCount;
         	newBook.description = resultArray.description;
-        	newBook.location = req.user.local.location;
+        	newBook.city = req.user.local.city;
+        	newBook.state = req.user.local.state;
+        	newBook.fullName = req.user.local.fullName;
         	newBook.username = req.user.local.username;
         	newBook.tradeRequests = [];
         	newBook.tradeConfirmUser = '';
@@ -161,6 +167,7 @@ module.exports = function (app, passport, googleBooks) {
     	
     	Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.body.tradeRequestUser}},{new:true}, function(err,data){
     		if(err) throw err;
+    		
     		Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
     		if(err) throw err;
     		console.log("GET YOUR TRADE REQUESTS");
@@ -175,7 +182,9 @@ module.exports = function (app, passport, googleBooks) {
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
     					"username": data[x].username,
-    					"location": data[x].location,
+    					"city": data[x].city,
+    					"state": data[x].state,
+    					"fullName": data[x].fullName,
     					"description": data[x].description,
     					"pageCount": data[x].pageCount,
     					"publishedDate": data[x].publishedDate,
@@ -215,7 +224,9 @@ module.exports = function (app, passport, googleBooks) {
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
     					"username": data[x].username,
-    					"location": data[x].location,
+    					"city": data[x].city,
+    					"state": data[x].state,
+    					"fullName": data[x].fullName,
     					"description": data[x].description,
     					"pageCount": data[x].pageCount,
     					"publishedDate": data[x].publishedDate,
@@ -255,7 +266,9 @@ module.exports = function (app, passport, googleBooks) {
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
     					"username": data[x].username,
-    					"location": data[x].location,
+    					"city": data[x].city,
+    					"state": data[x].state,
+    					"fullName": data[x].fullName,
     					"description": data[x].description,
     					"pageCount": data[x].pageCount,
     					"publishedDate": data[x].publishedDate,
@@ -327,7 +340,9 @@ module.exports = function (app, passport, googleBooks) {
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
     					"username": data[x].username,
-    					"location": data[x].location,
+    					"city": data[x].city,
+    					"state": data[x].state,
+    					"fullName": data[x].fullName,
     					"description": data[x].description,
     					"pageCount": data[x].pageCount,
     					"publishedDate": data[x].publishedDate,
@@ -417,7 +432,9 @@ module.exports = function (app, passport, googleBooks) {
 					if(err) throw err;
 					var userData = {
 					email: req.user.local.email,
-					location: req.user.local.location,
+					city: req.user.local.city,
+					state: req.user.local.state,
+					fullName: req.user.local.fullName,
 					about: req.user.local.about,
 					username: req.user.local.username,
 					tradeRequestsForYou: req.user.local.tradeRequestsForYou,

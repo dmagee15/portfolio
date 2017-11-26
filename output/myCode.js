@@ -3979,7 +3979,9 @@ var ADD = 'ADD';
 var initialState = {
     authenticated: false,
     username: '',
-    location: '',
+    city: '',
+    state: '',
+    fullName: '',
     about: '',
     tradeRequestsForYou: [],
     tradeRequests: [],
@@ -4009,6 +4011,9 @@ var messageReducer = function messageReducer() {
                 authenticated: true,
                 username: action.user.username,
                 location: action.user.location,
+                city: action.user.city,
+                state: action.user.state,
+                fullName: action.user.fullName,
                 about: action.user.about,
                 tradeRequestsForYou: action.user.tradeRequestsForYou,
                 tradeRequests: action.user.tradeRequests,
@@ -4018,7 +4023,9 @@ var messageReducer = function messageReducer() {
             return Object.assign({}, state, {
                 authenticated: false,
                 username: '',
-                location: '',
+                city: '',
+                state: '',
+                fullName: '',
                 about: '',
                 tradeRequestsForYou: [],
                 tradeRequests: [],
@@ -28735,7 +28742,9 @@ var SignUp = function (_React$Component) {
                 body: JSON.stringify({ "username": _this.state.usernameInput,
                     "password": _this.state.passwordInput,
                     "email": _this.state.emailInput,
-                    "location": _this.state.locationInput
+                    "city": _this.state.cityInput,
+                    "state": _this.state.stateInput,
+                    "fullName": _this.state.fullNameInput
                 })
             }).then(function (data) {
                 return data.json();
@@ -28766,9 +28775,21 @@ var SignUp = function (_React$Component) {
             });
         };
 
-        _this.handleLocationChange = function (event) {
+        _this.handleCityChange = function (event) {
             _this.setState({
-                locationInput: event.target.value
+                cityInput: event.target.value
+            });
+        };
+
+        _this.handleStateChange = function (event) {
+            _this.setState({
+                stateInput: event.target.value
+            });
+        };
+
+        _this.handleFullNameChange = function (event) {
+            _this.setState({
+                fullNameInput: event.target.value
             });
         };
 
@@ -28776,7 +28797,9 @@ var SignUp = function (_React$Component) {
             usernameInput: '',
             passwordInput: '',
             emailInput: '',
-            locationInput: ''
+            cityInput: '',
+            stateInput: '',
+            fullNameInput: ''
         };
         return _this;
     }
@@ -28803,6 +28826,18 @@ var SignUp = function (_React$Component) {
                 width: '100%',
                 height: 25
             };
+            var inputCityStyle = {
+                padding: 0,
+                width: '100%',
+                height: 25,
+                display: 'inline-block'
+            };
+            var inputStateStyle = {
+                padding: 0,
+                width: '100%',
+                height: 25,
+                display: 'inline-block'
+            };
             var hrStyle = {
                 width: '70%',
                 height: 0,
@@ -28817,6 +28852,16 @@ var SignUp = function (_React$Component) {
                 margin: 0,
                 fontFamily: 'Arial'
             };
+            var pCityStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var pStateStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
             var buttonStyle = {
                 background: 'lightblue',
                 border: 'none',
@@ -28826,6 +28871,18 @@ var SignUp = function (_React$Component) {
                 fontSize: 18,
                 fontFamily: 'Arial',
                 padding: '10px 10px 10px 10px'
+            };
+            var divCityStyle = {
+                width: '45%',
+                display: 'inline-block'
+            };
+            var divStateStyle = {
+                width: '45%',
+                display: 'inline-block'
+            };
+            var blankStyle = {
+                width: '10%',
+                display: 'inline-block'
             };
 
             return _react2.default.createElement(
@@ -28854,15 +28911,36 @@ var SignUp = function (_React$Component) {
                     _react2.default.createElement(
                         "h3",
                         { style: pStyle },
+                        "Full Name"
+                    ),
+                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.fullNameInput, onChange: this.handleFullNameChange }),
+                    _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
                         "Email"
                     ),
                     _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.emailInput, onChange: this.handleEmailChange }),
                     _react2.default.createElement(
-                        "h3",
-                        { style: pStyle },
-                        "Location"
+                        "div",
+                        { style: divCityStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: pCityStyle },
+                            "City"
+                        ),
+                        _react2.default.createElement("input", { style: inputCityStyle, type: "text", value: this.state.cityInput, onChange: this.handleCityChange })
                     ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.locationInput, onChange: this.handleLocationChange }),
+                    _react2.default.createElement("div", { style: blankStyle }),
+                    _react2.default.createElement(
+                        "div",
+                        { style: divStateStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: pStateStyle },
+                            "State"
+                        ),
+                        _react2.default.createElement("input", { style: inputStateStyle, type: "text", value: this.state.stateInput, onChange: this.handleStateChange })
+                    ),
                     _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
                             var history = _ref.history;
                             return _react2.default.createElement(
@@ -29869,15 +29947,13 @@ var TradeRequestBook = function (_React$Component3) {
                         "p",
                         { style: subtextStyle },
                         "Owner: ",
-                        this.props.book.username,
-                        ", ",
-                        this.props.book.location
+                        this.props.book.username
                     )
                 ),
                 _react2.default.createElement(
                     "div",
                     { style: buttonDiv },
-                    _react2.default.createElement(
+                    this.props.store.user.username != this.props.book.tradeConfirmUser && _react2.default.createElement(
                         "button",
                         { style: removeButtonStyle, onClick: function onClick() {
                                 _this6.props.removeRequest(_this6.props.book._id);
@@ -30415,7 +30491,7 @@ var RequestForYouBook = function (_React$Component7) {
                 padding: '0px 5px 0px 5px',
                 margin: 0,
                 border: 'none'
-            }, _defineProperty(_unapproveButtonStyle, "margin", '15px 0 0 5px'), _defineProperty(_unapproveButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_unapproveButtonStyle, "fontSize", 16), _defineProperty(_unapproveButtonStyle, "fontWeight", 900), _unapproveButtonStyle);
+            }, _defineProperty(_unapproveButtonStyle, "margin", '15px 10px 0 5px'), _defineProperty(_unapproveButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_unapproveButtonStyle, "fontSize", 16), _defineProperty(_unapproveButtonStyle, "fontWeight", 900), _defineProperty(_unapproveButtonStyle, "float", 'right'), _unapproveButtonStyle);
 
             return _react2.default.createElement(
                 "div",
@@ -30470,21 +30546,25 @@ var RequestForYouBook = function (_React$Component7) {
                 _react2.default.createElement(
                     "div",
                     { style: buttonDiv },
-                    _react2.default.createElement(
-                        "button",
-                        { style: removeButtonStyle, onClick: function onClick() {
-                                _this13.props.removeRequestForYou(_this13.props.book._id, _this13.props.book.tradeRequestUser);
-                            } },
-                        "Remove"
-                    ),
                     this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(
                         "button",
                         { style: unapproveButtonStyle, onClick: this.unapproveHandler },
                         "Unapprove"
                     ) : _react2.default.createElement(
-                        "button",
-                        { style: approveButtonStyle, onClick: this.approveHandler },
-                        "Approve"
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "button",
+                            { style: removeButtonStyle, onClick: function onClick() {
+                                    _this13.props.removeRequestForYou(_this13.props.book._id, _this13.props.book.tradeRequestUser);
+                                } },
+                            "Remove"
+                        ),
+                        _react2.default.createElement(
+                            "button",
+                            { style: approveButtonStyle, onClick: this.approveHandler },
+                            "Approve"
+                        )
                     )
                 )
             );
@@ -30929,9 +31009,7 @@ var AllBookAdded = function (_React$Component2) {
                             "p",
                             { style: subtextStyle },
                             "Owner: ",
-                            this.props.book.username,
-                            ", ",
-                            this.props.book.location
+                            this.props.book.username
                         )
                     ),
                     _react2.default.createElement(
