@@ -211,7 +211,7 @@ class Profile extends React.Component{
                         <button style={yourTradeRequestsStyle} onClick={this.tradeRequestWindowHandler}>Your Trade Requests</button>
                         <button style={requestsForYouStyle} onClick={this.tradeRequestsForYouWindowHandler}>Trade Requests For You</button>
                     </div>
-                    <YourRequests visible={this.state.tradeRequestsWindow}/>
+                    <YourRequests visible={this.state.tradeRequestsWindow} store={this.props.store}/>
                     <RequestsForYou visible={this.state.tradeRequestsForYouWindow}/>
                     <hr style={hrStyle}/>
                     <h3 style={pStyle}>My Books</h3>
@@ -376,10 +376,16 @@ class TradeRequestBook extends React.Component{
             backgroundImage: "url('"+this.props.book.thumbnail+"')",
             display:'inline-block'
         }
-        var approvedStyle = {
+        var unapprovedStyle = {
             height: 30,
             width: 220,
             backgroundColor: '#FF5100',
+            textAlign: 'center'
+        }
+        var approvedStyle = {
+            height: 30,
+            width: 220,
+            backgroundColor: 'lightgreen',
             textAlign: 'center'
         }
         var approveTextStyle = {
@@ -435,9 +441,15 @@ class TradeRequestBook extends React.Component{
         return (
             <div style={divStyle}>
                 <div style={thumbnailStyle}>
+                {(this.props.store.user.username==this.props.book.tradeConfirmUser)?(
                     <div style={approvedStyle}>
+                        <h3 style={approveTextStyle}>Approved</h3>
+                    </div>
+                ):(
+                    <div style={unapprovedStyle}>
                         <h3 style={approveTextStyle}>Unapproved</h3>
                     </div>
+                )}
                     <div style={imgStyle}>
                     </div>
                 </div>
@@ -643,7 +655,7 @@ class YourRequests extends React.Component{
 		    fontFamily:'Arial'
 		};
 		var booksDisplay = this.state.myBooksArray.map((book, index) => 
-		   <TradeRequestBook key={index} book={book} removeRequest={this.removeRequest}/>
+		   <TradeRequestBook key={index} book={book} removeRequest={this.removeRequest} store={this.props.store}/>
 		);
         return (
             <div style={divStyle}>
@@ -679,14 +691,14 @@ class RequestsForYou extends React.Component{
             this.setState({myBooksArray});
         });
     };
-    removeRequest = (id) => {
+    removeRequestForYou = (id, tradeRequestUser) => {
         console.log("REMOVE REQUEST");
         console.log(id);
-        fetch('/removerequest', {
+        fetch('/removerequestforyou', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         credentials: 'include',
-        body: JSON.stringify({"id":id,
+        body: JSON.stringify({"id":id, "tradeRequestUser":tradeRequestUser
         })
         }).then(function(data) {
             return data.json();
@@ -761,7 +773,7 @@ class RequestsForYou extends React.Component{
 		    fontFamily:'Arial'
 		};
 		var booksDisplay = this.state.myBooksArray.map((book, index) => 
-		   <RequestForYouBook key={index} book={book} removeRequest={this.removeRequest} approveRequest={this.approveRequest} unapproveRequest={this.unapproveRequest}/>
+		   <RequestForYouBook key={index} book={book} removeRequestForYou={this.removeRequestForYou} approveRequest={this.approveRequest} unapproveRequest={this.unapproveRequest}/>
 		);
         return (
             <div style={divStyle}>
@@ -921,7 +933,7 @@ class RequestForYouBook extends React.Component{
                     <p style={subtextStyle}>Request From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
                 </div>
                 <div style={buttonDiv}>
-                    <button style={removeButtonStyle}>Remove</button>
+                    <button style={removeButtonStyle} onClick={() => {this.props.removeRequestForYou(this.props.book._id,this.props.book.tradeRequestUser)}}>Remove</button>
                     {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
                             <button style={unapproveButtonStyle} onClick={this.unapproveHandler}>Unapprove</button>
                         ):(

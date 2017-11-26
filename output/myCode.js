@@ -29549,7 +29549,7 @@ var Profile = function (_React$Component) {
                             "Trade Requests For You"
                         )
                     ),
-                    _react2.default.createElement(YourRequests, { visible: this.state.tradeRequestsWindow }),
+                    _react2.default.createElement(YourRequests, { visible: this.state.tradeRequestsWindow, store: this.props.store }),
                     _react2.default.createElement(RequestsForYou, { visible: this.state.tradeRequestsForYouWindow }),
                     _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
@@ -29768,10 +29768,16 @@ var TradeRequestBook = function (_React$Component3) {
                 backgroundImage: "url('" + this.props.book.thumbnail + "')",
                 display: 'inline-block'
             };
-            var approvedStyle = {
+            var unapprovedStyle = {
                 height: 30,
                 width: 220,
                 backgroundColor: '#FF5100',
+                textAlign: 'center'
+            };
+            var approvedStyle = {
+                height: 30,
+                width: 220,
+                backgroundColor: 'lightgreen',
                 textAlign: 'center'
             };
             var approveTextStyle = {
@@ -29826,9 +29832,17 @@ var TradeRequestBook = function (_React$Component3) {
                 _react2.default.createElement(
                     "div",
                     { style: thumbnailStyle },
-                    _react2.default.createElement(
+                    this.props.store.user.username == this.props.book.tradeConfirmUser ? _react2.default.createElement(
                         "div",
                         { style: approvedStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: approveTextStyle },
+                            "Approved"
+                        )
+                    ) : _react2.default.createElement(
+                        "div",
+                        { style: unapprovedStyle },
                         _react2.default.createElement(
                             "h3",
                             { style: approveTextStyle },
@@ -30121,7 +30135,7 @@ var YourRequests = function (_React$Component5) {
                 fontFamily: 'Arial'
             };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(TradeRequestBook, { key: index, book: book, removeRequest: _this9.removeRequest });
+                return _react2.default.createElement(TradeRequestBook, { key: index, book: book, removeRequest: _this9.removeRequest, store: _this9.props.store });
             });
             return _react2.default.createElement(
                 "div",
@@ -30166,14 +30180,14 @@ var RequestsForYou = function (_React$Component6) {
             });
         };
 
-        _this10.removeRequest = function (id) {
+        _this10.removeRequestForYou = function (id, tradeRequestUser) {
             console.log("REMOVE REQUEST");
             console.log(id);
-            fetch('/removerequest', {
+            fetch('/removerequestforyou', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 credentials: 'include',
-                body: JSON.stringify({ "id": id
+                body: JSON.stringify({ "id": id, "tradeRequestUser": tradeRequestUser
                 })
             }).then(function (data) {
                 return data.json();
@@ -30250,7 +30264,7 @@ var RequestsForYou = function (_React$Component6) {
                 fontFamily: 'Arial'
             };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(RequestForYouBook, { key: index, book: book, removeRequest: _this11.removeRequest, approveRequest: _this11.approveRequest, unapproveRequest: _this11.unapproveRequest });
+                return _react2.default.createElement(RequestForYouBook, { key: index, book: book, removeRequestForYou: _this11.removeRequestForYou, approveRequest: _this11.approveRequest, unapproveRequest: _this11.unapproveRequest });
             });
             return _react2.default.createElement(
                 "div",
@@ -30297,7 +30311,9 @@ var RequestForYouBook = function (_React$Component7) {
     _createClass(RequestForYouBook, [{
         key: "render",
         value: function render() {
-            var _approveButtonStyle, _unapproveButtonStyle;
+            var _approveButtonStyle,
+                _unapproveButtonStyle,
+                _this13 = this;
 
             var thumbnailStyle = {
                 height: 230,
@@ -30456,7 +30472,9 @@ var RequestForYouBook = function (_React$Component7) {
                     { style: buttonDiv },
                     _react2.default.createElement(
                         "button",
-                        { style: removeButtonStyle },
+                        { style: removeButtonStyle, onClick: function onClick() {
+                                _this13.props.removeRequestForYou(_this13.props.book._id, _this13.props.book.tradeRequestUser);
+                            } },
                         "Remove"
                     ),
                     this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(

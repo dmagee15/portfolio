@@ -131,12 +131,64 @@ module.exports = function (app, passport, googleBooks) {
     		if(err) throw err;
     		console.log("username: "+req.user.local.username);
     		console.log(JSON.stringify(data));
-    		Book.find({tradeRequests: req.user.local.username }, function(err,data){
+    		if(data.tradeConfirmUser==req.user.local.username){
+    			Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: '', tradeConfirmDate: ''},{new:true}, function(err,data){
+    			if(err) throw err;
+    				Book.find({tradeRequests: req.user.local.username }, function(err,data){
+    				if(err) throw err;
+    				console.log("GET YOUR TRADE REQUESTS");
+    				console.log(JSON.stringify(data));
+    				res.send(data);
+    				});
+    			});
+    		}
+    		else{
+    			Book.find({tradeRequests: req.user.local.username }, function(err,data){
+    			if(err) throw err;
+    			console.log("GET YOUR TRADE REQUESTS");
+    			console.log(JSON.stringify(data));
+    			res.send(data);
+    		});
+    
+    		}
+    	});
+    	
+    });
+    
+    app.post('/removerequestforyou', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.id);
+    	
+    	Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.body.tradeRequestUser}},{new:true}, function(err,data){
+    		if(err) throw err;
+    		Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
     		if(err) throw err;
     		console.log("GET YOUR TRADE REQUESTS");
     		console.log(JSON.stringify(data));
-    		res.send(data);
-    		});
+    		var result = [];
+    		var length=data.length;
+    		for(var x=0;x<length;x++){
+    			var requestLength = data[x].tradeRequests.length;
+    			for(var y=0;y<requestLength;y++){
+    				var request = {
+    					"_id": data[x]._id,
+    					"tradeConfirmDate": data[x].tradeConfirmDate,
+    					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"username": data[x].username,
+    					"location": data[x].location,
+    					"description": data[x].description,
+    					"pageCount": data[x].pageCount,
+    					"publishedDate": data[x].publishedDate,
+    					"author": data[x].author,
+    					"thumbnail": data[x].thumbnail,
+    					"title": data[x].title,
+    					"tradeRequestUser": data[x].tradeRequests[y]
+    				}
+    				result.push(request);
+    			}
+    		}
+    		res.send(result);
+    	});
     	});
     	
     });
