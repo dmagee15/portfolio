@@ -141,6 +141,86 @@ module.exports = function (app, passport, googleBooks) {
     	
     });
     
+    app.post('/approverequest', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.id);
+    	
+    	Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: req.body.tradeRequestUser, tradeConfirmDate: new Date()},{new:true}, function(err,data){
+    		if(err) throw err;
+    		console.log("username: "+req.user.local.username);
+    		console.log(JSON.stringify(data));
+    		Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
+    		if(err) throw err;
+    		console.log("GET YOUR TRADE REQUESTS");
+    		console.log(JSON.stringify(data));
+    		var result = [];
+    		var length=data.length;
+    		for(var x=0;x<length;x++){
+    			var requestLength = data[x].tradeRequests.length;
+    			for(var y=0;y<requestLength;y++){
+    				var request = {
+    					"_id": data[x]._id,
+    					"tradeConfirmDate": data[x].tradeConfirmDate,
+    					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"username": data[x].username,
+    					"location": data[x].location,
+    					"description": data[x].description,
+    					"pageCount": data[x].pageCount,
+    					"publishedDate": data[x].publishedDate,
+    					"author": data[x].author,
+    					"thumbnail": data[x].thumbnail,
+    					"title": data[x].title,
+    					"tradeRequestUser": data[x].tradeRequests[y]
+    				}
+    				result.push(request);
+    			}
+    		}
+    		res.send(result);
+    	});
+    	});
+    	
+    });
+    
+    app.post('/unapproverequest', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.id);
+    	
+    	Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: '', tradeConfirmDate: ''},{new:true}, function(err,data){
+    		if(err) throw err;
+    		console.log("username: "+req.user.local.username);
+    		console.log(JSON.stringify(data));
+    		Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
+    		if(err) throw err;
+    		console.log("GET YOUR TRADE REQUESTS");
+    		console.log(JSON.stringify(data));
+    		var result = [];
+    		var length=data.length;
+    		for(var x=0;x<length;x++){
+    			var requestLength = data[x].tradeRequests.length;
+    			for(var y=0;y<requestLength;y++){
+    				var request = {
+    					"_id": data[x]._id,
+    					"tradeConfirmDate": data[x].tradeConfirmDate,
+    					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"username": data[x].username,
+    					"location": data[x].location,
+    					"description": data[x].description,
+    					"pageCount": data[x].pageCount,
+    					"publishedDate": data[x].publishedDate,
+    					"author": data[x].author,
+    					"thumbnail": data[x].thumbnail,
+    					"title": data[x].title,
+    					"tradeRequestUser": data[x].tradeRequests[y]
+    				}
+    				result.push(request);
+    			}
+    		}
+    		res.send(result);
+    	});
+    	});
+    	
+    });
+    
     
     app.get('/getprofiledata', function(req,res){
     	console.log("Fetch request successful");
@@ -174,6 +254,40 @@ module.exports = function (app, passport, googleBooks) {
     		console.log("GET YOUR TRADE REQUESTS");
     		console.log(JSON.stringify(data));
     		res.send(data);
+    	});
+    	
+    });
+    
+    app.get('/getrequestsforyou', function(req,res){
+    	console.log("Fetch request successful");
+
+    	Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
+    		if(err) throw err;
+    		console.log("GET YOUR TRADE REQUESTS");
+    		console.log(JSON.stringify(data));
+    		var result = [];
+    		var length=data.length;
+    		for(var x=0;x<length;x++){
+    			var requestLength = data[x].tradeRequests.length;
+    			for(var y=0;y<requestLength;y++){
+    				var request = {
+    					"_id": data[x]._id,
+    					"tradeConfirmDate": data[x].tradeConfirmDate,
+    					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"username": data[x].username,
+    					"location": data[x].location,
+    					"description": data[x].description,
+    					"pageCount": data[x].pageCount,
+    					"publishedDate": data[x].publishedDate,
+    					"author": data[x].author,
+    					"thumbnail": data[x].thumbnail,
+    					"title": data[x].title,
+    					"tradeRequestUser": data[x].tradeRequests[y]
+    				}
+    				result.push(request);
+    			}
+    		}
+    		res.send(result);
     	});
     	
     });

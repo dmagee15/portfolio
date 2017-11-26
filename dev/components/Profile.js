@@ -95,6 +95,14 @@ class Profile extends React.Component{
     closeInfoWindow = () => {
         this.setState({showInfoBook: null});
     }
+    tradeRequestWindowHandler = () => {
+        console.log("trade request window handler");
+        this.setState({tradeRequestsWindow:!this.state.tradeRequestsWindow});
+    }
+    tradeRequestsForYouWindowHandler = () => {
+        console.log("trade request window handler");
+        this.setState({tradeRequestsForYouWindow:!this.state.tradeRequestsForYouWindow});
+    }
    render(){
        var divStyle = {
 					padding:0,
@@ -200,10 +208,11 @@ class Profile extends React.Component{
                 <h1 style={hStyle}>Profile</h1>
                 <div style={innerDivStyle}>
                     <div>
-                        <button style={yourTradeRequestsStyle}>Your Trade Requests</button>
-                        <button style={requestsForYouStyle}>Trade Requests For You</button>
+                        <button style={yourTradeRequestsStyle} onClick={this.tradeRequestWindowHandler}>Your Trade Requests</button>
+                        <button style={requestsForYouStyle} onClick={this.tradeRequestsForYouWindowHandler}>Trade Requests For You</button>
                     </div>
-                    <YourRequests />
+                    <YourRequests visible={this.state.tradeRequestsWindow}/>
+                    <RequestsForYou visible={this.state.tradeRequestsForYouWindow}/>
                     <hr style={hrStyle}/>
                     <h3 style={pStyle}>My Books</h3>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
@@ -362,10 +371,24 @@ class TradeRequestBook extends React.Component{
         }
         var imgStyle = {
             width: 220,
-            height: 230,
+            height: 200,
             backgroundSize: 'cover',
             backgroundImage: "url('"+this.props.book.thumbnail+"')",
             display:'inline-block'
+        }
+        var approvedStyle = {
+            height: 30,
+            width: 220,
+            backgroundColor: '#FF5100',
+            textAlign: 'center'
+        }
+        var approveTextStyle = {
+            fontSize: 22,
+            margin:0,
+            padding:0,
+            fontFamily: 'Tahoma',
+            color: 'white',
+            fontWeight: 900
         }
         var divContentStyle = {
             width: '100%',
@@ -412,6 +435,9 @@ class TradeRequestBook extends React.Component{
         return (
             <div style={divStyle}>
                 <div style={thumbnailStyle}>
+                    <div style={approvedStyle}>
+                        <h3 style={approveTextStyle}>Unapproved</h3>
+                    </div>
                     <div style={imgStyle}>
                     </div>
                 </div>
@@ -555,7 +581,7 @@ class YourRequests extends React.Component{
     super(props);
     
     this.state = {
-            myBooksArray: []
+            myBooksArray: [],
             };
     }
     componentWillMount = () => {
@@ -594,6 +620,11 @@ class YourRequests extends React.Component{
     }
     
     render(){
+        
+        if(this.props.visible==false){
+            return null;
+        }
+        
         var divStyle = {
             
         };
@@ -620,6 +651,282 @@ class YourRequests extends React.Component{
                 <h3 style={pStyle}>My Trade Requests</h3>
                 <div style={boxStyle}>
                     {booksDisplay}
+                </div>
+            </div>
+            );
+    }
+}
+
+class RequestsForYou extends React.Component{
+    constructor(props) {
+    super(props);
+    
+    this.state = {
+            myBooksArray: [],
+            };
+    }
+    componentWillMount = () => {
+        fetch('/getrequestsforyou', {
+        method: 'GET',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include'
+        })
+        .then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+        });
+    };
+    removeRequest = (id) => {
+        console.log("REMOVE REQUEST");
+        console.log(id);
+        fetch('/removerequest', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"id":id,
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+
+
+        });
+
+    };
+    approveRequest = (id, tradeRequestUser) => {
+        console.log("approve request fetch");
+        console.log(id+" "+tradeRequestUser);
+        fetch('/approverequest', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"id":id,"tradeRequestUser":tradeRequestUser
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+
+
+        });
+    };
+    unapproveRequest = (id) => {
+        console.log("unapprove request fetch");
+        fetch('/unapproverequest', {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include',
+        body: JSON.stringify({"id":id
+        })
+        }).then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            console.log(j);
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray});
+
+
+        });
+    };
+    
+    render(){
+        
+        if(this.props.visible==false){
+            return null;
+        }
+        
+        var divStyle = {
+            
+        };
+        var boxStyle = {
+            width: '100%',
+		    minHeight: 200,
+		    margin: '20px 0 20px 0'
+        };
+        var hrStyle = {
+		    borderColor:'#F2F2F2',
+		    width: '100%'
+		};
+		var pStyle = {
+		    padding: '5px 0px 5px 0px',
+		    margin:0,
+		    fontFamily:'Arial'
+		};
+		var booksDisplay = this.state.myBooksArray.map((book, index) => 
+		   <RequestForYouBook key={index} book={book} removeRequest={this.removeRequest} approveRequest={this.approveRequest} unapproveRequest={this.unapproveRequest}/>
+		);
+        return (
+            <div style={divStyle}>
+                <hr style={hrStyle}/>
+                <h3 style={pStyle}>Trade Requests For You</h3>
+                <div style={boxStyle}>
+                    {booksDisplay}
+                </div>
+            </div>
+            );
+    }
+}
+
+class RequestForYouBook extends React.Component{
+    constructor(props) {
+    super(props);
+    }
+    approveHandler = () => {
+        console.log("approve handler");
+        this.props.approveRequest(this.props.book._id,this.props.book.tradeRequestUser);
+    };
+    unapproveHandler = () => {
+        console.log("approve handler");
+        this.props.unapproveRequest(this.props.book._id);
+    };
+    render(){
+
+        var thumbnailStyle = {
+            height: 230,
+            width: '100%',
+            display: 'inline-block',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0
+        }
+        var titleStyle = {
+            display: 'inline-block',
+            width:'100%',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0,
+            fontFamily: 'Arial'
+        }
+        var divStyle = {
+            display: 'inline-block',
+            width: 220,
+            margin: "10px 25px 10px 25px",
+            padding:0,
+            verticalAlign: 'top',
+            boxShadow: '3px 3px 2px 2px #888888',
+            overflow: 'hidden',
+            overflowX: 'hidden'
+        }
+        var imgStyle = {
+            width: 220,
+            height: 200,
+            backgroundSize: 'cover',
+            backgroundImage: "url('"+this.props.book.thumbnail+"')",
+            display:'inline-block'
+        }
+        var unapprovedStyle = {
+            height: 30,
+            width: 220,
+            backgroundColor: '#FF5100',
+            textAlign: 'center'
+        }
+        var approvedStyle = {
+            height: 30,
+            width: 220,
+            backgroundColor: 'lightgreen',
+            textAlign: 'center'
+        }
+        var approveTextStyle = {
+            fontSize: 22,
+            margin:0,
+            padding:0,
+            fontFamily: 'Tahoma',
+            color: 'white',
+            fontWeight: 900
+        }
+        var divContentStyle = {
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var subtextStyle = {
+            color: '#D8D8D8',
+            margin: 0,
+            padding: 0
+        };
+        var buttonDiv = {
+            height: 70,
+            width: '100%',
+            margin: 0,
+            padding: 0
+        }
+        var removeButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'black',
+            color: 'white',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            border: 'none',
+            margin: '15px 5px 30px 15px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        var approveButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: 'lightgreen',
+            color: 'black',
+            height: 40,
+            padding:'0px 8px 0px 8px',
+            margin:0,
+            border: 'none',
+            margin: '15px 0 0 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 18,
+            fontWeight: 900
+        };
+        var unapproveButtonStyle = {
+            display: 'inline-block',
+            backgroundColor: '#FF5100',
+            color: 'black',
+            height: 40,
+            padding:'0px 5px 0px 5px',
+            margin:0,
+            border: 'none',
+            margin: '15px 0 0 5px',
+            fontFamily: 'Tahoma',
+            fontSize: 16,
+            fontWeight: 900
+        };
+        
+        
+        return (
+            <div style={divStyle}>
+                <div style={thumbnailStyle}>
+                        {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
+                        <div style={approvedStyle}>
+                            <h3 style={approveTextStyle}>Approved</h3>
+                        </div>
+                        ):(
+                            <div style={unapprovedStyle}>
+                            <h3 style={approveTextStyle}>Unapproved</h3>
+                            </div>
+                        )}
+                    <div style={imgStyle}>
+                    </div>
+                </div>
+                <div style={divContentStyle}>
+                    <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
+                    <p style={subtextStyle}>Request From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
+                </div>
+                <div style={buttonDiv}>
+                    <button style={removeButtonStyle}>Remove</button>
+                    {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
+                            <button style={unapproveButtonStyle} onClick={this.unapproveHandler}>Unapprove</button>
+                        ):(
+                            <button style={approveButtonStyle} onClick={this.approveHandler}>Approve</button>
+                    )}
                 </div>
             </div>
             );

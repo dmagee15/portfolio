@@ -29403,6 +29403,16 @@ var Profile = function (_React$Component) {
             _this.setState({ showInfoBook: null });
         };
 
+        _this.tradeRequestWindowHandler = function () {
+            console.log("trade request window handler");
+            _this.setState({ tradeRequestsWindow: !_this.state.tradeRequestsWindow });
+        };
+
+        _this.tradeRequestsForYouWindowHandler = function () {
+            console.log("trade request window handler");
+            _this.setState({ tradeRequestsForYouWindow: !_this.state.tradeRequestsForYouWindow });
+        };
+
         _this.state = {
             searchInput: '',
             myBooksArray: [],
@@ -29530,16 +29540,17 @@ var Profile = function (_React$Component) {
                         null,
                         _react2.default.createElement(
                             "button",
-                            { style: yourTradeRequestsStyle },
+                            { style: yourTradeRequestsStyle, onClick: this.tradeRequestWindowHandler },
                             "Your Trade Requests"
                         ),
                         _react2.default.createElement(
                             "button",
-                            { style: requestsForYouStyle },
+                            { style: requestsForYouStyle, onClick: this.tradeRequestsForYouWindowHandler },
                             "Trade Requests For You"
                         )
                     ),
-                    _react2.default.createElement(YourRequests, null),
+                    _react2.default.createElement(YourRequests, { visible: this.state.tradeRequestsWindow }),
+                    _react2.default.createElement(RequestsForYou, { visible: this.state.tradeRequestsForYouWindow }),
                     _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
                         "h3",
@@ -29752,10 +29763,24 @@ var TradeRequestBook = function (_React$Component3) {
             };
             var imgStyle = {
                 width: 220,
-                height: 230,
+                height: 200,
                 backgroundSize: 'cover',
                 backgroundImage: "url('" + this.props.book.thumbnail + "')",
                 display: 'inline-block'
+            };
+            var approvedStyle = {
+                height: 30,
+                width: 220,
+                backgroundColor: '#FF5100',
+                textAlign: 'center'
+            };
+            var approveTextStyle = {
+                fontSize: 22,
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Tahoma',
+                color: 'white',
+                fontWeight: 900
             };
             var divContentStyle = {
                 width: '100%',
@@ -29801,6 +29826,15 @@ var TradeRequestBook = function (_React$Component3) {
                 _react2.default.createElement(
                     "div",
                     { style: thumbnailStyle },
+                    _react2.default.createElement(
+                        "div",
+                        { style: approvedStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: approveTextStyle },
+                            "Unapproved"
+                        )
+                    ),
                     _react2.default.createElement("div", { style: imgStyle })
                 ),
                 _react2.default.createElement(
@@ -30067,6 +30101,10 @@ var YourRequests = function (_React$Component5) {
         value: function render() {
             var _this9 = this;
 
+            if (this.props.visible == false) {
+                return null;
+            }
+
             var divStyle = {};
             var boxStyle = {
                 width: '100%',
@@ -30104,6 +30142,338 @@ var YourRequests = function (_React$Component5) {
     }]);
 
     return YourRequests;
+}(_react2.default.Component);
+
+var RequestsForYou = function (_React$Component6) {
+    _inherits(RequestsForYou, _React$Component6);
+
+    function RequestsForYou(props) {
+        _classCallCheck(this, RequestsForYou);
+
+        var _this10 = _possibleConstructorReturn(this, (RequestsForYou.__proto__ || Object.getPrototypeOf(RequestsForYou)).call(this, props));
+
+        _this10.componentWillMount = function () {
+            fetch('/getrequestsforyou', {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include'
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this10.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this10.removeRequest = function (id) {
+            console.log("REMOVE REQUEST");
+            console.log(id);
+            fetch('/removerequest', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "id": id
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this10.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this10.approveRequest = function (id, tradeRequestUser) {
+            console.log("approve request fetch");
+            console.log(id + " " + tradeRequestUser);
+            fetch('/approverequest', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "id": id, "tradeRequestUser": tradeRequestUser
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this10.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this10.unapproveRequest = function (id) {
+            console.log("unapprove request fetch");
+            fetch('/unapproverequest', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                body: JSON.stringify({ "id": id
+                })
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                console.log(j);
+                var myBooksArray = j.slice();
+                _this10.setState({ myBooksArray: myBooksArray });
+            });
+        };
+
+        _this10.state = {
+            myBooksArray: []
+        };
+        return _this10;
+    }
+
+    _createClass(RequestsForYou, [{
+        key: "render",
+        value: function render() {
+            var _this11 = this;
+
+            if (this.props.visible == false) {
+                return null;
+            }
+
+            var divStyle = {};
+            var boxStyle = {
+                width: '100%',
+                minHeight: 200,
+                margin: '20px 0 20px 0'
+            };
+            var hrStyle = {
+                borderColor: '#F2F2F2',
+                width: '100%'
+            };
+            var pStyle = {
+                padding: '5px 0px 5px 0px',
+                margin: 0,
+                fontFamily: 'Arial'
+            };
+            var booksDisplay = this.state.myBooksArray.map(function (book, index) {
+                return _react2.default.createElement(RequestForYouBook, { key: index, book: book, removeRequest: _this11.removeRequest, approveRequest: _this11.approveRequest, unapproveRequest: _this11.unapproveRequest });
+            });
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement("hr", { style: hrStyle }),
+                _react2.default.createElement(
+                    "h3",
+                    { style: pStyle },
+                    "Trade Requests For You"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: boxStyle },
+                    booksDisplay
+                )
+            );
+        }
+    }]);
+
+    return RequestsForYou;
+}(_react2.default.Component);
+
+var RequestForYouBook = function (_React$Component7) {
+    _inherits(RequestForYouBook, _React$Component7);
+
+    function RequestForYouBook(props) {
+        _classCallCheck(this, RequestForYouBook);
+
+        var _this12 = _possibleConstructorReturn(this, (RequestForYouBook.__proto__ || Object.getPrototypeOf(RequestForYouBook)).call(this, props));
+
+        _this12.approveHandler = function () {
+            console.log("approve handler");
+            _this12.props.approveRequest(_this12.props.book._id, _this12.props.book.tradeRequestUser);
+        };
+
+        _this12.unapproveHandler = function () {
+            console.log("approve handler");
+            _this12.props.unapproveRequest(_this12.props.book._id);
+        };
+
+        return _this12;
+    }
+
+    _createClass(RequestForYouBook, [{
+        key: "render",
+        value: function render() {
+            var _approveButtonStyle, _unapproveButtonStyle;
+
+            var thumbnailStyle = {
+                height: 230,
+                width: '100%',
+                display: 'inline-block',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0
+            };
+            var titleStyle = {
+                display: 'inline-block',
+                width: '100%',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Arial'
+            };
+            var divStyle = {
+                display: 'inline-block',
+                width: 220,
+                margin: "10px 25px 10px 25px",
+                padding: 0,
+                verticalAlign: 'top',
+                boxShadow: '3px 3px 2px 2px #888888',
+                overflow: 'hidden',
+                overflowX: 'hidden'
+            };
+            var imgStyle = {
+                width: 220,
+                height: 200,
+                backgroundSize: 'cover',
+                backgroundImage: "url('" + this.props.book.thumbnail + "')",
+                display: 'inline-block'
+            };
+            var unapprovedStyle = {
+                height: 30,
+                width: 220,
+                backgroundColor: '#FF5100',
+                textAlign: 'center'
+            };
+            var approvedStyle = {
+                height: 30,
+                width: 220,
+                backgroundColor: 'lightgreen',
+                textAlign: 'center'
+            };
+            var approveTextStyle = {
+                fontSize: 22,
+                margin: 0,
+                padding: 0,
+                fontFamily: 'Tahoma',
+                color: 'white',
+                fontWeight: 900
+            };
+            var divContentStyle = {
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var subtextStyle = {
+                color: '#D8D8D8',
+                margin: 0,
+                padding: 0
+            };
+            var buttonDiv = {
+                height: 70,
+                width: '100%',
+                margin: 0,
+                padding: 0
+            };
+            var removeButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'black',
+                color: 'white',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                border: 'none',
+                margin: '15px 5px 30px 15px',
+                fontFamily: 'Tahoma',
+                fontSize: 18,
+                fontWeight: 900
+            };
+            var approveButtonStyle = (_approveButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: 'lightgreen',
+                color: 'black',
+                height: 40,
+                padding: '0px 8px 0px 8px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_approveButtonStyle, "margin", '15px 0 0 5px'), _defineProperty(_approveButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_approveButtonStyle, "fontSize", 18), _defineProperty(_approveButtonStyle, "fontWeight", 900), _approveButtonStyle);
+            var unapproveButtonStyle = (_unapproveButtonStyle = {
+                display: 'inline-block',
+                backgroundColor: '#FF5100',
+                color: 'black',
+                height: 40,
+                padding: '0px 5px 0px 5px',
+                margin: 0,
+                border: 'none'
+            }, _defineProperty(_unapproveButtonStyle, "margin", '15px 0 0 5px'), _defineProperty(_unapproveButtonStyle, "fontFamily", 'Tahoma'), _defineProperty(_unapproveButtonStyle, "fontSize", 16), _defineProperty(_unapproveButtonStyle, "fontWeight", 900), _unapproveButtonStyle);
+
+            return _react2.default.createElement(
+                "div",
+                { style: divStyle },
+                _react2.default.createElement(
+                    "div",
+                    { style: thumbnailStyle },
+                    this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(
+                        "div",
+                        { style: approvedStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: approveTextStyle },
+                            "Approved"
+                        )
+                    ) : _react2.default.createElement(
+                        "div",
+                        { style: unapprovedStyle },
+                        _react2.default.createElement(
+                            "h3",
+                            { style: approveTextStyle },
+                            "Unapproved"
+                        )
+                    ),
+                    _react2.default.createElement("div", { style: imgStyle })
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: divContentStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: titleStyle },
+                        this.props.book.title
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Author: ",
+                        this.props.book.author
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Request From: ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.tradeRequestUser
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: removeButtonStyle },
+                        "Remove"
+                    ),
+                    this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(
+                        "button",
+                        { style: unapproveButtonStyle, onClick: this.unapproveHandler },
+                        "Unapprove"
+                    ) : _react2.default.createElement(
+                        "button",
+                        { style: approveButtonStyle, onClick: this.approveHandler },
+                        "Approve"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RequestForYouBook;
 }(_react2.default.Component);
 
 exports.default = Profile;
