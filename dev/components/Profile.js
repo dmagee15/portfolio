@@ -212,7 +212,7 @@ class Profile extends React.Component{
                         <button style={requestsForYouStyle} onClick={this.tradeRequestsForYouWindowHandler}>Trade Requests For You</button>
                     </div>
                     <YourRequests visible={this.state.tradeRequestsWindow} store={this.props.store}/>
-                    <RequestsForYou visible={this.state.tradeRequestsForYouWindow}/>
+                    <RequestsForYou visible={this.state.tradeRequestsForYouWindow} store={this.props.store}/>
                     <hr style={hrStyle}/>
                     <h3 style={pStyle}>My Books</h3>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
@@ -775,7 +775,7 @@ class RequestsForYou extends React.Component{
 		    fontFamily:'Arial'
 		};
 		var booksDisplay = this.state.myBooksArray.map((book, index) => 
-		   <RequestForYouBook key={index} book={book} removeRequestForYou={this.removeRequestForYou} approveRequest={this.approveRequest} unapproveRequest={this.unapproveRequest}/>
+		   <RequestForYouBook key={index} book={book} store={this.props.store} removeRequestForYou={this.removeRequestForYou} approveRequest={this.approveRequest} unapproveRequest={this.unapproveRequest}/>
 		);
         return (
             <div style={divStyle}>
@@ -932,8 +932,8 @@ class RequestForYouBook extends React.Component{
                 </div>
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Request From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
+                    <p style={subtextStyle}>From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
+                    <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestCity}, {this.props.book.tradeRequestState}</span></p>
                 </div>
                 <div style={buttonDiv}>
                     {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (

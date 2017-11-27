@@ -6,7 +6,8 @@ var User = require('../models/users');
 var Book = require('../models/books');
 
 module.exports = function (app, passport, googleBooks) {
-
+//User.find({}).remove().exec();
+//Book.find({}).remove().exec();
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -45,7 +46,7 @@ module.exports = function (app, passport, googleBooks) {
 	
 	app.post('/login', passport.authenticate('local-login', { failureFlash: 'Username already exists.' }), function(req,res){
 
-		User.find({'local.username':req.user.local.username},{new:true}, function(err,data){
+		User.find({'local.username':req.user.local.username}, function(err,data){
 			if(err)throw err;
 			console.log(JSON.stringify(data));
 			var userData = {
@@ -92,8 +93,14 @@ module.exports = function (app, passport, googleBooks) {
         	newBook.fullName = req.user.local.fullName;
         	newBook.username = req.user.local.username;
         	newBook.tradeRequests = [];
+        	newBook.tradeRequestsCities = [];
+        	newBook.tradeRequestsStates = [];
         	newBook.tradeConfirmUser = '';
         	newBook.tradeConfirmDate = '';
+        	newBook.tradeConfirmEmail = '';
+        	newBook.tradeConfirmCity = '';
+        	newBook.tradeConfirmState = '';
+        	newBook.email = req.user.local.email;
         	console.log("New Book");
         	console.log(newBook);
         	newBook.save(function(err){
@@ -164,8 +171,9 @@ module.exports = function (app, passport, googleBooks) {
     app.post('/removerequestforyou', function(req,res){
     	console.log("Fetch request successful");
     	console.log(req.body.id);
-    	
-    	Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.body.tradeRequestUser}},{new:true}, function(err,data){
+    	User.find({'local.username':req.body.tradeRequestUser},function(err,userdata){
+    		if(err) throw err;
+    		Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.body.tradeRequestUser, tradeRequestsCities: userdata[0].local.city, tradeRequestsStates: userdata[0].local.state}},{new:true}, function(err,data){
     		if(err) throw err;
     		
     		Book.find({username: req.user.local.username, $where : "this.tradeRequests.length != 0"}, function(err,data){
@@ -181,6 +189,10 @@ module.exports = function (app, passport, googleBooks) {
     					"_id": data[x]._id,
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"tradeConfirmCity": data[x].tradeConfirmCity,
+    					"tradeConfirmState": data[x].tradeConfirmState,
+    					"tradeConfirmEmail": data[x].tradeConfirmEmail,
+    					"email": data[x].email,
     					"username": data[x].username,
     					"city": data[x].city,
     					"state": data[x].state,
@@ -191,7 +203,9 @@ module.exports = function (app, passport, googleBooks) {
     					"author": data[x].author,
     					"thumbnail": data[x].thumbnail,
     					"title": data[x].title,
-    					"tradeRequestUser": data[x].tradeRequests[y]
+    					"tradeRequestUser": data[x].tradeRequests[y],
+    					"tradeRequestCity": data[x].tradeRequestsCities[y],
+    					"tradeRequestState": data[x].tradeRequestsStates[y]
     				}
     				result.push(request);
     			}
@@ -199,14 +213,17 @@ module.exports = function (app, passport, googleBooks) {
     		res.send(result);
     	});
     	});
+    	});
+    	
     	
     });
     
     app.post('/approverequest', function(req,res){
     	console.log("Fetch request successful");
     	console.log(req.body.id);
-    	
-    	Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: req.body.tradeRequestUser, tradeConfirmDate: new Date()},{new:true}, function(err,data){
+    	User.find({'local.username':req.body.tradeRequestUser}, function(err,userdata){
+    		if(err) throw err;
+    		Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: req.body.tradeRequestUser, tradeConfirmDate: new Date(), tradeConfirmCity: userdata[0].local.city, tradeConfirmState: userdata[0].local.state, tradeConfirmEmail: userdata[0].local.email},{new:true}, function(err,data){
     		if(err) throw err;
     		console.log("username: "+req.user.local.username);
     		console.log(JSON.stringify(data));
@@ -223,6 +240,10 @@ module.exports = function (app, passport, googleBooks) {
     					"_id": data[x]._id,
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"tradeConfirmCity": data[x].tradeConfirmCity,
+    					"tradeConfirmState": data[x].tradeConfirmState,
+    					"tradeConfirmEmail": data[x].tradeConfirmEmail,
+    					"email": data[x].email,
     					"username": data[x].username,
     					"city": data[x].city,
     					"state": data[x].state,
@@ -233,7 +254,9 @@ module.exports = function (app, passport, googleBooks) {
     					"author": data[x].author,
     					"thumbnail": data[x].thumbnail,
     					"title": data[x].title,
-    					"tradeRequestUser": data[x].tradeRequests[y]
+    					"tradeRequestUser": data[x].tradeRequests[y],
+    					"tradeRequestCity": data[x].tradeRequestsCities[y],
+    					"tradeRequestState": data[x].tradeRequestsStates[y]
     				}
     				result.push(request);
     			}
@@ -241,14 +264,14 @@ module.exports = function (app, passport, googleBooks) {
     		res.send(result);
     	});
     	});
-    	
+    	});
     });
     
     app.post('/unapproverequest', function(req,res){
     	console.log("Fetch request successful");
     	console.log(req.body.id);
     	
-    	Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: '', tradeConfirmDate: ''},{new:true}, function(err,data){
+    	Book.findOneAndUpdate({'_id':req.body.id},{tradeConfirmUser: '', tradeConfirmDate: '', tradeConfirmCity: '', tradeConfirmState: '', tradeConfirmEmail: ''},{new:true}, function(err,data){
     		if(err) throw err;
     		console.log("username: "+req.user.local.username);
     		console.log(JSON.stringify(data));
@@ -261,10 +284,15 @@ module.exports = function (app, passport, googleBooks) {
     		for(var x=0;x<length;x++){
     			var requestLength = data[x].tradeRequests.length;
     			for(var y=0;y<requestLength;y++){
-    				var request = {
+	
+    					var request = {
     					"_id": data[x]._id,
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"tradeConfirmCity": data[x].tradeConfirmCity,
+    					"tradeConfirmState": data[x].tradeConfirmState,
+    					"tradeConfirmEmail": data[x].tradeConfirmEmail,
+    					"email": data[x].email,
     					"username": data[x].username,
     					"city": data[x].city,
     					"state": data[x].state,
@@ -275,9 +303,13 @@ module.exports = function (app, passport, googleBooks) {
     					"author": data[x].author,
     					"thumbnail": data[x].thumbnail,
     					"title": data[x].title,
-    					"tradeRequestUser": data[x].tradeRequests[y]
+    					"tradeRequestUser": data[x].tradeRequests[y],
+    					"tradeRequestCity": data[x].tradeRequestsCities[y],
+    					"tradeRequestState": data[x].tradeRequestsStates[y]
+
     				}
     				result.push(request);
+    				
     			}
     		}
     		res.send(result);
@@ -335,10 +367,15 @@ module.exports = function (app, passport, googleBooks) {
     		for(var x=0;x<length;x++){
     			var requestLength = data[x].tradeRequests.length;
     			for(var y=0;y<requestLength;y++){
-    				var request = {
+
+    					var request = {
     					"_id": data[x]._id,
     					"tradeConfirmDate": data[x].tradeConfirmDate,
     					"tradeConfirmUser": data[x].tradeConfirmUser,
+    					"tradeConfirmCity": data[x].tradeConfirmCity,
+    					"tradeConfirmState": data[x].tradeConfirmState,
+    					"tradeConfirmEmail": data[x].tradeConfirmEmail,
+    					"email": data[x].email,
     					"username": data[x].username,
     					"city": data[x].city,
     					"state": data[x].state,
@@ -349,9 +386,12 @@ module.exports = function (app, passport, googleBooks) {
     					"author": data[x].author,
     					"thumbnail": data[x].thumbnail,
     					"title": data[x].title,
-    					"tradeRequestUser": data[x].tradeRequests[y]
+    					"tradeRequestUser": data[x].tradeRequests[y],
+    					"tradeRequestCity": data[x].tradeRequestsCities[y],
+    					"tradeRequestState": data[x].tradeRequestsStates[y]
     				}
     				result.push(request);
+
     			}
     		}
     		res.send(result);
@@ -375,7 +415,7 @@ module.exports = function (app, passport, googleBooks) {
     		}
     		else
     		if(data[0].tradeRequests.indexOf(req.user.local.username)==-1){
-    			Book.findOneAndUpdate({'_id':req.body.id},{$push: {tradeRequests: req.user.local.username}},{new:true}, function(err,data){
+    			Book.findOneAndUpdate({'_id':req.body.id},{$push: {tradeRequests: req.user.local.username, tradeRequestsCities: req.user.local.city, tradeRequestsStates: req.user.local.state}},{new:true}, function(err,data){
     				if(err) throw err;
     				console.log("tradeRequests: "+data.tradeRequests);
     				Book.find({}, function(err,data){
@@ -386,7 +426,7 @@ module.exports = function (app, passport, googleBooks) {
     			});
     		}
     		else{
-    			Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.user.local.username}},{new:true}, function(err,data){
+    			Book.findOneAndUpdate({'_id':req.body.id},{$pull: {tradeRequests: req.user.local.username, tradeRequestsCities: req.user.local.city, tradeRequestsStates: req.user.local.state}},{new:true}, function(err,data){
     				if(err) throw err;
     				console.log("tradeRequests: "+data.tradeRequests);
     				Book.find({}, function(err,data){

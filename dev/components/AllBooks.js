@@ -319,7 +319,8 @@ class AllBookAdded extends React.Component{
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
                     <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Year: {this.props.book.publishedDate}</p>
+                    <p style={subtextStyle}>Owner: {this.props.book.username}</p>
+                    <p style={subtextStyle}>Location: {this.props.book.city}, {this.props.book.state}</p>
                 </div>
                 <div style={buttonDiv}>
                         <button style={blankInfoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
@@ -338,6 +339,7 @@ class AllBookAdded extends React.Component{
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
                     <p style={subtextStyle}>Author: {this.props.book.author}</p>
                     <p style={subtextStyle}>Owner: {this.props.book.username}</p>
+                    <p style={subtextStyle}>Location: {this.props.book.city}, {this.props.book.state}</p>
                 </div>
                 <div style={buttonDiv}>
                         <button style={requestButtonStyle} onClick={() => {this.props.requestBook(this.props.book._id)}}>Request</button>

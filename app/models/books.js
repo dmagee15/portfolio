@@ -13,10 +13,16 @@ var Book = new Schema({
         city: String,
         state: String,
         fullName: String,
+        email: String,
         username: String,
         tradeRequests: Array,
+        tradeRequestsCities: Array,
+        tradeRequestsStates: Array,
         tradeConfirmUser: String,
-        tradeConfirmDate: String
+        tradeConfirmDate: String,
+        tradeConfirmCity: String,
+        tradeConfirmState: String,
+        tradeConfirmEmail: String
 });
 
 module.exports = mongoose.model('Book', Book);

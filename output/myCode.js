@@ -4010,7 +4010,6 @@ var messageReducer = function messageReducer() {
             return Object.assign({}, state, {
                 authenticated: true,
                 username: action.user.username,
-                location: action.user.location,
                 city: action.user.city,
                 state: action.user.state,
                 fullName: action.user.fullName,
@@ -29628,7 +29627,7 @@ var Profile = function (_React$Component) {
                         )
                     ),
                     _react2.default.createElement(YourRequests, { visible: this.state.tradeRequestsWindow, store: this.props.store }),
-                    _react2.default.createElement(RequestsForYou, { visible: this.state.tradeRequestsForYouWindow }),
+                    _react2.default.createElement(RequestsForYou, { visible: this.state.tradeRequestsForYouWindow, store: this.props.store }),
                     _react2.default.createElement("hr", { style: hrStyle }),
                     _react2.default.createElement(
                         "h3",
@@ -30340,7 +30339,7 @@ var RequestsForYou = function (_React$Component6) {
                 fontFamily: 'Arial'
             };
             var booksDisplay = this.state.myBooksArray.map(function (book, index) {
-                return _react2.default.createElement(RequestForYouBook, { key: index, book: book, removeRequestForYou: _this11.removeRequestForYou, approveRequest: _this11.approveRequest, unapproveRequest: _this11.unapproveRequest });
+                return _react2.default.createElement(RequestForYouBook, { key: index, book: book, store: _this11.props.store, removeRequestForYou: _this11.removeRequestForYou, approveRequest: _this11.approveRequest, unapproveRequest: _this11.unapproveRequest });
             });
             return _react2.default.createElement(
                 "div",
@@ -30529,17 +30528,23 @@ var RequestForYouBook = function (_React$Component7) {
                     _react2.default.createElement(
                         "p",
                         { style: subtextStyle },
-                        "Author: ",
-                        this.props.book.author
-                    ),
-                    _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Request From: ",
+                        "From: ",
                         _react2.default.createElement(
                             "span",
                             { style: { color: '#5D5D5D' } },
                             this.props.book.tradeRequestUser
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Location: ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.tradeRequestCity,
+                            ", ",
+                            this.props.book.tradeRequestState
                         )
                     )
                 ),
@@ -30966,8 +30971,16 @@ var AllBookAdded = function (_React$Component2) {
                         _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
-                            "Year: ",
-                            this.props.book.publishedDate
+                            "Owner: ",
+                            this.props.book.username
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Location: ",
+                            this.props.book.city,
+                            ", ",
+                            this.props.book.state
                         )
                     ),
                     _react2.default.createElement(
@@ -31010,6 +31023,14 @@ var AllBookAdded = function (_React$Component2) {
                             { style: subtextStyle },
                             "Owner: ",
                             this.props.book.username
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Location: ",
+                            this.props.book.city,
+                            ", ",
+                            this.props.book.state
                         )
                     ),
                     _react2.default.createElement(

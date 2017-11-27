@@ -45,7 +45,6 @@ const messageReducer = (state = initialState, action) => {
         return Object.assign({}, state, {
         authenticated: true,
 		username: action.user.username,
-	    location: action.user.location,
 	    city: action.user.city,
 	    state: action.user.state,
 	    fullName: action.user.fullName,
