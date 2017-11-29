@@ -30410,6 +30410,7 @@ var RequestForYouBook = function (_React$Component7) {
             };
             var divStyle = {
                 display: 'inline-block',
+                minHeight: 380,
                 width: 220,
                 margin: "10px 25px 10px 25px",
                 padding: 0,
@@ -30447,6 +30448,7 @@ var RequestForYouBook = function (_React$Component7) {
             };
             var divContentStyle = {
                 width: '100%',
+                minHeight: 80,
                 margin: 0,
                 padding: 0
             };
@@ -30525,51 +30527,95 @@ var RequestForYouBook = function (_React$Component7) {
                         { style: titleStyle },
                         this.props.book.title
                     ),
-                    _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "From: ",
-                        _react2.default.createElement(
-                            "span",
-                            { style: { color: '#5D5D5D' } },
-                            this.props.book.tradeRequestUser
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "p",
-                        { style: subtextStyle },
-                        "Location: ",
-                        _react2.default.createElement(
-                            "span",
-                            { style: { color: '#5D5D5D' } },
-                            this.props.book.tradeRequestCity,
-                            ", ",
-                            this.props.book.tradeRequestState
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { style: buttonDiv },
                     this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(
-                        "button",
-                        { style: unapproveButtonStyle, onClick: this.unapproveHandler },
-                        "Unapprove"
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "From: ",
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.tradeRequestUser
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Location: ",
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.tradeRequestCity,
+                                ", ",
+                                this.props.book.tradeRequestState
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { style: subtextStyle },
+                            "Email: ",
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.tradeConfirmEmail,
+                                "}"
+                            )
+                        )
                     ) : _react2.default.createElement(
                         "div",
                         null,
                         _react2.default.createElement(
-                            "button",
-                            { style: removeButtonStyle, onClick: function onClick() {
-                                    _this13.props.removeRequestForYou(_this13.props.book._id, _this13.props.book.tradeRequestUser);
-                                } },
-                            "Remove"
-                        ),
-                        _react2.default.createElement(
-                            "button",
-                            { style: approveButtonStyle, onClick: this.approveHandler },
-                            "Approve"
+                            "div",
+                            null,
+                            _react2.default.createElement(
+                                "p",
+                                { style: subtextStyle },
+                                "From: ",
+                                _react2.default.createElement(
+                                    "span",
+                                    { style: { color: '#5D5D5D' } },
+                                    this.props.book.tradeRequestUser
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "p",
+                                { style: subtextStyle },
+                                "Location: ",
+                                _react2.default.createElement(
+                                    "span",
+                                    { style: { color: '#5D5D5D' } },
+                                    this.props.book.tradeRequestCity,
+                                    ", ",
+                                    this.props.book.tradeRequestState
+                                )
+                            )
                         )
+                    )
+                ),
+                this.props.book.tradeRequestUser == this.props.book.tradeConfirmUser ? _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: unapproveButtonStyle, onClick: this.unapproveHandler },
+                        "Unapprove"
+                    )
+                ) : _react2.default.createElement(
+                    "div",
+                    { style: buttonDiv },
+                    _react2.default.createElement(
+                        "button",
+                        { style: removeButtonStyle, onClick: function onClick() {
+                                _this13.props.removeRequestForYou(_this13.props.book._id, _this13.props.book.tradeRequestUser);
+                            } },
+                        "Remove"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { style: approveButtonStyle, onClick: this.approveHandler },
+                        "Approve"
                     )
                 )
             );

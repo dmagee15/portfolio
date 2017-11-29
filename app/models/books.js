@@ -16,8 +16,6 @@ var Book = new Schema({
         email: String,
         username: String,
         tradeRequests: Array,
-        tradeRequestsCities: Array,
-        tradeRequestsStates: Array,
         tradeConfirmUser: String,
         tradeConfirmDate: String,
         tradeConfirmCity: String,

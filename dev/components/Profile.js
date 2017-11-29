@@ -823,6 +823,7 @@ class RequestForYouBook extends React.Component{
         }
         var divStyle = {
             display: 'inline-block',
+            minHeight: 380,
             width: 220,
             margin: "10px 25px 10px 25px",
             padding:0,
@@ -860,6 +861,7 @@ class RequestForYouBook extends React.Component{
         }
         var divContentStyle = {
             width: '100%',
+            minHeight: 80,
             margin: 0,
             padding: 0
         }
@@ -932,19 +934,32 @@ class RequestForYouBook extends React.Component{
                 </div>
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
-                    <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestCity}, {this.props.book.tradeRequestState}</span></p>
-                </div>
-                <div style={buttonDiv}>
                     {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
-                            <button style={unapproveButtonStyle} onClick={this.unapproveHandler}>Unapprove</button>
+                            <div>
+                            <p style={subtextStyle}>From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
+                            <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestCity}, {this.props.book.tradeRequestState}</span></p>
+                            <p style={subtextStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeConfirmEmail}}</span></p>
+                            </div>
                         ):(
                         <div>
+                            <div>
+                            <p style={subtextStyle}>From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
+                            <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestCity}, {this.props.book.tradeRequestState}</span></p>
+                            </div>
+                        </div>
+                    )}
+                    
+                </div>
+                    {(this.props.book.tradeRequestUser==this.props.book.tradeConfirmUser) ? (
+                        <div style={buttonDiv}>
+                            <button style={unapproveButtonStyle} onClick={this.unapproveHandler}>Unapprove</button>
+                        </div>
+                        ):(
+                        <div style={buttonDiv}>
                             <button style={removeButtonStyle} onClick={() => {this.props.removeRequestForYou(this.props.book._id,this.props.book.tradeRequestUser)}}>Remove</button>
                             <button style={approveButtonStyle} onClick={this.approveHandler}>Approve</button>
                         </div>
                     )}
-                </div>
             </div>
             );
     }
