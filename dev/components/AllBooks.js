@@ -318,9 +318,9 @@ class AllBookAdded extends React.Component{
                 </div>
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Owner: {this.props.book.username}</p>
-                    <p style={subtextStyle}>Location: {this.props.book.city}, {this.props.book.state}</p>
+                    <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
+                    <p style={subtextStyle}>Owner: <span style={{color:'#5D5D5D'}}>{this.props.book.username}</span></p>
+                    <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.city}, {this.props.book.state}</span></p>
                 </div>
                 <div style={buttonDiv}>
                         <button style={blankInfoButtonStyle} onClick={() => {this.props.showInfoWindow(this.props.book)}}>Book Info</button>
@@ -337,9 +337,9 @@ class AllBookAdded extends React.Component{
                 </div>
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Owner: {this.props.book.username}</p>
-                    <p style={subtextStyle}>Location: {this.props.book.city}, {this.props.book.state}</p>
+                    <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
+                    <p style={subtextStyle}>Owner: <span style={{color:'#5D5D5D'}}>{this.props.book.username}</span></p>
+                    <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.city}, {this.props.book.state}</span></p>
                 </div>
                 <div style={buttonDiv}>
                         <button style={requestButtonStyle} onClick={() => {this.props.requestBook(this.props.book._id)}}>Request</button>

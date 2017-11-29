@@ -32,11 +32,16 @@ class SignUp extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
+            if(Object.keys(j).length === 0){
+                console.log('fail');
+            }
+            else{
             console.log('pushing to homepage');
             console.log(j);
             this.props.store.loginUser(j);
             console.log(this.props);
             history.push('/');
+            }
         });
 
     }

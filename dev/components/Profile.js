@@ -322,8 +322,8 @@ class BookAdded extends React.Component{
                 </div>
                 <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Year: {this.props.book.publishedDate}</p>
+                    <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
+                    <p style={subtextStyle}>Year: <span style={{color:'#5D5D5D'}}>{this.props.book.publishedDate}</span></p>
                 </div>
                 <div style={buttonDiv}>
                     <button style={removeButtonStyle} onClick={() => {this.props.removeBook(this.props.book._id)}}>Remove</button>
@@ -363,6 +363,7 @@ class TradeRequestBook extends React.Component{
             display: 'inline-block',
             width: 220,
             margin: "10px 25px 10px 25px",
+            minHeight: 380,
             padding:0,
             verticalAlign: 'top',
             boxShadow: '3px 3px 2px 2px #888888',
@@ -399,7 +400,8 @@ class TradeRequestBook extends React.Component{
         var divContentStyle = {
             width: '100%',
             margin: 0,
-            padding: 0
+            padding: 0,
+            minHeight: 80
         }
         var subtextStyle = {
             color: '#D8D8D8',
@@ -453,11 +455,20 @@ class TradeRequestBook extends React.Component{
                     <div style={imgStyle}>
                     </div>
                 </div>
-                <div style={divContentStyle}>
+                {(this.props.store.user.username==this.props.book.tradeConfirmUser)?(
+                    <div style={divContentStyle}>
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
-                    <p style={subtextStyle}>Author: {this.props.book.author}</p>
-                    <p style={subtextStyle}>Owner: {this.props.book.username}</p>
+                    <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
+                    <p style={subtextStyle}>Owner: <span style={{color:'#5D5D5D'}}>{this.props.book.username}</span></p>
+                    <p style={subtextStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.email}</span></p>
                 </div>
+                ):(
+                    <div style={divContentStyle}>
+                    <h3 style={titleStyle}>{this.props.book.title}</h3>
+                    <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
+                    <p style={subtextStyle}>Owner: <span style={{color:'#5D5D5D'}}>{this.props.book.username}</span></p>
+                </div>
+                )}
                 <div style={buttonDiv}>
                 {(this.props.store.user.username!=this.props.book.tradeConfirmUser) &&
                 <button style={removeButtonStyle} onClick={() => {this.props.removeRequest(this.props.book._id)}}>Remove</button>

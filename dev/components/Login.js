@@ -23,10 +23,16 @@ class Login extends React.Component{
             return data.json();
         }).then((j) =>{
             console.log('pushing to homepage');
-            console.log(j);
-            this.props.store.loginUser(j);
-            console.log(this.props);
-            history.push('/');
+            if(Object.keys(j).length === 0){
+                console.log('fail');
+            }
+            else{
+                console.log(j);
+                this.props.store.loginUser(j);
+                console.log(this.props);
+                history.push('/');
+            }
+
         });
 
     }

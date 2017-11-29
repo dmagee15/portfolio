@@ -28748,11 +28748,15 @@ var SignUp = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log('pushing to homepage');
-                console.log(j);
-                _this.props.store.loginUser(j);
-                console.log(_this.props);
-                history.push('/');
+                if (Object.keys(j).length === 0) {
+                    console.log('fail');
+                } else {
+                    console.log('pushing to homepage');
+                    console.log(j);
+                    _this.props.store.loginUser(j);
+                    console.log(_this.props);
+                    history.push('/');
+                }
             });
         };
 
@@ -29012,10 +29016,14 @@ var Login = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 console.log('pushing to homepage');
-                console.log(j);
-                _this.props.store.loginUser(j);
-                console.log(_this.props);
-                history.push('/');
+                if (Object.keys(j).length === 0) {
+                    console.log('fail');
+                } else {
+                    console.log(j);
+                    _this.props.store.loginUser(j);
+                    console.log(_this.props);
+                    history.push('/');
+                }
             });
         };
 
@@ -29761,13 +29769,21 @@ var BookAdded = function (_React$Component2) {
                         "p",
                         { style: subtextStyle },
                         "Author: ",
-                        this.props.book.author
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.author
+                        )
                     ),
                     _react2.default.createElement(
                         "p",
                         { style: subtextStyle },
                         "Year: ",
-                        this.props.book.publishedDate
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.publishedDate
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -29832,6 +29848,7 @@ var TradeRequestBook = function (_React$Component3) {
                 display: 'inline-block',
                 width: 220,
                 margin: "10px 25px 10px 25px",
+                minHeight: 380,
                 padding: 0,
                 verticalAlign: 'top',
                 boxShadow: '3px 3px 2px 2px #888888',
@@ -29868,7 +29885,8 @@ var TradeRequestBook = function (_React$Component3) {
             var divContentStyle = {
                 width: '100%',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                minHeight: 80
             };
             var subtextStyle = {
                 color: '#D8D8D8',
@@ -29928,7 +29946,7 @@ var TradeRequestBook = function (_React$Component3) {
                     ),
                     _react2.default.createElement("div", { style: imgStyle })
                 ),
-                _react2.default.createElement(
+                this.props.store.user.username == this.props.book.tradeConfirmUser ? _react2.default.createElement(
                     "div",
                     { style: divContentStyle },
                     _react2.default.createElement(
@@ -29940,13 +29958,59 @@ var TradeRequestBook = function (_React$Component3) {
                         "p",
                         { style: subtextStyle },
                         "Author: ",
-                        this.props.book.author
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.author
+                        )
                     ),
                     _react2.default.createElement(
                         "p",
                         { style: subtextStyle },
                         "Owner: ",
-                        this.props.book.username
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.username
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Email: ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.email
+                        )
+                    )
+                ) : _react2.default.createElement(
+                    "div",
+                    { style: divContentStyle },
+                    _react2.default.createElement(
+                        "h3",
+                        { style: titleStyle },
+                        this.props.book.title
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Author: ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.author
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "p",
+                        { style: subtextStyle },
+                        "Owner: ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: { color: '#5D5D5D' } },
+                            this.props.book.username
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -31012,21 +31076,33 @@ var AllBookAdded = function (_React$Component2) {
                             "p",
                             { style: subtextStyle },
                             "Author: ",
-                            this.props.book.author
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.author
+                            )
                         ),
                         _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
                             "Owner: ",
-                            this.props.book.username
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.username
+                            )
                         ),
                         _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
                             "Location: ",
-                            this.props.book.city,
-                            ", ",
-                            this.props.book.state
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.city,
+                                ", ",
+                                this.props.book.state
+                            )
                         )
                     ),
                     _react2.default.createElement(
@@ -31062,21 +31138,33 @@ var AllBookAdded = function (_React$Component2) {
                             "p",
                             { style: subtextStyle },
                             "Author: ",
-                            this.props.book.author
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.author
+                            )
                         ),
                         _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
                             "Owner: ",
-                            this.props.book.username
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.username
+                            )
                         ),
                         _react2.default.createElement(
                             "p",
                             { style: subtextStyle },
                             "Location: ",
-                            this.props.book.city,
-                            ", ",
-                            this.props.book.state
+                            _react2.default.createElement(
+                                "span",
+                                { style: { color: '#5D5D5D' } },
+                                this.props.book.city,
+                                ", ",
+                                this.props.book.state
+                            )
                         )
                     ),
                     _react2.default.createElement(

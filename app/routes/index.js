@@ -23,7 +23,7 @@ module.exports = function (app, passport, googleBooks) {
 			res.sendFile(path + '/dev/index.html');
 		});
 		
-	app.post('/createnewuser', passport.authenticate('local-signup',{ failureFlash: 'Username already exists.' }), function(req,res){
+	app.post('/createnewuser', passport.authenticate('local-signup',{ failureRedirect: '/signupfail', failureFlash: false }), function(req,res){
 		console.log("authentication successful");
 		console.log(req.body.email);
 		User.findOneAndUpdate({'local.username':req.body.username},{'local.email':req.body.email,'local.city':req.body.city,'local.state':req.body.state,'local.fullName':req.body.fullName},{new:true}, function(err,data){
@@ -44,7 +44,7 @@ module.exports = function (app, passport, googleBooks) {
 		});
 	});
 	
-	app.post('/login', passport.authenticate('local-login', { failureFlash: 'Username already exists.' }), function(req,res){
+	app.post('/login', passport.authenticate('local-login', { failureRedirect: '/loginfail', failureFlash: false }), function(req,res){
 
 		User.find({'local.username':req.user.local.username}, function(err,data){
 			if(err)throw err;
@@ -63,6 +63,15 @@ module.exports = function (app, passport, googleBooks) {
 			console.log("USER DATA: "+JSON.stringify(req.user));
 			res.send(userData);
 		});
+	});
+	
+	app.get('/loginfail', function(req,res){
+		res.send({});
+	});
+	
+	app.get('/signupfail', function(req,res)
+	{
+		res.send({});
 	});
     
     app.post('/test', function(req,res){
