@@ -7,7 +7,8 @@ class Login extends React.Component{
     super(props);
     this.state = {
         usernameInput: '',
-        passwordInput: ''
+        passwordInput: '',
+        fail: 'false'
         };
     }
     loginAccount = (history) => {
@@ -25,6 +26,7 @@ class Login extends React.Component{
             console.log('pushing to homepage');
             if(Object.keys(j).length === 0){
                 console.log('fail');
+                this.setState({fail:true});
             }
             else{
                 console.log(j);
@@ -46,7 +48,6 @@ class Login extends React.Component{
             passwordInput: event.target.value
         });
     }
-
    render(){
        var divStyle = {
 					padding:0,
@@ -89,13 +90,22 @@ class Login extends React.Component{
 		    fontFamily: 'Arial',
 		    padding: '10px 10px 10px 10px'
 		};
+		var failStyle = {
+		    color: 'red',
+		    display:'inline-block',
+		    fontSize: 14
+		};
         
 
             return (
            <div style={divStyle}>
                 <h1 style={hStyle}>Login</h1>
                 <div style={innerDivStyle}>
-                    <h3 style={pStyle}>Username</h3>
+                    {(this.state.fail==true)?(
+                        <h3 style={pStyle}>Username  <span style={failStyle}>Username and password do not match.</span></h3>
+                    ):(
+                        <h3 style={pStyle}>Username</h3>
+                    )}
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>

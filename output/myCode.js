@@ -28750,6 +28750,7 @@ var SignUp = function (_React$Component) {
             }).then(function (j) {
                 if (Object.keys(j).length === 0) {
                     console.log('fail');
+                    _this.setState({ fail: true });
                 } else {
                     console.log('pushing to homepage');
                     console.log(j);
@@ -28802,7 +28803,8 @@ var SignUp = function (_React$Component) {
             emailInput: '',
             cityInput: '',
             stateInput: '',
-            fullNameInput: ''
+            fullNameInput: '',
+            fail: false
         };
         return _this;
     }
@@ -28887,6 +28889,11 @@ var SignUp = function (_React$Component) {
                 width: '10%',
                 display: 'inline-block'
             };
+            var failStyle = {
+                color: 'red',
+                display: 'inline-block',
+                fontSize: 14
+            };
 
             return _react2.default.createElement(
                 "div",
@@ -28899,7 +28906,16 @@ var SignUp = function (_React$Component) {
                 _react2.default.createElement(
                     "div",
                     { style: innerDivStyle },
-                    _react2.default.createElement(
+                    this.state.fail == true ? _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Username  ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: failStyle },
+                            "Username already taken."
+                        )
+                    ) : _react2.default.createElement(
                         "h3",
                         { style: pStyle },
                         "Username"
@@ -29018,6 +29034,7 @@ var Login = function (_React$Component) {
                 console.log('pushing to homepage');
                 if (Object.keys(j).length === 0) {
                     console.log('fail');
+                    _this.setState({ fail: true });
                 } else {
                     console.log(j);
                     _this.props.store.loginUser(j);
@@ -29041,7 +29058,8 @@ var Login = function (_React$Component) {
 
         _this.state = {
             usernameInput: '',
-            passwordInput: ''
+            passwordInput: '',
+            fail: 'false'
         };
         return _this;
     }
@@ -29092,6 +29110,11 @@ var Login = function (_React$Component) {
                 fontFamily: 'Arial',
                 padding: '10px 10px 10px 10px'
             };
+            var failStyle = {
+                color: 'red',
+                display: 'inline-block',
+                fontSize: 14
+            };
 
             return _react2.default.createElement(
                 "div",
@@ -29104,7 +29127,16 @@ var Login = function (_React$Component) {
                 _react2.default.createElement(
                     "div",
                     { style: innerDivStyle },
-                    _react2.default.createElement(
+                    this.state.fail == true ? _react2.default.createElement(
+                        "h3",
+                        { style: pStyle },
+                        "Username  ",
+                        _react2.default.createElement(
+                            "span",
+                            { style: failStyle },
+                            "Username and password do not match."
+                        )
+                    ) : _react2.default.createElement(
                         "h3",
                         { style: pStyle },
                         "Username"
@@ -29490,12 +29522,24 @@ var Profile = function (_React$Component) {
 
         _this.tradeRequestWindowHandler = function () {
             console.log("trade request window handler");
-            _this.setState({ tradeRequestsWindow: !_this.state.tradeRequestsWindow });
+            if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == false) {
+                _this.setState({ tradeRequestsWindow: true });
+            } else if (_this.state.tradeRequestsWindow == true && _this.state.tradeRequestsForYouWindow == false) {
+                _this.setState({ tradeRequestsWindow: false });
+            } else if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == true) {
+                _this.setState({ tradeRequestsWindow: true, tradeRequestsForYouWindow: false });
+            }
         };
 
         _this.tradeRequestsForYouWindowHandler = function () {
             console.log("trade request window handler");
-            _this.setState({ tradeRequestsForYouWindow: !_this.state.tradeRequestsForYouWindow });
+            if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == false) {
+                _this.setState({ tradeRequestsForYouWindow: true });
+            } else if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == true) {
+                _this.setState({ tradeRequestsForYouWindow: false });
+            } else if (_this.state.tradeRequestsWindow == true && _this.state.tradeRequestsForYouWindow == false) {
+                _this.setState({ tradeRequestsWindow: false, tradeRequestsForYouWindow: true });
+            }
         };
 
         _this.state = {

@@ -97,11 +97,27 @@ class Profile extends React.Component{
     }
     tradeRequestWindowHandler = () => {
         console.log("trade request window handler");
-        this.setState({tradeRequestsWindow:!this.state.tradeRequestsWindow});
+        if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==false){
+            this.setState({tradeRequestsWindow:true});
+        }
+        else if(this.state.tradeRequestsWindow==true && this.state.tradeRequestsForYouWindow==false){
+            this.setState({tradeRequestsWindow:false});
+        }
+        else if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==true){
+            this.setState({tradeRequestsWindow:true,tradeRequestsForYouWindow:false});
+        }
     }
     tradeRequestsForYouWindowHandler = () => {
         console.log("trade request window handler");
-        this.setState({tradeRequestsForYouWindow:!this.state.tradeRequestsForYouWindow});
+        if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==false){
+            this.setState({tradeRequestsForYouWindow:true});
+        }
+        else if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==true){
+            this.setState({tradeRequestsForYouWindow:false});
+        }
+        else if(this.state.tradeRequestsWindow==true && this.state.tradeRequestsForYouWindow==false){
+            this.setState({tradeRequestsWindow:false,tradeRequestsForYouWindow:true});
+        }
     }
    render(){
        var divStyle = {

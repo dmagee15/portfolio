@@ -13,7 +13,8 @@ class SignUp extends React.Component{
         emailInput: '',
         cityInput: '',
         stateInput: '',
-        fullNameInput: ''
+        fullNameInput: '',
+        fail: false
         };
     }
     createAccount = (history) => {
@@ -34,6 +35,7 @@ class SignUp extends React.Component{
         }).then((j) =>{
             if(Object.keys(j).length === 0){
                 console.log('fail');
+                this.setState({fail:true});
             }
             else{
             console.log('pushing to homepage');
@@ -151,12 +153,21 @@ class SignUp extends React.Component{
 		    width:'10%',
 		    display:'inline-block'
 		};
+		var failStyle = {
+		    color: 'red',
+		    display:'inline-block',
+		    fontSize: 14
+		};
         
         return (
            <div style={divStyle}>
                 <h1 style={hStyle}>Sign Up</h1>
                 <div style={innerDivStyle}>
-                    <h3 style={pStyle}>Username</h3>
+                    {(this.state.fail==true)?(
+                        <h3 style={pStyle}>Username  <span style={failStyle}>Username already taken.</span></h3>
+                    ):(
+                        <h3 style={pStyle}>Username</h3>
+                    )}
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
                     <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
