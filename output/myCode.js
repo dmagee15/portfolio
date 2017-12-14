@@ -28649,7 +28649,7 @@ var ProjectInfo = function (_React$Component4) {
                     _react2.default.createElement(
                         "p",
                         { style: pStyle },
-                        "Front-end: React, React Router"
+                        "Front-end: React, React Router, Redux"
                     ),
                     _react2.default.createElement(
                         "p",
@@ -28717,6 +28717,8 @@ var _redux = __webpack_require__(9);
 var _redux2 = _interopRequireDefault(_redux);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28812,7 +28814,8 @@ var SignUp = function (_React$Component) {
     _createClass(SignUp, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _React$createElement,
+                _this2 = this;
 
             var divStyle = {
                 padding: 0,
@@ -28926,7 +28929,7 @@ var SignUp = function (_React$Component) {
                         { style: pStyle },
                         "Password"
                     ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
+                    _react2.default.createElement("input", (_React$createElement = { style: inputStyle, type: "text" }, _defineProperty(_React$createElement, "type", "password"), _defineProperty(_React$createElement, "value", this.state.passwordInput), _defineProperty(_React$createElement, "onChange", this.handlePasswordChange), _React$createElement)),
                     _react2.default.createElement(
                         "h3",
                         { style: pStyle },
@@ -29005,6 +29008,8 @@ var _reactRouterDom = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -29067,7 +29072,8 @@ var Login = function (_React$Component) {
     _createClass(Login, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _React$createElement,
+                _this2 = this;
 
             var divStyle = {
                 padding: 0,
@@ -29147,7 +29153,7 @@ var Login = function (_React$Component) {
                         { style: pStyle },
                         "Password"
                     ),
-                    _react2.default.createElement("input", { style: inputStyle, type: "text", value: this.state.passwordInput, onChange: this.handlePasswordChange }),
+                    _react2.default.createElement("input", (_React$createElement = { style: inputStyle, type: "text" }, _defineProperty(_React$createElement, "type", "password"), _defineProperty(_React$createElement, "value", this.state.passwordInput), _defineProperty(_React$createElement, "onChange", this.handlePasswordChange), _React$createElement)),
                     _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
                             var history = _ref.history;
                             return _react2.default.createElement(
@@ -30798,9 +30804,9 @@ var AllBooks = function (_React$Component) {
             });
         };
 
-        _this.findBook = function () {
+        _this.searchAllBooks = function () {
 
-            fetch('/findbook', {
+            fetch('/searchallbooks', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 credentials: 'include',
@@ -30811,7 +30817,9 @@ var AllBooks = function (_React$Component) {
             }).then(function (j) {
                 console.log(j);
                 var myBooksArray = j.slice();
-                _this.setState({ myBooksArray: myBooksArray });
+                _this.setState({ myBooksArray: myBooksArray,
+                    searchInput: ''
+                });
             });
         };
 
@@ -30983,7 +30991,7 @@ var AllBooks = function (_React$Component) {
                     _react2.default.createElement("input", { style: searchInputStyle, type: "text", value: this.state.searchInput, onChange: this.handleSearchChange }),
                     _react2.default.createElement(
                         "button",
-                        { style: searchButtonStyle, onClick: this.findBook },
+                        { style: searchButtonStyle, onClick: this.searchAllBooks },
                         "Search Books"
                     ),
                     _react2.default.createElement(

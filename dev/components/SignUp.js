@@ -170,7 +170,7 @@ class SignUp extends React.Component{
                     )}
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
-                    <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
+                    <input style={inputStyle} type="text" type="password" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
                     <h3 style={pStyle}>Full Name</h3>
                     <input style={inputStyle} type="text" value={this.state.fullNameInput} onChange={this.handleFullNameChange}/>
                     <h3 style={pStyle}>Email</h3>

@@ -108,7 +108,7 @@ class Login extends React.Component{
                     )}
                     <input style={inputStyle} type="text" value={this.state.usernameInput} onChange={this.handleUsernameChange}/>
                     <h3 style={pStyle}>Password</h3>
-                    <input style={inputStyle} type="text" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
+                    <input style={inputStyle} type="text" type="password" value={this.state.passwordInput} onChange={this.handlePasswordChange}/>
                     <Route render={({ history}) => (
                         <button onClick={() => this.loginAccount(history)} style={buttonStyle}>Login</button>
                     )} />

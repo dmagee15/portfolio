@@ -166,7 +166,7 @@ class ProjectInfo extends React.Component{
                     </div>
                     <div style={infoBoxStyle}>
                         <h1 style={hStyle}>Technologies</h1>
-                        <p style={pStyle}>Front-end: React, React Router</p>
+                        <p style={pStyle}>Front-end: React, React Router, Redux</p>
                         <p style={pStyle}>Back-end: Express.js, Mongoose</p>
                     </div>
                     <div style={infoBoxStyle}>

@@ -1,7 +1,6 @@
 'use strict';
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var User = require('../models/users');
 var Book = require('../models/books');
 
@@ -15,8 +14,6 @@ module.exports = function (app, passport, googleBooks) {
 			res.redirect('/login');
 		}
 	}
-
-	var clickHandler = new ClickHandler();
 
 	app.route('/')
 		.get(function (req, res) {
@@ -126,6 +123,26 @@ module.exports = function (app, passport, googleBooks) {
         		res.end();
     		}
 		});
+    	
+    });
+    
+    app.post('/searchallbooks', function(req,res){
+    	console.log("Fetch request successful");
+    	console.log(req.body.searchInput);
+    	
+    	Book.find({}, function(err,data){
+    		if(err) throw err;
+    		console.log(JSON.stringify(data));
+    		var resultArray = [];
+    		var regex = new RegExp(req.body.searchInput, 'i');
+    		var length = data.length;
+    		for(var x=0;x<length;x++){
+    			if(regex.test(data[x].title)||regex.test(data[x].username)){
+    				resultArray.push(data[x]);
+    			}
+    		}
+    		res.send(resultArray);
+    	});
     	
     });
     
@@ -525,27 +542,4 @@ module.exports = function (app, passport, googleBooks) {
 			}
 		});
 
-	app.route('/profile')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/profile.html');
-		});
-
-	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
-		});
-
-	app.route('/auth/github')
-		.get(passport.authenticate('github'));
-
-	app.route('/auth/github/callback')
-		.get(passport.authenticate('github', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
-
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
 };

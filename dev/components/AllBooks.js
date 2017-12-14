@@ -33,9 +33,9 @@ class AllBooks extends React.Component{
         });
     };
     
-    findBook = () => {
+    searchAllBooks = () => {
         
-        fetch('/findbook', {
+        fetch('/searchallbooks', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         credentials: 'include',
@@ -46,7 +46,9 @@ class AllBooks extends React.Component{
         }).then((j) =>{
             console.log(j);
             var myBooksArray = j.slice();
-            this.setState({myBooksArray});
+            this.setState({myBooksArray: myBooksArray,
+                searchInput: ''
+            });
 
 
         });
@@ -199,7 +201,7 @@ class AllBooks extends React.Component{
                 <div style={innerDivStyle}>
                     <hr style={hrStyle}/>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
-                    <button style={searchButtonStyle} onClick={this.findBook}>Search Books</button>
+                    <button style={searchButtonStyle} onClick={this.searchAllBooks}>Search Books</button>
                     <div style={myBooksStyle}>
                         {booksDisplay}
                     </div>
