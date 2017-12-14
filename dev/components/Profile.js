@@ -29,7 +29,6 @@ class Profile extends React.Component{
         .then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
         });
@@ -46,17 +45,22 @@ class Profile extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
-            var myBooksArray = j.slice();
-            this.setState({myBooksArray});
-
+            if(Object.keys(j).length != 0 && j.constructor != Object){
+                var myBooksArray = j.slice();
+            this.setState({myBooksArray: myBooksArray,
+                searchInput: ''
+            });
+            }
+            else{
+                this.setState({searchInput: ''
+            });
+            }
 
         });
 
     }
     removeBook = (id) => {
-        console.log("REMOVE BOOK");
-        console.log(id);
+
         fetch('/removebook', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -66,7 +70,6 @@ class Profile extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 
@@ -96,7 +99,6 @@ class Profile extends React.Component{
         this.setState({showInfoBook: null});
     }
     tradeRequestWindowHandler = () => {
-        console.log("trade request window handler");
         if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==false){
             this.setState({tradeRequestsWindow:true});
         }
@@ -108,7 +110,6 @@ class Profile extends React.Component{
         }
     }
     tradeRequestsForYouWindowHandler = () => {
-        console.log("trade request window handler");
         if(this.state.tradeRequestsWindow==false && this.state.tradeRequestsForYouWindow==false){
             this.setState({tradeRequestsForYouWindow:true});
         }
@@ -634,14 +635,12 @@ class YourRequests extends React.Component{
         .then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
         });
     };
     removeRequest = (id) => {
-        console.log("REMOVE REQUEST");
-        console.log(id);
+
         fetch('/removerequest', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -651,7 +650,6 @@ class YourRequests extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 
@@ -715,14 +713,12 @@ class RequestsForYou extends React.Component{
         .then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
         });
     };
     removeRequestForYou = (id, tradeRequestUser) => {
-        console.log("REMOVE REQUEST");
-        console.log(id);
+
         fetch('/removerequestforyou', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -732,7 +728,6 @@ class RequestsForYou extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 
@@ -741,8 +736,7 @@ class RequestsForYou extends React.Component{
 
     };
     approveRequest = (id, tradeRequestUser) => {
-        console.log("approve request fetch");
-        console.log(id+" "+tradeRequestUser);
+
         fetch('/approverequest', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -752,7 +746,6 @@ class RequestsForYou extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 
@@ -760,7 +753,6 @@ class RequestsForYou extends React.Component{
         });
     };
     unapproveRequest = (id) => {
-        console.log("unapprove request fetch");
         fetch('/unapproverequest', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -770,7 +762,6 @@ class RequestsForYou extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 

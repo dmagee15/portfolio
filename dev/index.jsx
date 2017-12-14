@@ -1,4 +1,3 @@
-console.log("Script started");
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -101,7 +100,6 @@ class App extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             if(j!=false){
               this.props.loginUser(j);
             }
@@ -109,7 +107,6 @@ class App extends React.Component{
     }
     
    render(){
-            console.log(this.props);
             return (
            <div>
             <Router>
@@ -151,4 +148,3 @@ ReactDOM.render(
     document.querySelector("#container")
     );
     
-console.log("script ended");

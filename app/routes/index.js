@@ -80,18 +80,27 @@ module.exports = function (app, passport, googleBooks) {
     app.post('/findbook', function(req,res){
     	console.log("Fetch request successful");
     	console.log(req.body.searchInput);
+    	if(req.body.searchInput==''){
+    		res.send({});
+    	}
+    	else{
+    		
     	
     	googleBooks.search(req.body.searchInput, function(error, results) {
 		if ( ! error ) {
-			
+			console.log("RESULTS");
+			if(results.length==0){
+				res.send({});
+			}
+			else{
+			console.log(JSON.stringify(results));
         	var resultArray = Object.assign({},results[0]);
-        	resultArray.thumbnail = resultArray.thumbnail.replace(/=1&zoom=1&edge=curl&source=gbs_api/,'').replace(/http/,'https');
-        	console.log(resultArray);
-        	
+        	resultArray.thumbnail = (resultArray.thumbnail)?resultArray.thumbnail.replace(/=1&zoom=1&edge=curl&source=gbs_api/,'').replace(/http/,'https'):'';
+
         	var newBook = new Book();
         	newBook.title = resultArray.title;
         	newBook.thumbnail = resultArray.thumbnail;
-        	newBook.author = resultArray.authors[0];
+        	newBook.author = (resultArray.authors)?resultArray.authors[0]:'';
         	newBook.publishedDate = resultArray.publishedDate;
         	newBook.pageCount = resultArray.pageCount;
         	newBook.description = resultArray.description;
@@ -117,13 +126,13 @@ module.exports = function (app, passport, googleBooks) {
     			res.send(data);
         		});
     		});
-			
+		}
     	} else {
         		console.log(error);
         		res.end();
     		}
 		});
-    	
+    	}
     });
     
     app.post('/searchallbooks', function(req,res){

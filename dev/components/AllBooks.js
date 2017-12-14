@@ -13,7 +13,8 @@ class AllBooks extends React.Component{
             myBooksArray: [],
             passwordInput: '',
             emailInput: '',
-            showInfoBook: null
+            showInfoBook: null,
+            searchStatus: false
             };
     
     }
@@ -27,7 +28,6 @@ class AllBooks extends React.Component{
         .then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
         });
@@ -44,19 +44,32 @@ class AllBooks extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray: myBooksArray,
-                searchInput: ''
+                searchInput: '',
+                searchStatus: true
             });
 
 
         });
 
     }
+    cancelSearch = () => {
+        fetch('/getallbooksdata', {
+        method: 'GET',
+        headers: {"Content-Type": "application/json"},
+        credentials: 'include'
+        })
+        .then(function(data) {
+            return data.json();
+        }).then((j) =>{
+            var myBooksArray = j.slice();
+            this.setState({myBooksArray: myBooksArray,
+                searchStatus: false
+            });
+        });
+    }
     requestBook = (id) => {
-        console.log("REQUEST BOOK");
-        console.log(id);
         fetch('/requestbook', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -66,7 +79,6 @@ class AllBooks extends React.Component{
         }).then(function(data) {
             return data.json();
         }).then((j) =>{
-            console.log(j);
             var myBooksArray = j.slice();
             this.setState({myBooksArray});
 
@@ -149,7 +161,8 @@ class AllBooks extends React.Component{
 		    border:'none',
 		    boxShadow:'none',
 		    fontSize: 18,
-		    fontFamily: 'Arial',
+		    fontFamily: 'Tahoma',
+		    fontWeight: 900,
 		    borderRadius: 2,
 		    display: 'inline-block',
 		    margin: "15px 0px 0px 10px"
@@ -194,6 +207,17 @@ class AllBooks extends React.Component{
             fontSize: 16,
             fontWeight: 900
 		};
+		var cancelSearchStyle = {
+		    background: 'white',
+		    height: 25,
+		    border:'1px solid black',
+		    boxShadow:'none',
+		    fontSize: 18,
+		    fontFamily: 'Tahoma',
+		    borderRadius: 2,
+		    display: 'inline-block',
+		    margin: "15px 0px 0px 10px"
+		};
 
         return (
            <div style={divStyle}>
@@ -202,6 +226,10 @@ class AllBooks extends React.Component{
                     <hr style={hrStyle}/>
                     <input style={searchInputStyle} type="text" value={this.state.searchInput} onChange={this.handleSearchChange}/>
                     <button style={searchButtonStyle} onClick={this.searchAllBooks}>Search Books</button>
+                    {
+                        this.state.searchStatus &&
+                        <button style={cancelSearchStyle} onClick={this.cancelSearch}>Cancel Search</button>
+                    }
                     <div style={myBooksStyle}>
                         {booksDisplay}
                     </div>

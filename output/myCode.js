@@ -3972,8 +3972,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-console.log("Script started");
-
 var ADD = 'ADD';
 
 var initialState = {
@@ -4070,7 +4068,6 @@ var App = function (_React$Component) {
         }).then(function (data) {
             return data.json();
         }).then(function (j) {
-            console.log(j);
             if (j != false) {
                 _this.props.loginUser(j);
             }
@@ -4083,7 +4080,6 @@ var App = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.props);
             return _react2.default.createElement(
                 "div",
                 null,
@@ -4128,8 +4124,6 @@ var AppWrapper = function AppWrapper(_ref) {
 };
 
 _reactDom2.default.render(_react2.default.createElement(AppWrapper, { store: store }), document.querySelector("#container"));
-
-console.log("script ended");
 
 /***/ }),
 /* 53 */
@@ -28751,13 +28745,9 @@ var SignUp = function (_React$Component) {
                 return data.json();
             }).then(function (j) {
                 if (Object.keys(j).length === 0) {
-                    console.log('fail');
                     _this.setState({ fail: true });
                 } else {
-                    console.log('pushing to homepage');
-                    console.log(j);
                     _this.props.store.loginUser(j);
-                    console.log(_this.props);
                     history.push('/');
                 }
             });
@@ -29036,14 +29026,10 @@ var Login = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log('pushing to homepage');
                 if (Object.keys(j).length === 0) {
-                    console.log('fail');
                     _this.setState({ fail: true });
                 } else {
-                    console.log(j);
                     _this.props.store.loginUser(j);
-                    console.log(_this.props);
                     history.push('/');
                 }
             });
@@ -29459,7 +29445,6 @@ var Profile = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this.setState({ myBooksArray: myBooksArray });
             });
@@ -29476,15 +29461,20 @@ var Profile = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
-                var myBooksArray = j.slice();
-                _this.setState({ myBooksArray: myBooksArray });
+                if (Object.keys(j).length != 0 && j.constructor != Object) {
+                    var myBooksArray = j.slice();
+                    _this.setState({ myBooksArray: myBooksArray,
+                        searchInput: ''
+                    });
+                } else {
+                    _this.setState({ searchInput: ''
+                    });
+                }
             });
         };
 
         _this.removeBook = function (id) {
-            console.log("REMOVE BOOK");
-            console.log(id);
+
             fetch('/removebook', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -29494,7 +29484,6 @@ var Profile = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this.setState({ myBooksArray: myBooksArray });
             });
@@ -29527,7 +29516,6 @@ var Profile = function (_React$Component) {
         };
 
         _this.tradeRequestWindowHandler = function () {
-            console.log("trade request window handler");
             if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == false) {
                 _this.setState({ tradeRequestsWindow: true });
             } else if (_this.state.tradeRequestsWindow == true && _this.state.tradeRequestsForYouWindow == false) {
@@ -29538,7 +29526,6 @@ var Profile = function (_React$Component) {
         };
 
         _this.tradeRequestsForYouWindowHandler = function () {
-            console.log("trade request window handler");
             if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == false) {
                 _this.setState({ tradeRequestsForYouWindow: true });
             } else if (_this.state.tradeRequestsWindow == false && _this.state.tradeRequestsForYouWindow == true) {
@@ -30269,15 +30256,13 @@ var YourRequests = function (_React$Component5) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this8.setState({ myBooksArray: myBooksArray });
             });
         };
 
         _this8.removeRequest = function (id) {
-            console.log("REMOVE REQUEST");
-            console.log(id);
+
             fetch('/removerequest', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -30287,7 +30272,6 @@ var YourRequests = function (_React$Component5) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this8.setState({ myBooksArray: myBooksArray });
             });
@@ -30363,15 +30347,13 @@ var RequestsForYou = function (_React$Component6) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this10.setState({ myBooksArray: myBooksArray });
             });
         };
 
         _this10.removeRequestForYou = function (id, tradeRequestUser) {
-            console.log("REMOVE REQUEST");
-            console.log(id);
+
             fetch('/removerequestforyou', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -30381,15 +30363,13 @@ var RequestsForYou = function (_React$Component6) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this10.setState({ myBooksArray: myBooksArray });
             });
         };
 
         _this10.approveRequest = function (id, tradeRequestUser) {
-            console.log("approve request fetch");
-            console.log(id + " " + tradeRequestUser);
+
             fetch('/approverequest', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -30399,14 +30379,12 @@ var RequestsForYou = function (_React$Component6) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this10.setState({ myBooksArray: myBooksArray });
             });
         };
 
         _this10.unapproveRequest = function (id) {
-            console.log("unapprove request fetch");
             fetch('/unapproverequest', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -30416,7 +30394,6 @@ var RequestsForYou = function (_React$Component6) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this10.setState({ myBooksArray: myBooksArray });
             });
@@ -30798,7 +30775,6 @@ var AllBooks = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this.setState({ myBooksArray: myBooksArray });
             });
@@ -30815,17 +30791,30 @@ var AllBooks = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this.setState({ myBooksArray: myBooksArray,
-                    searchInput: ''
+                    searchInput: '',
+                    searchStatus: true
+                });
+            });
+        };
+
+        _this.cancelSearch = function () {
+            fetch('/getallbooksdata', {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include'
+            }).then(function (data) {
+                return data.json();
+            }).then(function (j) {
+                var myBooksArray = j.slice();
+                _this.setState({ myBooksArray: myBooksArray,
+                    searchStatus: false
                 });
             });
         };
 
         _this.requestBook = function (id) {
-            console.log("REQUEST BOOK");
-            console.log(id);
             fetch('/requestbook', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -30835,7 +30824,6 @@ var AllBooks = function (_React$Component) {
             }).then(function (data) {
                 return data.json();
             }).then(function (j) {
-                console.log(j);
                 var myBooksArray = j.slice();
                 _this.setState({ myBooksArray: myBooksArray });
             });
@@ -30872,7 +30860,8 @@ var AllBooks = function (_React$Component) {
             myBooksArray: [],
             passwordInput: '',
             emailInput: '',
-            showInfoBook: null
+            showInfoBook: null,
+            searchStatus: false
         };
 
         return _this;
@@ -30938,7 +30927,8 @@ var AllBooks = function (_React$Component) {
                 border: 'none',
                 boxShadow: 'none',
                 fontSize: 18,
-                fontFamily: 'Arial',
+                fontFamily: 'Tahoma',
+                fontWeight: 900,
                 borderRadius: 2,
                 display: 'inline-block',
                 margin: "15px 0px 0px 10px"
@@ -30975,6 +30965,17 @@ var AllBooks = function (_React$Component) {
                 border: 'none',
                 borderRadius: 8
             }, _defineProperty(_requestsForYouStyle, "margin", '15px 0 0 10px'), _defineProperty(_requestsForYouStyle, "fontFamily", 'Tahoma'), _defineProperty(_requestsForYouStyle, "fontSize", 16), _defineProperty(_requestsForYouStyle, "fontWeight", 900), _requestsForYouStyle);
+            var cancelSearchStyle = {
+                background: 'white',
+                height: 25,
+                border: '1px solid black',
+                boxShadow: 'none',
+                fontSize: 18,
+                fontFamily: 'Tahoma',
+                borderRadius: 2,
+                display: 'inline-block',
+                margin: "15px 0px 0px 10px"
+            };
 
             return _react2.default.createElement(
                 "div",
@@ -30993,6 +30994,11 @@ var AllBooks = function (_React$Component) {
                         "button",
                         { style: searchButtonStyle, onClick: this.searchAllBooks },
                         "Search Books"
+                    ),
+                    this.state.searchStatus && _react2.default.createElement(
+                        "button",
+                        { style: cancelSearchStyle, onClick: this.cancelSearch },
+                        "Cancel Search"
                     ),
                     _react2.default.createElement(
                         "div",
