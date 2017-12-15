@@ -812,11 +812,9 @@ class RequestForYouBook extends React.Component{
     super(props);
     }
     approveHandler = () => {
-        console.log("approve handler");
         this.props.approveRequest(this.props.book._id,this.props.book.tradeRequestUser);
     };
     unapproveHandler = () => {
-        console.log("approve handler");
         this.props.unapproveRequest(this.props.book._id);
     };
     render(){

@@ -30462,12 +30462,10 @@ var RequestForYouBook = function (_React$Component7) {
         var _this12 = _possibleConstructorReturn(this, (RequestForYouBook.__proto__ || Object.getPrototypeOf(RequestForYouBook)).call(this, props));
 
         _this12.approveHandler = function () {
-            console.log("approve handler");
             _this12.props.approveRequest(_this12.props.book._id, _this12.props.book.tradeRequestUser);
         };
 
         _this12.unapproveHandler = function () {
-            console.log("approve handler");
             _this12.props.unapproveRequest(_this12.props.book._id);
         };
 
