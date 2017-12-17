@@ -296,6 +296,7 @@ class AllBookAdded extends React.Component{
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
+            fontSize: 14
         };
         var buttonDiv = {
             height: 70,

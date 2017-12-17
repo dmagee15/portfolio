@@ -427,6 +427,7 @@ class TradeRequestBook extends React.Component{
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
+            fontSize: 14
         };
         var buttonDiv = {
             height: 70,
@@ -463,8 +464,7 @@ class TradeRequestBook extends React.Component{
             color: '#D8D8D8',
             margin: 0,
             padding: 0,
-            width: '100%',
-            display: 'inline-block'
+            fontSize: 14
         };
         
         return (
@@ -898,13 +898,13 @@ class RequestForYouBook extends React.Component{
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
+            fontSize: 14
         };
         var subtextEmailStyle = {
             color: '#D8D8D8',
             margin: 0,
             padding: 0,
-            width: '100%',
-            display: 'inline-block'
+            fontSize: 14
         };
         var buttonDiv = {
             height: 70,

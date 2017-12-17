@@ -29931,7 +29931,8 @@ var TradeRequestBook = function (_React$Component3) {
                 padding: 0,
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                fontSize: 14
             };
             var buttonDiv = {
                 height: 70,
@@ -29964,8 +29965,7 @@ var TradeRequestBook = function (_React$Component3) {
                 color: '#D8D8D8',
                 margin: 0,
                 padding: 0,
-                width: '100%',
-                display: 'inline-block'
+                fontSize: 14
             };
 
             return _react2.default.createElement(
@@ -30557,14 +30557,14 @@ var RequestForYouBook = function (_React$Component7) {
                 padding: 0,
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                fontSize: 14
             };
             var subtextEmailStyle = {
                 color: '#D8D8D8',
                 margin: 0,
                 padding: 0,
-                width: '100%',
-                display: 'inline-block'
+                fontSize: 14
             };
             var buttonDiv = {
                 height: 70,
@@ -31095,7 +31095,8 @@ var AllBookAdded = function (_React$Component2) {
                 padding: 0,
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                fontSize: 14
             };
             var buttonDiv = {
                 height: 70,
