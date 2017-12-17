@@ -292,7 +292,10 @@ class AllBookAdded extends React.Component{
         var subtextStyle = {
             color: '#D8D8D8',
             margin: 0,
-            padding: 0
+            padding: 0,
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
         };
         var buttonDiv = {
             height: 70,

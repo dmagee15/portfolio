@@ -423,7 +423,10 @@ class TradeRequestBook extends React.Component{
         var subtextStyle = {
             color: '#D8D8D8',
             margin: 0,
-            padding: 0
+            padding: 0,
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
         };
         var buttonDiv = {
             height: 70,
@@ -456,6 +459,11 @@ class TradeRequestBook extends React.Component{
             fontSize: 18,
             fontWeight: 900
         };
+        var subtextEmailStyle = {
+            color: '#D8D8D8',
+            margin: 0,
+            padding: 0,
+        };
         
         return (
             <div style={divStyle}>
@@ -477,7 +485,7 @@ class TradeRequestBook extends React.Component{
                     <h3 style={titleStyle}>{this.props.book.title}</h3>
                     <p style={subtextStyle}>Author: <span style={{color:'#5D5D5D'}}>{this.props.book.author}</span></p>
                     <p style={subtextStyle}>Owner: <span style={{color:'#5D5D5D'}}>{this.props.book.username}</span></p>
-                    <p style={subtextStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.email}</span></p>
+                    <p style={subtextEmailStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.email}</span></p>
                 </div>
                 ):(
                     <div style={divContentStyle}>
@@ -884,7 +892,15 @@ class RequestForYouBook extends React.Component{
         var subtextStyle = {
             color: '#D8D8D8',
             margin: 0,
-            padding: 0
+            padding: 0,
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+        };
+        var subtextEmailStyle = {
+            color: '#D8D8D8',
+            margin: 0,
+            padding: 0,
         };
         var buttonDiv = {
             height: 70,
@@ -954,7 +970,7 @@ class RequestForYouBook extends React.Component{
                             <div>
                             <p style={subtextStyle}>From: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestUser}</span></p>
                             <p style={subtextStyle}>Location: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeRequestCity}, {this.props.book.tradeRequestState}</span></p>
-                            <p style={subtextStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeConfirmEmail}}</span></p>
+                            <p style={subtextEmailStyle}>Email: <span style={{color:'#5D5D5D'}}>{this.props.book.tradeConfirmEmail}}</span></p>
                             </div>
                         ):(
                         <div>
