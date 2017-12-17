@@ -296,7 +296,8 @@ class BookAdded extends React.Component{
         var subtextStyle = {
             color: '#D8D8D8',
             margin: 0,
-            padding: 0
+            padding: 0,
+            fontSize: 14
         };
         var buttonDiv = {
             height: 70,
