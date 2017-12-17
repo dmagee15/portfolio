@@ -29928,7 +29928,10 @@ var TradeRequestBook = function (_React$Component3) {
             var subtextStyle = {
                 color: '#D8D8D8',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden'
             };
             var buttonDiv = {
                 height: 70,
@@ -29957,6 +29960,11 @@ var TradeRequestBook = function (_React$Component3) {
                 margin: 0,
                 border: 'none'
             }, _defineProperty(_infoButtonStyle2, "margin", '15px 0 0 5px'), _defineProperty(_infoButtonStyle2, "fontFamily", 'Tahoma'), _defineProperty(_infoButtonStyle2, "fontSize", 18), _defineProperty(_infoButtonStyle2, "fontWeight", 900), _infoButtonStyle2);
+            var subtextEmailStyle = {
+                color: '#D8D8D8',
+                margin: 0,
+                padding: 0
+            };
 
             return _react2.default.createElement(
                 "div",
@@ -30013,7 +30021,7 @@ var TradeRequestBook = function (_React$Component3) {
                     ),
                     _react2.default.createElement(
                         "p",
-                        { style: subtextStyle },
+                        { style: subtextEmailStyle },
                         "Email: ",
                         _react2.default.createElement(
                             "span",
@@ -30544,6 +30552,14 @@ var RequestForYouBook = function (_React$Component7) {
             var subtextStyle = {
                 color: '#D8D8D8',
                 margin: 0,
+                padding: 0,
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden'
+            };
+            var subtextEmailStyle = {
+                color: '#D8D8D8',
+                margin: 0,
                 padding: 0
             };
             var buttonDiv = {
@@ -30643,7 +30659,7 @@ var RequestForYouBook = function (_React$Component7) {
                         ),
                         _react2.default.createElement(
                             "p",
-                            { style: subtextStyle },
+                            { style: subtextEmailStyle },
                             "Email: ",
                             _react2.default.createElement(
                                 "span",
@@ -31072,7 +31088,10 @@ var AllBookAdded = function (_React$Component2) {
             var subtextStyle = {
                 color: '#D8D8D8',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden'
             };
             var buttonDiv = {
                 height: 70,
