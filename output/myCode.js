@@ -29963,7 +29963,9 @@ var TradeRequestBook = function (_React$Component3) {
             var subtextEmailStyle = {
                 color: '#D8D8D8',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                width: '100%',
+                display: 'inline-block'
             };
 
             return _react2.default.createElement(
@@ -30560,7 +30562,9 @@ var RequestForYouBook = function (_React$Component7) {
             var subtextEmailStyle = {
                 color: '#D8D8D8',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                width: '100%',
+                display: 'inline-block'
             };
             var buttonDiv = {
                 height: 70,

@@ -463,6 +463,8 @@ class TradeRequestBook extends React.Component{
             color: '#D8D8D8',
             margin: 0,
             padding: 0,
+            width: '100%',
+            display: 'inline-block'
         };
         
         return (
@@ -901,6 +903,8 @@ class RequestForYouBook extends React.Component{
             color: '#D8D8D8',
             margin: 0,
             padding: 0,
+            width: '100%',
+            display: 'inline-block'
         };
         var buttonDiv = {
             height: 70,
