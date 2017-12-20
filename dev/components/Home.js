@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Header from "./components/Header.js";
+
 
 class Home extends React.Component{
     constructor(props) {
@@ -10,6 +12,7 @@ class Home extends React.Component{
 
             return (
                <div>
+                    <Header/>
                     <HomeMain/>
                     <HomeInfo/>
                     <ProjectInfo/>

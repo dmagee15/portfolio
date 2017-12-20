@@ -17,7 +17,8 @@ module.exports = function (app, passport, googleBooks) {
 
 	app.route('/')
 		.get(function (req, res) {
-			res.sendFile(path + '/dev/index.html');
+			res.render('homepage', {
+			});
 		});
 		
 	app.post('/createnewuser', passport.authenticate('local-signup',{ failureRedirect: '/signupfail', failureFlash: false }), function(req,res){
