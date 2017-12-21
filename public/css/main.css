@@ -233,13 +233,14 @@ span {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 125px 0px 0px;
 	border-bottom: 1px solid white;
+	transition: border-bottom 0.5s;
 }
 .buttonList li{
 	display: inline-block;
 	height: 100%;
 	margin: 0px 15px 0px 15px;
 }
-.buttonList li button{
+.headerButton{
 	height: 100%;
 	font-family: 'Tahoma';
 	font-weight: 900;
@@ -247,9 +248,45 @@ span {
 	background: none;
 	border: none;
 	color: white;
+	transition: color 0.5s;
 }
-.workSection{
+.skillsSection{
 	width: 100%;
 	height: 100vh;
 	background-color:white;
+	text-align: center;
+}
+.skillsSectionTitle{
+	width: 750px;
+	text-align: center;
+	display:inline-block;
+	margin: 25px 0px 0px 0px;
+}
+.skillsSectionTitle hr{
+	width: 200px;
+	min-width: 300px;
+	display: inline-block;
+	margin: 0px 0px 9px 0px;
+	border: 1px solid #E1E1E1F;
+	height: 0px;
+	background-color: #E1E1E1;
+}
+.skillsTitle{
+	background-color:#7C0B00;
+	margin: 0;
+	padding: 5px 20px 5px 20px;
+	display: inline-block;
+	text-align:center;
+}
+.skillsTitle h1{
+	font-family: Tahoma;
+	margin: 0;
+	padding: 0;
+	color:white;
+}
+.active{
+	color:black;
+}
+.activeBorder{
+	border-bottom: 1px solid black;
 }
