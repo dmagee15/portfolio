@@ -1,4 +1,7 @@
 /********* Fonts **********/
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Oswald|Oxygen');
 
 @font-face {
   font-family: 'Roboto';
@@ -324,7 +327,58 @@ span {
 }
 .workSection{
 	width: 100%;
-	height: 100vh;
+	height: 200vh;
 	background-color:white;
 	text-align: center;
+}
+.workSectionTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+}
+.work{
+	width: 1000px;
+	text-align:left;
+	display:inline-block;
+}
+.workInfo{
+	display:inline-block;
+	width: 500px;
+	vertical-align:top;
+}
+.workImage{
+	width: 500px;
+	display:inline-block;
+}
+.computerPreview{
+	margin:0px 0px 0px 50px;
+	padding:0;
+	height: 300px;
+}
+.computerPreviewLeft{
+	margin:0px 0px 0px 0px;
+	padding:0;
+	height: 300px;
+}
+.workTitle{
+	color: #520000;
+}
+.workDescription{
+	font-family: Oxygen;
+	color: #6E6E6E;
+}
+.technologies{
+	margin: 25px 0px 0px 0px;
+	font-family: Oswald;
+}
+.technologyList{
+	display:inline-block;
+	font-family: Oxygen;
+	color: #6E6E6E;
+}
+.viewLiveButton{
+	padding: 5px 10px 5px 10px;
+	display:block;
+	margin: 15px 0px 0px 0px;
+	background: none;
+	border: 1px solid black;
 }
