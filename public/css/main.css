@@ -327,18 +327,20 @@ span {
 }
 .workSection{
 	width: 100%;
-	height: 200vh;
+	height: 250vh;
 	background-color:white;
 	text-align: center;
 }
 .workSectionTitle{
 	font-family: 'Slabo 27px';
 	font-size: 46px;
+	margin: 45px 0px 0px 0px;
 }
 .work{
 	width: 1000px;
 	text-align:left;
 	display:inline-block;
+	margin: 25px 0px 0px 0px;
 }
 .workInfo{
 	display:inline-block;
