@@ -227,12 +227,16 @@ span {
 	position: fixed;
 	width: 100%;
 	height: 40px;
+	transition: background-color 0.5s;
+}
+.headerActive{
+	background-color: rgba(1,1,1,.3);
 }
 .buttonList{
 	list-style-type: none;
 	display:inline-block;
 	float: right;
-	height: 100%;
+	height: 39px;
 	margin: 0px 0px 0px 0px;
 	padding: 0px 125px 0px 0px;
 	border-bottom: 1px solid white;
@@ -240,11 +244,11 @@ span {
 }
 .buttonList li{
 	display: inline-block;
-	height: 100%;
+	height: 39px;
 	margin: 0px 15px 0px 15px;
 }
 .headerButton{
-	height: 100%;
+	height: 39px;
 	font-family: 'Tahoma';
 	font-weight: 900;
 	font-size: 16px;
@@ -288,7 +292,7 @@ span {
 	color:white;
 }
 .active{
-	color:black;
+	color:white;
 }
 .activeBorder{
 	border-bottom: 1px solid black;
@@ -296,7 +300,6 @@ span {
 .skillsList{
 	width: 100%;
 	min-height: 300px;
-	background-color: yellow;
 }
 .skill{
 	display:inline-block;
@@ -327,14 +330,14 @@ span {
 }
 .workSection{
 	width: 100%;
-	height: 250vh;
 	background-color:white;
 	text-align: center;
 }
 .workSectionTitle{
 	font-family: 'Slabo 27px';
 	font-size: 46px;
-	margin: 45px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 0px 0px;
 }
 .work{
 	width: 1000px;
@@ -373,13 +376,13 @@ span {
 	font-family: Oswald;
 }
 .technologyList{
-	display:inline-block;
+	display:block;
 	font-family: Oxygen;
 	color: #6E6E6E;
 }
 .viewLiveButton{
 	padding: 5px 10px 5px 10px;
-	display:block;
+	display:inline-block;
 	margin: 15px 0px 0px 0px;
 	background: none;
 	border: 1px solid black;
