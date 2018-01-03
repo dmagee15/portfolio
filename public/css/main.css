@@ -280,7 +280,7 @@ span {
 }
 .skillsTitle{
 	background-color:#7C0B00;
-	margin: 0;
+	margin: 0px 0px 25px 0px;
 	padding: 5px 20px 5px 20px;
 	display: inline-block;
 	text-align:center;
@@ -290,6 +290,7 @@ span {
 	margin: 0;
 	padding: 0;
 	color:white;
+	font-size: 18px;
 }
 .active{
 	color:white;
@@ -303,14 +304,14 @@ span {
 }
 .skill{
 	display:inline-block;
-	width: 100px;
+	width: 80px;
 	margin: 25px 15px 25px 15px;
 	text-align: center;
 	position: relative;
 }
 .skillImage{
-	width: 100px;
-	height: 80px;
+	width: 60px;
+	height: 40px;
 	display:inline-block;
 	position: relative;
 }
@@ -326,7 +327,8 @@ span {
 .skillName{
 	display:inline-block;
 	font-family: Arial;
-	font-size: 20px;
+	font-size: 15px;
+	padding: 15px 0px 0px 0px;
 }
 .workSection{
 	width: 100%;
