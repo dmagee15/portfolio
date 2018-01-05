@@ -296,7 +296,7 @@ span {
 	color:white;
 }
 .activeBorder{
-	border-bottom: 1px solid black;
+	border-bottom: none;
 }
 .skillsList{
 	width: 100%;
@@ -388,4 +388,9 @@ span {
 	margin: 15px 0px 0px 0px;
 	background: none;
 	border: 1px solid black;
+	transition: background-color .3s, font-weight .3s;
+}
+.viewLiveButton:hover{
+	background-color:#DFF9FF;
+	font-weight: 500;
 }
