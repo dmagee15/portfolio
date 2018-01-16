@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 @import url('https://fonts.googleapis.com/css?family=Oswald|Oxygen');
+@import url('https://fonts.googleapis.com/css?family=Abel');
+@import url('https://fonts.googleapis.com/css?family=Karla');
 
 @font-face {
   font-family: 'Roboto';
@@ -223,6 +225,20 @@ span {
 	background-color: rgba(1,1,1,.7);
 	z-index: 2;
 }
+.coverText{
+	margin: 300px 0px 0px 0px;
+	width: 100%;
+	display:inline-block;
+}
+.coverText p{
+	font-family: 'Karla', sans-serif;
+	padding: 0;
+	margin: 0px 0px 0px 50px;
+	color: #FF763A;
+	font-size: 50px;
+	display: inline-block;
+	width: 100%;
+}
 .header{
 	position: fixed;
 	width: 100%;
@@ -259,8 +275,8 @@ span {
 }
 .skillsSection{
 	width: 100%;
-	height: 100vh;
-	background-color:white;
+	min-height: 55vh;
+	background-color:#D5D5D5;
 	text-align: center;
 }
 .skillsSectionTitle{
@@ -274,9 +290,10 @@ span {
 	min-width: 300px;
 	display: inline-block;
 	margin: 0px 0px 9px 0px;
-	border: 1px solid #E1E1E1F;
-	height: 0px;
-	background-color: #E1E1E1;
+	border: 1px solid darkred;
+	height: -1px;
+	background-color: darkred;
+	border-style: solid;
 }
 .skillsTitle{
 	background-color:#7C0B00;
@@ -316,7 +333,7 @@ span {
 	position: relative;
 }
 .skill img{
-	height: 80px;
+	height: 60px;
 	max-width: 150px;
 	display: inline-block;
 	position: absolute;
@@ -393,4 +410,10 @@ span {
 .viewLiveButton:hover{
 	background-color:#DFF9FF;
 	font-weight: 500;
+}
+.contactSection{
+	width:100%;
+	height: 50vh;
+	padding:0;
+	margin:0;
 }
