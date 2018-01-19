@@ -224,6 +224,7 @@ span {
 	height: 100vh;
 	background-color: rgba(1,1,1,.7);
 	z-index: 2;
+	text-align: center;
 }
 .coverText{
 	margin: 300px 0px 0px 0px;
@@ -237,7 +238,7 @@ span {
 	color: #FF763A;
 	font-size: 50px;
 	display: inline-block;
-	width: 100%;
+	width: 60%;
 }
 .header{
 	position: fixed;
@@ -276,7 +277,7 @@ span {
 .skillsSection{
 	width: 100%;
 	min-height: 55vh;
-	background-color:#D5D5D5;
+	background-color:white;
 	text-align: center;
 }
 .skillsSectionTitle{
@@ -286,10 +287,9 @@ span {
 	margin: 25px 0px 0px 0px;
 }
 .skillsSectionTitle hr{
-	width: 200px;
-	min-width: 300px;
+	min-width: 230px;
 	display: inline-block;
-	margin: 0px 0px 9px 0px;
+	margin: 0px 0px 5px 0px;
 	border: 1px solid darkred;
 	height: -1px;
 	background-color: darkred;
@@ -298,7 +298,7 @@ span {
 .skillsTitle{
 	background-color:#7C0B00;
 	margin: 0px 0px 25px 0px;
-	padding: 5px 20px 5px 20px;
+	padding: 3px 20px 3px 20px;
 	display: inline-block;
 	text-align:center;
 }
@@ -307,7 +307,7 @@ span {
 	margin: 0;
 	padding: 0;
 	color:white;
-	font-size: 18px;
+	font-size: 16px;
 }
 .active{
 	color:white;
@@ -333,7 +333,7 @@ span {
 	position: relative;
 }
 .skill img{
-	height: 60px;
+	height: 50px;
 	max-width: 150px;
 	display: inline-block;
 	position: absolute;
@@ -413,7 +413,41 @@ span {
 }
 .contactSection{
 	width:100%;
-	height: 50vh;
+	min-height: 50vh;
 	padding:0;
 	margin:0;
+	text-align:right;
+}
+.contactForm{
+	display:inline-block;
+	outline:none;
+	border:none;
+}
+.smallForm{
+	width: 305px;
+	height: 30px;
+	display:block;
+	margin: 25px 50px 0px 0px;
+	border-top:none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid black;
+	padding-left: 10px;
+	font-family: 'Karla', sans-serif;
+	font-size: 15px;
+}
+.smallForm:focus{
+	outline:none;
+}
+.contactSection textarea{
+	resize: none;
+	width: 300px;
+	height: 150px;
+	display:block;
+	margin: 25px 50px 100px 0px;
+	border: 1px solid black;
+	padding-top: 10px;
+	padding-left: 10px;
+	font-family: 'Karla', sans-serif;
+	font-size: 15px;
 }
