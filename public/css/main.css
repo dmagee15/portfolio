@@ -4,6 +4,8 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald|Oxygen');
 @import url('https://fonts.googleapis.com/css?family=Abel');
 @import url('https://fonts.googleapis.com/css?family=Karla');
+@import url('https://fonts.googleapis.com/css?family=Syncopate');
+
 
 @font-face {
   font-family: 'Roboto';
@@ -227,18 +229,14 @@ span {
 	text-align: center;
 }
 .coverText{
-	margin: 300px 0px 0px 0px;
+	margin: 100px 0px 0px 0px;
 	width: 100%;
 	display:inline-block;
 }
 .coverText p{
-	font-family: 'Karla', sans-serif;
 	padding: 0;
-	margin: 0px 0px 0px 50px;
-	color: #FF763A;
-	font-size: 50px;
 	display: inline-block;
-	width: 60%;
+	width: 80%;
 }
 .header{
 	position: fixed;
@@ -422,12 +420,13 @@ span {
 	display:inline-block;
 	outline:none;
 	border:none;
+	margin: 50px 0px 0px 0px;
 }
 .smallForm{
 	width: 305px;
 	height: 30px;
 	display:block;
-	margin: 25px 50px 0px 0px;
+	margin: 25px 100px 0px 0px;
 	border-top:none;
 	border-right: none;
 	border-left: none;
@@ -444,10 +443,42 @@ span {
 	width: 300px;
 	height: 150px;
 	display:block;
-	margin: 25px 50px 100px 0px;
+	margin: 25px 100px 100px 0px;
 	border: 1px solid black;
 	padding-top: 10px;
 	padding-left: 10px;
 	font-family: 'Karla', sans-serif;
 	font-size: 15px;
+}
+.coverline1{
+	font-family: 'Syncopate', sans-serif;
+	font-size: 90px;
+	color: white;
+	letter-spacing: -10px;
+}
+.coverline1 span{
+	color:lightblue;
+	font-size:100px;
+}
+.coverline2{
+	font-family: 'Syncopate', sans-serif;
+	font-size: 80px;
+	color: white;
+	letter-spacing: -10px;
+}
+.coverline3{
+	font-family: 'Syncopate', sans-serif;
+	font-size: 90px;
+	color: white;
+	letter-spacing: -10px;
+}
+.contactTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 0px 0px;
+}
+.contactTitleContainer{
+	width:100%;
+	text-align:center;
 }

@@ -16,7 +16,9 @@ html
         .coverSection
           .coverSectionOverlay
             .coverText
-              p Hi, I'm David. I am a web developer living in Houston, Texas.
+              p.coverline1 Hi, I'm <span>David</span>. I am an
+              p.coverline2 aspiring web developer
+              p.coverline3 living in Houston, Texas.
         .workSection
           h1.workSectionTitle My Work
           .work
@@ -119,6 +121,8 @@ html
                   img(src='/public/css/GitHub-Mark-120px-plus.png')
                 h1.skillName GitHub
         .contactSection
+          .contactTitleContainer
+            h1.contactTitle Contact
           .contactForm
             input(type='text' placeholder='Name' class='smallForm')
             input(type='text' placeholder='Email' class='smallForm')
