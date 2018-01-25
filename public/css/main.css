@@ -357,8 +357,7 @@ span {
 	padding: 45px 0px 0px 0px;
 }
 .work{
-	width: 1000px;
-	text-align:left;
+	text-align:center;
 	display:inline-block;
 	margin: 25px 0px 0px 0px;
 }
@@ -366,6 +365,7 @@ span {
 	display:inline-block;
 	width: 500px;
 	vertical-align:top;
+	text-align:left;
 }
 .workImage{
 	width: 500px;
@@ -412,9 +412,8 @@ span {
 .contactSection{
 	width:100%;
 	min-height: 50vh;
-	padding:0;
+	padding:0px 0px 50px 0px;
 	margin:0;
-	text-align:right;
 }
 .contactForm{
 	display:inline-block;
@@ -422,11 +421,14 @@ span {
 	border:none;
 	margin: 50px 0px 0px 0px;
 }
+.contactContent{
+	text-align:center;
+}
 .smallForm{
 	width: 305px;
 	height: 30px;
 	display:block;
-	margin: 25px 100px 0px 0px;
+	margin: 25px 0px 0px 0px;
 	border-top:none;
 	border-right: none;
 	border-left: none;
@@ -443,12 +445,17 @@ span {
 	width: 300px;
 	height: 150px;
 	display:block;
-	margin: 25px 100px 100px 0px;
+	margin: 25px 0px 15px 0px;
 	border: 1px solid black;
 	padding-top: 10px;
 	padding-left: 10px;
 	font-family: 'Karla', sans-serif;
 	font-size: 15px;
+}
+.contactContentSpace{
+	display:inline-block;
+	min-height:30px;
+	width:20%;
 }
 .coverline1{
 	font-family: 'Syncopate', sans-serif;
@@ -457,19 +464,19 @@ span {
 	letter-spacing: -10px;
 }
 .coverline1 span{
-	color:lightblue;
+	color:#59B2FF;
 	font-size:110px;
 }
 .coverline2{
 	font-family: 'Syncopate', sans-serif;
 	font-size: 110px;
-	color: white;
+	color: #EAEAEA;
 	letter-spacing: -10px;
 }
 .coverline3{
 	font-family: 'Syncopate', sans-serif;
 	font-size: 78px;
-	color: white;
+	color: #CFCFCF;
 	letter-spacing: -10px;
 }
 .coverButtonSection{
@@ -487,6 +494,42 @@ span {
 	width:100%;
 	text-align:center;
 	overflow:hidden;
+}
+.contactLinks{
+	display:inline-block;
+	vertical-align:top;
+	margin: 50px 0px 0px 0px;
+	text-align:left;
+}
+.emailTitle{
+	font-family: 'Roboto', sans-serif;
+	color: #520000;
+	font-size:20px;
+	padding-bottom:10px;
+}
+.accountsTitle{
+	font-family: 'Roboto', sans-serif;
+	color: #520000;
+	font-size:20px;
+	padding-top:45px;
+	padding-bottom:10px;
+}
+.contactSubmitButtonContainer{
+	width: 305px;
+	display:block;
+	text-align:right;
+}
+.contactSubmitButton{
+	padding: 5px 10px 5px 10px;
+	display:inline-block;
+	margin: 15px 0px 0px 0px;
+	background: none;
+	border: 1px solid black;
+	transition: background-color .3s, font-weight .3s;
+}
+.contactSubmitButton:hover{
+	background-color:#DFF9FF;
+	font-weight: 500;
 }
 .githubCoverButton{
 	border: 1px solid white;
@@ -508,4 +551,18 @@ span {
 .copyrightText{
 	color: white;
 	padding: 12px 0px 0px 10px;
+}
+.account img{
+	height: 20px;
+	width: 20px;
+	display:inline-block;
+	vertical-align:bottom;
+}
+.account p{
+	display:inline-block;
+	padding: 0;
+	margin: 0px 0px 0px 5px;
+}
+.account{
+	margin: 0px 0px 15px 0px;
 }

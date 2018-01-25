@@ -126,11 +126,28 @@ html
         .contactSection
           .contactTitleContainer
             h1.contactTitle Contact
-          .contactForm
-            input(type='text' placeholder='Name' class='smallForm')
-            input(type='text' placeholder='Email' class='smallForm')
-            input(type='text' placeholder='Subject' class='smallForm')
-            textarea(type='text' placeholder='Information')
+          .contactContent
+            .contactLinks
+              h1.emailTitle Email
+              p.email david.magee15@yahoo.com
+              h1.accountsTitle Accounts
+              .account
+                img(src='/public/css/GitHub-Mark-120px-plus.png')
+                p Github
+              .account
+                img(src='/public/css/codepen.png')
+                p CodePen
+              .account
+                img(src='/public/css/freecodecamp.svg')
+                p FreeCodeCamp
+            .contactContentSpace
+            .contactForm
+              input(type='text' placeholder='Name' class='smallForm')
+              input(type='text' placeholder='Email' class='smallForm')
+              input(type='text' placeholder='Subject' class='smallForm')
+              textarea(type='text' placeholder='Information')
+              .contactSubmitButtonContainer
+                .contactSubmitButton Submit
         .copyright
           p.copyrightText &#9400; David Magee
   script(src="/public/css/jquery-3.2.1.min.js")
