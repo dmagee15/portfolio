@@ -20,8 +20,9 @@ html
               p.coverline2 web developer
               p.coverline3 living in Houston, Texas.
             .coverButtonSection
-              .githubCoverButton
-                p View Github
+              a(href='https://github.com/dmagee15')
+                .githubCoverButton
+                  p View Github
         .workSection
           h1.workSectionTitle My Work
           .work
@@ -131,15 +132,18 @@ html
               h1.emailTitle Email
               p.email david.magee15@yahoo.com
               h1.accountsTitle Accounts
-              .account
-                img(src='/public/css/GitHub-Mark-120px-plus.png')
-                p Github
-              .account
-                img(src='/public/css/codepen.png')
-                p CodePen
-              .account
-                img(src='/public/css/freecodecamp.svg')
-                p FreeCodeCamp
+              a(href='https://github.com/dmagee15')
+                .account
+                  img(src='/public/css/GitHub-Mark-120px-plus.png')
+                  p Github
+              a(href='https://codepen.io/dmagee15/')
+                .account
+                  img(src='/public/css/codepen.png')
+                  p CodePen
+              a(href='https://www.freecodecamp.org/dmagee15')
+                .account
+                  img(src='/public/css/freecodecamp.svg')
+                  p FreeCodeCamp
             .contactContentSpace
             .contactForm
               input(type='text' placeholder='Name' class='smallForm')

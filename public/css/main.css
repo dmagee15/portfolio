@@ -272,6 +272,12 @@ span {
 	color: white;
 	transition: color 0.5s;
 }
+.headerButton:focus{
+	outline:0;
+}
+.headerButton:hover{
+	color:#59B2FF;
+}
 .skillsSection{
 	width: 100%;
 	min-height: 55vh;

@@ -22,3 +22,9 @@ $("#aboutButton").click(function() {
         scrollTop: $(".coverSection").offset().top},
         'slow');
 });
+
+$("#contactButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $(".contactSection").offset().top},
+        'slow');
+});
