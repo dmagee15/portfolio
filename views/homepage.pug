@@ -146,12 +146,13 @@ html
                   p FreeCodeCamp
             .contactContentSpace
             .contactForm
-              input(type='text' placeholder='Name' class='smallForm')
-              input(type='text' placeholder='Email' class='smallForm')
-              input(type='text' placeholder='Subject' class='smallForm')
-              textarea(type='text' placeholder='Information')
-              .contactSubmitButtonContainer
-                .contactSubmitButton Submit
+              form(action="https://formspree.io/david.magee15@yahoo.com" method="POST")
+                input(type='text' placeholder='Name' class='smallForm' name="name")
+                input(type='text' placeholder='Email' class='smallForm' name="_replyto")
+                input(type='text' placeholder='Subject' class='smallForm' name="subject")
+                textarea(type='text' placeholder='Information' name="body")
+                .contactSubmitButtonContainer
+                  button.contactSubmitButton(type="submit" value="Send") Submit
         .copyright
           p.copyrightText &#9400; David Magee
   script(src="/public/css/jquery-3.2.1.min.js")
