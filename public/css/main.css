@@ -351,6 +351,40 @@ span {
 	font-size: 15px;
 	padding: 15px 0px 0px 0px;
 }
+.aboutSection{
+	width: 100%;
+	background-color:white;
+	text-align: center;
+}
+.aboutSectionTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 30px 0px;
+}
+.aboutInfo{
+	display:inline-block;
+	width: 400px;
+	vertical-align:top;
+	text-align:left;
+}
+.aboutDescription{
+	font-size: 20px;
+	font-family: Oxygen;
+	padding-top: 20px;
+	line-height: 1.5;
+	width: 80%;
+	display:inline-block;
+}
+.aboutImage{
+	width: 400px;
+	display:inline-block;
+}
+.aboutImage img{
+	border-radius: 50%;
+	height: 325px;
+	width: 325px;
+}
 .workSection{
 	width: 100%;
 	background-color:white;
