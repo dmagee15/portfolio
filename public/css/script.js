@@ -13,13 +13,13 @@ $(window).on("scroll", function() {
 
 $("#workButton").click(function() {
     $('html,body').animate({
-        scrollTop: $(".workSection").offset().top},
+        scrollTop: $(".workSection").offset().top+2},
         'slow');
 });
 
 $("#aboutButton").click(function() {
     $('html,body').animate({
-        scrollTop: $(".coverSection").offset().top},
+        scrollTop: $(".aboutSection").offset().top},
         'slow');
 });
 

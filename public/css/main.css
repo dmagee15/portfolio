@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 @import url('https://fonts.googleapis.com/css?family=Karla');
 @import url('https://fonts.googleapis.com/css?family=Syncopate');
+@import url('https://fonts.googleapis.com/css?family=Rokkit');
 
 
 @font-face {
@@ -355,25 +356,26 @@ span {
 	width: 100%;
 	background-color:white;
 	text-align: center;
+	padding-bottom: 30px;
 }
 .aboutSectionTitle{
 	font-family: 'Slabo 27px';
 	font-size: 46px;
 	margin: 0px 0px 0px 0px;
-	padding: 45px 0px 30px 0px;
+	padding: 45px 0px 50px 0px;
 }
 .aboutInfo{
 	display:inline-block;
 	width: 400px;
 	vertical-align:top;
 	text-align:left;
+	padding-left: 100px;
 }
 .aboutDescription{
 	font-size: 20px;
 	font-family: Oxygen;
-	padding-top: 40px;
 	line-height: 1.5;
-	width: 80%;
+	width: 100%;
 	display:inline-block;
 }
 .aboutImage{
@@ -520,10 +522,12 @@ span {
 	font-size:110px;
 }
 .coverline2{
-	font-family: 'Syncopate', sans-serif;
-	font-size: 110px;
+	font-family: 'Rokkit', sans-serif;
+	font-size: 180px;
 	color: #EAEAEA;
 	letter-spacing: -10px;
+	margin-top: -20px;
+	padding: 0;
 }
 .coverline3{
 	font-family: 'Syncopate', sans-serif;
@@ -586,14 +590,23 @@ span {
 .githubCoverButton{
 	border: 1px solid white;
 	display:inline-block;
-}
-.githubCoverButton p{
 	color:white;
-	dispay:inline-block;
 	font-family: 'Roboto', sans-serif;
 	padding: 5px 10px 5px 10px;
 	font-size: 20px;
 	margin: 0;
+	transition:color 0.3s, background-color 0.3s;
+}
+.githubCoverButton p{
+	display:inline-block;
+	font-family: 'Roboto', sans-serif;
+	padding: 5px 10px 5px 10px;
+	font-size: 20px;
+	margin: 0;
+	transition:color 0.3s;
+}
+.githubCoverButton:hover{
+	color: #59B2FF;
 }
 .copyright{
 	height: 50px;
