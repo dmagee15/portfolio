@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 @import url('https://fonts.googleapis.com/css?family=Karla');
 @import url('https://fonts.googleapis.com/css?family=Syncopate');
-@import url('https://fonts.googleapis.com/css?family=Rokkit');
+@import url('https://fonts.googleapis.com/css?family=Rokkitt');
 
 
 @font-face {
@@ -377,6 +377,7 @@ span {
 	line-height: 1.8;
 	width: 100%;
 	display:inline-block;
+	color: #606060;
 }
 .aboutImage{
 	width: 300px;
@@ -522,7 +523,7 @@ span {
 	font-size:110px;
 }
 .coverline2{
-	font-family: 'Rokkit', sans-serif;
+	font-family: sans-serif;
 	font-size: 180px;
 	color: #EAEAEA;
 	letter-spacing: -10px;
