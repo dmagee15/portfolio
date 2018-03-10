@@ -242,7 +242,7 @@ span {
 .header{
 	position: fixed;
 	width: 100%;
-	height: 40px;
+	min-height: 6%;
 	transition: background-color 0.5s;
 }
 .headerActive{
@@ -252,7 +252,7 @@ span {
 	list-style-type: none;
 	display:inline-block;
 	float: right;
-	height: 39px;
+	height: 100%;
 	margin: 0px 0px 0px 0px;
 	padding: 0px 125px 0px 0px;
 	border-bottom: 1px solid white;
@@ -260,17 +260,18 @@ span {
 }
 .buttonList li{
 	display: inline-block;
-	height: 39px;
+	height: 100%;
 	margin: 0px 15px 0px 15px;
 }
 .headerButton{
-	height: 39px;
+	height: 100%;
 	font-family: 'Tahoma';
 	font-weight: 900;
-	font-size: 16px;
+	font-size: calc(8px + 1vw);
 	background: none;
 	border: none;
 	color: white;
+	padding: 7px 0px 7px 0px;
 	transition: color 0.5s;
 }
 .headerButton:focus{
@@ -286,7 +287,6 @@ span {
 	text-align: center;
 }
 .skillsSectionTitle{
-	width: 750px;
 	text-align: center;
 	display:inline-block;
 	margin: 25px 0px 0px 0px;
@@ -366,27 +366,40 @@ span {
 }
 .aboutInfo{
 	display:inline-block;
-	width: 400px;
 	vertical-align:top;
 	text-align:left;
-	padding-left: 100px;
+	min-width: 350px;
 }
 .aboutDescription{
-	font-size: 20px;
+	font-size: 17px;
 	font-family: Oxygen;
 	line-height: 1.8;
-	width: 100%;
-	display:inline-block;
 	color: #606060;
+	display:inline;
 }
 .aboutImage{
 	width: 300px;
 	display:inline-block;
+	float:left;
+	clip: circle(50% at 50% 50%);
 }
-.aboutImage img{
+.aboutInfo img{
+	width: 300px;
+	clip: circle(50% at 50% 50%);
+	float:left;
 	border-radius: 50%;
 	height: 225px;
 	width: 225px;
+}
+.portrait{
+	width: 300px;
+	shape-outside: circle(50% at 50% 50%);;
+	float:left;
+	border-radius: 50%;
+	height: 225px;
+	width: 225px;
+	margin-right: 65px;
+	margin-bottom: 15px;
 }
 .workSection{
 	width: 100%;
@@ -595,7 +608,7 @@ span {
 	color:white;
 	font-family: 'Roboto', sans-serif;
 	padding: 5px 10px 5px 10px;
-	font-size: 20px;
+	font-size: calc(8px + 1vw);
 	margin: 0;
 	transition:color 0.3s, background-color 0.3s;
 }
@@ -603,7 +616,7 @@ span {
 	display:inline-block;
 	font-family: 'Roboto', sans-serif;
 	padding: 5px 10px 5px 10px;
-	font-size: 20px;
+	font-size: 2vw;
 	margin: 0;
 	transition:color 0.3s;
 }
