@@ -514,27 +514,28 @@ span {
 }
 .coverline1{
 	font-family: 'Syncopate', sans-serif;
-	font-size: 100px;
+	font-size: 7.5vw;
 	color: white;
-	letter-spacing: -10px;
+	letter-spacing: -1vw;
 }
 .coverline1 span{
 	color:#59B2FF;
-	font-size:110px;
+	font-size:8vw;
+	font-weight: 900;
 }
 .coverline2{
 	font-family: sans-serif;
-	font-size: 180px;
-	color: #EAEAEA;
-	letter-spacing: -10px;
-	margin-top: -20px;
+	font-size: 13.5vw;
+	color: #FFC800;
+	letter-spacing: -1vw;
+	margin-top: -2%;
 	padding: 0;
 }
 .coverline3{
 	font-family: 'Syncopate', sans-serif;
-	font-size: 78px;
+	font-size: 5.7vw;
 	color: #CFCFCF;
-	letter-spacing: -10px;
+	letter-spacing: -1vw;
 }
 .coverButtonSection{
 	width: 100%;
