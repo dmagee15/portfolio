@@ -290,15 +290,22 @@ span {
 	text-align: center;
 	display:inline-block;
 	margin: 25px 0px 0px 0px;
+	position: relative;
+	
 }
 .skillsSectionTitle hr{
-	min-width: 230px;
+	min-width: 530px;
 	display: inline-block;
 	margin: 0px 0px 5px 0px;
 	border: 1px solid darkred;
 	height: -1px;
 	background-color: darkred;
 	border-style: solid;
+	position: absolute;
+	top: 28%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }
 .skillsTitle{
 	background-color:#7C0B00;
@@ -306,6 +313,8 @@ span {
 	padding: 3px 20px 3px 20px;
 	display: inline-block;
 	text-align:center;
+	z-index:3;
+	position: relative;
 }
 .skillsTitle h1{
 	font-family: Tahoma;
@@ -369,6 +378,7 @@ span {
 	vertical-align:top;
 	text-align:left;
 	min-width: 350px;
+	max-width: 600px;
 }
 .aboutDescription{
 	font-size: 17px;
