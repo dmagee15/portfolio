@@ -228,9 +228,15 @@ span {
 	background-color: rgba(1,1,1,.7);
 	z-index: 2;
 	text-align: center;
+	display:table;
+}
+.coverContentContainer{
+	display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
 .coverText{
-	margin: 100px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
 	width: 100%;
 	display:inline-block;
 }
