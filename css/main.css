@@ -1,0 +1,666 @@
+/********* Fonts **********/
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Oswald|Oxygen');
+@import url('https://fonts.googleapis.com/css?family=Abel');
+@import url('https://fonts.googleapis.com/css?family=Karla');
+@import url('https://fonts.googleapis.com/css?family=Syncopate');
+@import url('https://fonts.googleapis.com/css?family=Rokkitt');
+
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+/****** Main Styling ******/
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	color: #00BCD4;
+	height: 56px;
+	margin: 0 0 14px 0;
+	text-align: center;
+}
+
+p {
+	margin: 8px 0 0 0;
+}
+
+.container p {
+	text-align: center;
+	padding: 0;
+}
+
+/****** Header Styling ******/
+
+header p {
+	margin: 16px 0 5px 0;
+}
+
+.menu {
+	text-decoration: none;
+	padding: 6px;
+	margin: 0;
+	color: #727272;
+}
+
+.menu:visited {
+	color: #727272;
+}
+
+.menu:hover {
+	color: #FFA000;
+}
+
+.menu:active {
+	color: #FF630D;
+}
+
+header a ~ p {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	color: #ECEFF1;
+}
+
+#display-name {
+	font-weight: 400;
+}
+
+/****** Login Styling ******/
+
+.login {
+	margin: 86px auto 0 auto;
+	text-align: center;
+}
+
+#login-btn {
+	width: 225px;
+	padding: 7px 5px;
+}
+
+.btn p {
+	margin: 8px 0 0 0;
+	padding: 0;
+}
+
+.btn > img {
+	float: left;
+	margin-left: 10px
+}
+
+/****** Logo Div Styling ******/
+
+img {
+	margin: 0 auto;
+	display: block;
+}
+
+.clementine-text { /* Styling for the Clementine.js text */
+	padding: 0;
+	margin: -25px 0 0 0;
+	font-weight: 500;
+	font-size: 60px;
+	color: #FFA000;
+}
+
+/****** Click Styling ******/
+
+.btn-container {	/* Styling for the div that contains the buttons */
+	margin: -10px auto 0 auto;
+	text-align: center;
+}
+
+.btn {	/* Styling for buttons */
+	margin: 0 8px;
+	color: white;
+	background-color: #00BCD4;
+	display: inline-block;
+	border: 0;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 10px 5px;
+	width: 100px;
+	font-weight: 500;
+}
+
+.btn:focus {	/* Remove outline when hovering over button */
+	outline: none;
+}
+
+.btn:active {	/* Scale the button down by 10% when clicking on button */
+	transform: scale(0.9, 0.9);
+	-webkit-transform: scale(0.9, 0.9);
+	-moz-transform: scale(0.9, 0.9);
+}
+
+.btn-delete {	/* Styling for delete button */
+	background-color: #ECEFF1;
+	color: #212121;
+}
+
+#click-nbr {
+	font-weight: 400;
+}
+
+/****** Profile Styling ******/
+
+.github-profile {
+	width: 350px;
+	height: 200px;
+	border-radius: 3px;
+	margin: 86px auto 0 auto;
+	background-color: #EEE;
+	text-align: center;
+	color: #000;
+}
+
+.github-profile p:first-child {
+	padding-top: 16px;
+}
+
+.github-profile p:nth-child(5) {
+	margin-bottom: 16px
+}
+
+.github-profile p {
+	margin: 0 0 0 16px;
+	text-align: left;
+}
+
+.profile-value {
+	font-weight: 400;
+}
+
+span {
+	font-weight: 500;
+}
+
+.github-profile > img {
+	padding-top: 16px;
+	margin-bottom: 16px;
+}
+
+.github-profile .menu:hover {
+	color: #FFA000;
+}
+
+.github-profile .menu:active {
+	color: #FF630D;
+}
+
+#menu-divide {
+	color: #FFFFFF;
+	display: inline;
+	margin: 0;
+}
+.main{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+}
+.coverSection{
+	width: 100%;
+	min-height: 100vh;
+	background-image: url('../img/luke-chesser-2347 (1).jpg');
+	background-size: cover;
+}
+.coverSectionOverlay{
+	width: 100%;
+	min-height: 100vh;
+	background-color: rgba(1,1,1,.7);
+	z-index: 2;
+	text-align: center;
+	display:table;
+}
+.coverContentContainer{
+	display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.coverText{
+	margin: 0px 0px 0px 0px;
+	width: 100%;
+	display:inline-block;
+}
+.coverText p{
+	padding: 0;
+	display: inline-block;
+	width: 80%;
+}
+.header{
+	position: fixed;
+	width: 100%;
+	min-height: 6%;
+	transition: background-color 0.5s;
+}
+.headerActive{
+	background-color: rgba(1,1,1,.3);
+}
+.buttonList{
+	list-style-type: none;
+	display:inline-block;
+	float: right;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 125px 0px 0px;
+	border-bottom: 1px solid white;
+	transition: border-bottom 0.5s;
+}
+.buttonList li{
+	display: inline-block;
+	height: 100%;
+	margin: 0px 15px 0px 15px;
+}
+.headerButton{
+	height: 100%;
+	font-family: 'Tahoma';
+	font-weight: 900;
+	font-size: calc(8px + 1vw);
+	background: none;
+	border: none;
+	color: white;
+	padding: 7px 0px 7px 0px;
+	transition: color 0.5s;
+}
+.headerButton:focus{
+	outline:0;
+}
+.headerButton:hover{
+	color:#59B2FF;
+}
+.skillsSection{
+	width: 100%;
+	min-height: 55vh;
+	background-color:white;
+	text-align: center;
+}
+.skillsSectionTitle{
+	text-align: center;
+	display:inline-block;
+	margin: 25px 0px 0px 0px;
+	position: relative;
+	
+}
+.skillsSectionTitle hr{
+	min-width: 530px;
+	display: inline-block;
+	margin: 0px 0px 5px 0px;
+	border: 1px solid darkred;
+	height: -1px;
+	background-color: darkred;
+	border-style: solid;
+	position: absolute;
+	top: 28%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+.skillsTitle{
+	background-color:#7C0B00;
+	margin: 0px 0px 25px 0px;
+	padding: 3px 20px 3px 20px;
+	display: inline-block;
+	text-align:center;
+	z-index:3;
+	position: relative;
+}
+.skillsTitle h1{
+	font-family: Tahoma;
+	margin: 0;
+	padding: 0;
+	color:white;
+	font-size: 16px;
+}
+.active{
+	color:white;
+}
+.activeBorder{
+	border-bottom: none;
+}
+.skillsList{
+	width: 100%;
+	min-height: 300px;
+}
+.skill{
+	display:inline-block;
+	width: 80px;
+	margin: 25px 15px 25px 15px;
+	text-align: center;
+	position: relative;
+}
+.skillImage{
+	width: 60px;
+	height: 40px;
+	display:inline-block;
+	position: relative;
+}
+.skill img{
+	height: 50px;
+	max-width: 150px;
+	display: inline-block;
+	position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.skillName{
+	display:inline-block;
+	font-family: Arial;
+	font-size: 15px;
+	padding: 15px 0px 0px 0px;
+}
+.aboutSection{
+	width: 100%;
+	background-color:white;
+	text-align: center;
+	padding-bottom: 30px;
+}
+.aboutSectionTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 50px 0px;
+}
+.aboutInfo{
+	display:inline-block;
+	vertical-align:top;
+	text-align:left;
+	min-width: 350px;
+	max-width: 600px;
+}
+.aboutDescription{
+	font-size: 16px;
+	font-family: Oxygen;
+	line-height: 1.8;
+	color: #606060;
+	display:inline;
+}
+.aboutImage{
+	width: 300px;
+	display:inline-block;
+	float:left;
+	clip: circle(50% at 50% 50%);
+}
+.aboutInfo img{
+	width: 300px;
+	clip: circle(50% at 50% 50%);
+	float:left;
+	border-radius: 50%;
+	height: 225px;
+	width: 225px;
+}
+.portrait{
+	width: 300px;
+	shape-outside: circle(50% at 50% 50%);;
+	float:left;
+	border-radius: 50%;
+	height: 225px;
+	width: 225px;
+	margin-right: 65px;
+	margin-bottom: 15px;
+}
+.workSection{
+	width: 100%;
+	background-color:white;
+	text-align: center;
+}
+.workSectionTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 0px 0px;
+}
+.work{
+	text-align:center;
+	display:inline-block;
+	margin: 25px 0px 0px 0px;
+}
+.workInfo{
+	display:inline-block;
+	width: 500px;
+	vertical-align:top;
+	text-align:left;
+}
+.workImage{
+	width: 500px;
+	display:inline-block;
+}
+.computerPreview{
+	margin:0px 0px 0px 50px;
+	padding:0;
+	height: 300px;
+}
+.computerPreviewLeft{
+	margin:0px 0px 0px 0px;
+	padding:0;
+	height: 300px;
+}
+.workTitle{
+	color: #520000;
+}
+.workDescription{
+	font-family: Oxygen;
+	color: #6E6E6E;
+}
+.technologies{
+	margin: 25px 0px 0px 0px;
+	font-family: Oswald;
+}
+.technologyList{
+	display:block;
+	font-family: Oxygen;
+	color: #6E6E6E;
+}
+.viewLiveButton{
+	padding: 5px 10px 5px 10px;
+	display:inline-block;
+	margin: 15px 0px 0px 0px;
+	background: none;
+	border: 1px solid black;
+	transition: background-color .3s, font-weight .3s;
+	color: black;
+}
+.viewLiveButton:hover{
+	background-color:#DFF9FF;
+	font-weight: 500;
+}
+.viewCodeButton{
+	padding: 5px 10px 5px 10px;
+	display:inline-block;
+	margin: 15px 0px 0px 10px;
+	background: none;
+	border: 1px solid black;
+	color: black;
+	transition: background-color .3s, font-weight .3s;
+}
+.viewCodeButton:hover{
+	background-color:#DFF9FF;
+	font-weight: 500;
+}
+.contactSection{
+	width:100%;
+	min-height: 50vh;
+	padding:0px 0px 50px 0px;
+	margin:0;
+}
+.contactForm{
+	display:inline-block;
+	outline:none;
+	border:none;
+	margin: 50px 0px 0px 0px;
+}
+.contactContent{
+	text-align:center;
+}
+.smallForm{
+	width: 305px;
+	height: 30px;
+	display:block;
+	margin: 25px 0px 0px 0px;
+	border-top:none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid black;
+	padding-left: 10px;
+	font-family: 'Karla', sans-serif;
+	font-size: 15px;
+}
+.smallForm:focus{
+	outline:none;
+}
+.contactSection textarea{
+	resize: none;
+	width: 300px;
+	height: 150px;
+	display:block;
+	margin: 25px 0px 15px 0px;
+	border: 1px solid black;
+	padding-top: 10px;
+	padding-left: 10px;
+	font-family: 'Karla', sans-serif;
+	font-size: 15px;
+}
+.contactContentSpace{
+	display:inline-block;
+	min-height:30px;
+	width:20%;
+}
+.coverline1{
+	font-family: 'Syncopate', sans-serif;
+	font-size: 7.5vw;
+	color: white;
+	letter-spacing: -1vw;
+}
+.coverline1 span{
+	color:#59B2FF;
+	font-size:8vw;
+	font-weight: 900;
+}
+.coverline2{
+	font-family: sans-serif;
+	font-size: 13.5vw;
+	color: #FFC800;
+	letter-spacing: -1vw;
+	margin-top: -2%;
+	padding: 0;
+}
+.coverline3{
+	font-family: 'Syncopate', sans-serif;
+	font-size: 5.7vw;
+	color: #CFCFCF;
+	letter-spacing: -1vw;
+}
+.coverButtonSection{
+	width: 100%;
+	margin-top: 50px;
+	padding-bottom: 50px;
+}
+.contactTitle{
+	font-family: 'Slabo 27px';
+	font-size: 46px;
+	margin: 0px 0px 0px 0px;
+	padding: 45px 0px 0px 0px;
+}
+.contactTitleContainer{
+	width:100%;
+	text-align:center;
+	overflow:hidden;
+}
+.contactLinks{
+	display:inline-block;
+	vertical-align:top;
+	margin: 50px 0px 0px 0px;
+	text-align:left;
+}
+.emailTitle{
+	font-family: 'Roboto', sans-serif;
+	color: #520000;
+	font-size:20px;
+	padding-bottom:10px;
+}
+.accountsTitle{
+	font-family: 'Roboto', sans-serif;
+	color: #520000;
+	font-size:20px;
+	padding-top:45px;
+	padding-bottom:10px;
+}
+.contactSubmitButtonContainer{
+	width: 305px;
+	display:block;
+	text-align:right;
+}
+.contactSubmitButton{
+	padding: 5px 10px 5px 10px;
+	display:inline-block;
+	margin: 15px 0px 0px 0px;
+	background: none;
+	border: 1px solid black;
+	transition: background-color .3s, font-weight .3s;
+}
+.contactSubmitButton:hover{
+	background-color:#DFF9FF;
+	font-weight: 500;
+}
+.githubCoverButton{
+	border: 1px solid white;
+	display:inline-block;
+	color:white;
+	font-family: 'Roboto', sans-serif;
+	padding: 5px 10px 5px 10px;
+	font-size: calc(8px + 1vw);
+	margin: 0;
+	transition:color 0.3s, background-color 0.3s;
+}
+.githubCoverButton p{
+	display:inline-block;
+	font-family: 'Roboto', sans-serif;
+	padding: 5px 10px 5px 10px;
+	font-size: 2vw;
+	margin: 0;
+	transition:color 0.3s;
+}
+.githubCoverButton:hover{
+	color: #59B2FF;
+}
+.copyright{
+	height: 50px;
+	width: 100%;
+	background-color: gray;
+}
+.copyrightText{
+	color: white;
+	padding: 12px 0px 0px 10px;
+}
+.account img{
+	height: 20px;
+	width: 20px;
+	display:inline-block;
+	vertical-align:bottom;
+}
+.account p{
+	display:inline-block;
+	padding: 0;
+	margin: 0px 0px 0px 5px;
+}
+.account{
+	margin: 0px 0px 15px 0px;
+}
