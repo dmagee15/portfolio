@@ -403,7 +403,7 @@ p {
 	font-family: 'Syncopate', sans-serif;
 	font-size: 7.5vw;
 	color: white;
-	letter-spacing: -1vw;
+	letter-spacing: -0.8vw;
 }
 .coverline1 span{
 	color:#59B2FF;
@@ -412,17 +412,31 @@ p {
 }
 .coverline2{
 	font-family: sans-serif;
-	font-size: 13.5vw;
+	font-size: 13.8vw;
 	color: #FFC800;
+	line-height: 90%;
 	letter-spacing: -1vw;
 	margin-top: -2%;
 	padding: 0;
+	text-shadow: 0 1px 0 rgb(104, 51, 21), 
+               0 2px 0 #503713,
+               0 3px 0 rgb(92, 57, 24),
+               0 4px 0 #4e2910,
+               0 5px 0 rgb(70, 42, 10),
+               0 6px 1px rgba(80, 37, 12, 0.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
 }
 .coverline3{
 	font-family: 'Syncopate', sans-serif;
 	font-size: 5.7vw;
 	color: #CFCFCF;
-	letter-spacing: -1vw;
+	letter-spacing: -0.8vw;
+	margin-top:10px;
 }
 .coverButtonSection{
 	width: 100%;
