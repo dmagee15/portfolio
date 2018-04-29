@@ -142,7 +142,6 @@ p {
 }
 .skillsSection{
 	width: 100%;
-	min-height: 55vh;
 	background-color:white;
 	text-align: center;
 }
@@ -292,7 +291,6 @@ p {
 }
 .workInfo{
 	display:block;
-	width: 500px;
 	vertical-align:top;
 	text-align:left;
 	margin: auto;
@@ -301,7 +299,6 @@ p {
 	padding-top: 45px;
 }
 .workImage{
-	width: 500px;
 	display:block;
 	margin: auto;
 }
@@ -327,6 +324,9 @@ p {
 }
 .technologies{
 	margin: 25px 0px 0px 0px;
+	font-family: Oswald;
+}
+.description{
 	font-family: Oswald;
 }
 .technologyList{
@@ -563,4 +563,17 @@ p {
 }
 .account{
 	margin: 0px 0px 15px 0px;
+}
+.infoContainer{
+	width: 300px;
+	border: 1px solid black;
+	margin: auto;
+	padding: 15px;
+	margin-top: 30px;
+	box-shadow: 6px 6px 7px gray;
+	display: block;
+	text-align: left;
+}
+.invisible{
+	display:none;
 }

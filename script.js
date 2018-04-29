@@ -28,3 +28,39 @@ $("#contactButton").click(function() {
         scrollTop: $(".contactSection").offset().top},
         'slow');
 });
+
+$("#workEntryInfo1").on("click", function(){
+    if ( $("#workEntryInfo1Box").css('display') == 'none' ){
+        $("#workEntryInfo1Box").removeClass("invisible");
+    }
+    else{
+        $("#workEntryInfo1Box").addClass("invisible");
+    }
+});
+
+$("#workEntryInfo2").on("click", function(){
+    if ( $("#workEntryInfo2Box").css('display') == 'none' ){
+        $("#workEntryInfo2Box").removeClass("invisible");
+    }
+    else{
+        $("#workEntryInfo2Box").addClass("invisible");
+    }
+});
+
+$("#workEntryInfo3").on("click", function(){
+    if ( $("#workEntryInfo3Box").css('display') == 'none' ){
+        $("#workEntryInfo3Box").removeClass("invisible");
+    }
+    else{
+        $("#workEntryInfo3Box").addClass("invisible");
+    }
+});
+
+$("#workEntryInfo4").on("click", function(){
+    if ( $("#workEntryInfo4Box").css('display') == 'none' ){
+        $("#workEntryInfo4Box").removeClass("invisible");
+    }
+    else{
+        $("#workEntryInfo4Box").addClass("invisible");
+    }
+});
