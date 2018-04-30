@@ -289,6 +289,8 @@ p {
 }
 .workEntry{
 	padding-top:45px;
+	display: block;
+	margin: auto;
 }
 .workInfo{
 	display:block;
